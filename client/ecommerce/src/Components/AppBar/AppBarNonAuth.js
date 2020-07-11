@@ -4,6 +4,7 @@ import {
   AppBar, Toolbar, Typography, List, ListItem,
   withStyles, Grid, SwipeableDrawer, Button
 } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
@@ -26,6 +27,11 @@ const styleSheet = {
 
   menuIcon : {
     paddingRight: 5
+  },
+
+  navLink : {
+    textDecoration: 'none',
+    color : 'white'
   }
 }
 
@@ -109,9 +115,13 @@ class AppBarNonAuth extends Component{
     return (
       <AppBar>
         <Toolbar>
-          <Typography variant = "h6" style={{flexGrow:1}} color="inherit" >Reactify</Typography>
-          <Button variant = "subheading" className = {classes.padding} color="inherit" >Login</Button>
-          <Button variant = "subheading" className = {classes.padding} color="inherit" >Register</Button>
+          <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><Link className={classes.navLink} to="/">Reactify</Link></Typography>
+          <Link className={classes.navLink} to="/">
+            <Button variant = "text" className = {classes.padding} color="inherit" >Login</Button>
+          </Link>
+          <Link className={classes.navLink} to="/register">
+            <Button variant = "text" className = {classes.padding} color="inherit" >Register</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     )
