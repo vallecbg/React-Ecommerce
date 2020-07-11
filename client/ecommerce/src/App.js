@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import AppBarNonAuth from './Components/AppBarNonAuth'
+import AppBarNonAuth from './Components/AppBar/AppBarNonAuth'
 
 class App extends Component {
   render() {
