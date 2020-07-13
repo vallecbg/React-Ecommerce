@@ -23,12 +23,12 @@ module.exports = {
       .catch(next);
   },
   register: (req, res, next) => {
-    const { email, password, rePassword, name } = req.body;
+    const { email, password, rePassword, firstName, lastName } = req.body;
     if (password != rePassword) {
       res.status(400).send({ msg: 'Passwords don`t match' });
       return;
     }
-    UserModel.create({ email, password, name })
+    UserModel.create({ email, password, firstName, lastName })
       .then((user) => {
         const token = tokenCreate({ id: user._id });
         res.cookie(authCookieName, token, { httpOnly: false }).send({
