@@ -23,6 +23,7 @@ module.exports = {
       .catch(next);
   },
   register: (req, res, next) => {
+    console.log(req.body);
     const { email, password, rePassword, firstName, lastName } = req.body;
     if (password != rePassword) {
       res.status(400).send({ msg: 'Passwords don`t match' });
