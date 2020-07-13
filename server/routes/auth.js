@@ -6,7 +6,7 @@ const {
     logout
 } = require('../controllers/auth')
 
-router.post('/', login)
+router.post('/login', login)
 router.post('/register', register)
 
 router.get('/logout', logout)
