@@ -74,7 +74,8 @@ const asyncActionMap = {
         .catch((error) => loginFail(error))
     },
     [ActionTypes.Register]: ({user}) => {
-        return userService.register(user).then(() => {
+        return userService.register(user).then(({data: {user}}) => {
+            console.log(user);
             window.localStorage.setItem(
                 'user',
                 JSON.stringify({id: user._id, token: user.token})
