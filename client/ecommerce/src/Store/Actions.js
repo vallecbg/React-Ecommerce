@@ -6,6 +6,10 @@ export const ActionTypes = {
     Register: Symbol('[AUTH] Register'),
     RegisterSuccess: Symbol('[AUTH] Register Success'),
     RegisterFail: Symbol('[AUTH] Register Fail'),
+
+    Logout: Symbol('[AUTH] Logout'),
+    LogoutSuccess: Symbol('[AUTH] Logout Success'),
+    LogoutFail: Symbol('[AUTH] Logout Fail'),
 }
 
 export const login = (user) => ({
@@ -33,4 +37,18 @@ export const registerFail = (error) => ({
     type: ActionTypes.RegisterFail,
     payload: {error}
 })
+
+export const logout = () => ({
+    type: ActionTypes.Logout,
+    payload: undefined
+})
+export const logoutSuccess = () => ({
+    type: ActionTypes.LogoutSuccess,
+    payload: undefined 
+})
+export const logoutFail = (error) => ({
+    type: ActionTypes.LogoutFail,
+    payload: {error}
+})
+
 

@@ -18,14 +18,14 @@ const userService = {
             console.error(error)
         })
     },
-    // logout: function() {
-    //     return axios.get(`${baseUrl}/logout`, {
-    //         withCredentials: true
-    //     })
-    //     .catch((error) => {
-    //         console.error(error)
-    //     })
-    // }
+    logout: function() {
+        return axios.get(`${baseUrl}/logout`, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    }
 }
 
 export default userService

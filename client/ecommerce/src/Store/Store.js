@@ -8,7 +8,9 @@ import {
     loginSuccess,
     loginFail,
     registerSuccess,
-    registerFail
+    registerFail,
+    logoutSuccess,
+    logoutFail
 } from './Actions'
 import userService from '../Services/userService'
 
@@ -58,6 +60,11 @@ const actionMap = {
     [ActionTypes.RegisterFail]: (state, {error}) => ({
         ...state,
         error
+    }),
+    [ActionTypes.Logout]: (state) => ({
+        ...state,
+        user: null,
+        isAuth: false
     })
 }
 
@@ -82,6 +89,13 @@ const asyncActionMap = {
             return registerSuccess(user)
         })
         .catch((error) => registerFail(error))
+    },
+    [ActionTypes.Logout]: () => {
+        return userService.logout().then(() => {
+            window.localStorage.clear()
+            return logoutSuccess()
+        })
+        .catch((error) => logoutFail(error))
     }
 }
 
