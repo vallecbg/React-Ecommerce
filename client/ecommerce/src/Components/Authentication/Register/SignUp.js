@@ -2,9 +2,6 @@ import React, { useContext, useCallback } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import MatLink from '@material-ui/core/Link';
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +14,7 @@ import { StoreContext } from '../../../Store/Store'
 import { register } from '../../../Store/Actions'
 import * as yup from 'yup';
 import InputField from '../../Input/InputField'
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,8 +47,9 @@ const Register = ({
   formIsInvalid,
   history,
 }) => {
+
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext)
+  const { dispatch } = useContext(StoreContext)
 
   const handleOnChangeFirstName = changeHandlerFactory('firstName')
   const handleOnChangeLastName = changeHandlerFactory('lastName')
@@ -58,14 +57,17 @@ const Register = ({
   const handleOnChangePassword = changeHandlerFactory('password')
   const handleOnChangeRePassword = changeHandlerFactory('rePassword')
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    runValidations().then((formData) => {
-      console.log(formData);
-      dispatch(register(formData));
-      history.push('/');
-    });
-  });
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      runValidations().then((formData) => {
+        dispatch(register(formData));
+        history.push('/');
+      });
+    },
+    [history, dispatch, runValidations]
+  );
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -110,6 +112,7 @@ const Register = ({
               <InputField 
                 label={'Password'}
                 name={'password'}
+                type={'password'}
                 changeHandler={handleOnChangePassword}
                 runControlValidation={runControlValidation}
                 formState={formState}
@@ -119,15 +122,10 @@ const Register = ({
               <InputField 
                 label={'Repeat Password'}
                 name={'rePassword'}
+                type={'password'}
                 changeHandler={handleOnChangeRePassword}
                 runControlValidation={runControlValidation}
                 formState={formState}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
           </Grid>
@@ -167,7 +165,7 @@ const schema = yup.object().shape({
     .string()
     .required('Password is required')
     .min(6, 'Password must be at least 6 symbols'),
-  rePassword: yup
+    rePassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Password don`t match')
     .required('Password is required')
@@ -181,5 +179,14 @@ const initialState = {
   password: '',
   rePassword: ''
 }
+
+Register.propTypes = {
+  changeHandlerFactory: PropTypes.func,
+  formState: PropTypes.object,
+  runValidations: PropTypes.func,
+  runControlValidation: PropTypes.func,
+  formIsInvalid: PropTypes.func,
+  history: PropTypes.object,
+};
 
 export default withForm(Register, initialState, schema)
