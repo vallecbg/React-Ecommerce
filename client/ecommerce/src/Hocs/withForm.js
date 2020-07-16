@@ -15,7 +15,6 @@ const withForm = (Cmp, initialState, schema) => {
           id = null;
         }
         const newValue = e.target.value;
-        console.log(newValue);
         // id = setTimeout(() => {
         setState(({ form }) => {
           return { form: { ...form, [name]: newValue } };

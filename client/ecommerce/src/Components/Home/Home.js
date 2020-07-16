@@ -1,16 +1,16 @@
 import React from 'react'
-import {
-  makeStyles
-} from '@material-ui/core/styles'
+// import {
+//   makeStyles
+// } from '@material-ui/core/styles'
 import Hero from './Hero';
 import TextSection from './TextSection'
 
-const useStyles = makeStyles((theme) => ({
-  content: {},
-  container: {
-    padding: '200px',
-  },
-}))
+// const useStyles = makeStyles((theme) => ({
+//   content: {},
+//   container: {
+//     padding: '200px',
+//   },
+// }))
 
 const heroImages = [
   '/banner2.jpeg',

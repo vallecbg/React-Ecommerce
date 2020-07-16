@@ -139,7 +139,7 @@ class Hero extends Component {
         {subtitleText && Subtitle}
 
         {primaryBtnText || secondaryBtnText || tertiaryBtnText ? (
-          <Grid container style={{ width: '100%' }} spacing={16}>
+          <Grid container style={{ width: '100%' }} spacing={10}>
             {primaryBtnText && primaryBtnLink ? PrimaryBtn : null}
             {secondaryBtnText && secondaryBtnLink ? SecondaryBtn : null}
             {tertiaryBtnText && tertiaryBtnLink ? TertiaryBtn : null}

@@ -43,7 +43,7 @@ class AppBarNonAuth extends Component{
     this.destroyDrawer = this.destroyDrawer.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     if(window.innerWidth <= 600){
       this.setState({drawerActivate:true});
     }
@@ -71,7 +71,7 @@ class AppBarNonAuth extends Component{
                 onClick={()=>{this.setState({drawer:true})}} />
 
               <Typography color="inherit" variant = "h6">Reactify</Typography>
-              <Typography color="inherit" variant = "headline"></Typography>
+              <Typography color="inherit" variant = "h1"></Typography>
             </Grid>
           </Toolbar>
         </AppBar>
@@ -81,22 +81,22 @@ class AppBarNonAuth extends Component{
          onClose={()=>{this.setState({drawer:false})}}
          onOpen={()=>{this.setState({drawer:true})}}>
 
+           <Typography color="inherit" variant = "h6">Reactify</Typography>
            <div
              tabIndex={0}
              role="button"
              onClick={()=>{this.setState({drawer:false})}}
              onKeyDown={()=>{this.setState({drawer:false})}}>
-
             <List className = {this.props.classes.list}>
                <ListItem key = {1} button divider> 
                 <HomeIcon className={classes.menuIcon}/>
                 Home 
                </ListItem>
-               <ListItem key = {1} button divider> 
+               <ListItem key = {2} button divider> 
                 <AccountCircleIcon className = {classes.menuIcon}/>  
                 Login 
                </ListItem>
-               <ListItem key = {2} button divider> 
+               <ListItem key = {3} button divider> 
                <PersonOutlineIcon className = {classes.menuIcon}/>
                 Register 
                </ListItem>

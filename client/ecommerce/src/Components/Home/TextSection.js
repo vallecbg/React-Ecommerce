@@ -92,7 +92,7 @@ class TextSection extends Component {
       >
         <div className={classes.innerContainer}>
           <Typography
-            variant="display2"
+            variant="subtitle2"
             gutterBottom
             style={{ color: textColor }}
           >
