@@ -27,8 +27,9 @@ const Home = () => {
           <span>50% SALE TO ALL LAPTOPS &#8226; 25% TO ALL SMARTPHONES</span>
         }
         primaryBtnText="SIGN IN"
-        primaryBtnLink="/register"
+        primaryBtnLink="/login"
       />
+      {/* TODO: change the btn link and text */}
       <TextSection
         text="Our mission as an Reactify Shop is to provide the customer the best experience and huge promotions while shopping."
         bgColor="#3F51B5"

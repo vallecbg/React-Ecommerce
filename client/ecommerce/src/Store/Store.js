@@ -64,6 +64,7 @@ const actionMap = {
 const asyncActionMap = {
     [ActionTypes.Login]: ({user}) => {
         return userService.login(user).then(({data: {user}}) => {
+            console.log(user);
             window.localStorage.setItem(
                 'user',
                 JSON.stringify({id: user._id, token: user.token})
@@ -74,7 +75,6 @@ const asyncActionMap = {
     },
     [ActionTypes.Register]: ({user}) => {
         return userService.register(user).then(({data: {user}}) => {
-            console.log(user);
             window.localStorage.setItem(
                 'user',
                 JSON.stringify({id: user._id, token: user.token})

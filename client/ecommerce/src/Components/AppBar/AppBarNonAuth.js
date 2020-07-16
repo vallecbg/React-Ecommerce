@@ -80,7 +80,7 @@ class AppBarNonAuth extends Component{
          open={this.state.drawer}
          onClose={()=>{this.setState({drawer:false})}}
          onOpen={()=>{this.setState({drawer:true})}}>
-
+           {/* TODO: add links */}
            <Typography color="inherit" variant = "h6">Reactify</Typography>
            <div
              tabIndex={0}
@@ -116,7 +116,7 @@ class AppBarNonAuth extends Component{
       <AppBar>
         <Toolbar>
           <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><Link className={classes.navLink} to="/">Reactify</Link></Typography>
-          <Link className={classes.navLink} to="/">
+          <Link className={classes.navLink} to="/login">
             <Button variant = "text" className = {classes.padding} color="inherit" >Login</Button>
           </Link>
           <Link className={classes.navLink} to="/register">
