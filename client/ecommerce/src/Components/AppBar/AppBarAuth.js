@@ -142,4 +142,4 @@ AppBarAuth.propTypes = {
 
 
 
-export default withStyles(styleSheet)(AppBarAuth);
+export default AppBarAuth;

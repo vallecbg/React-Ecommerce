@@ -18,9 +18,6 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
-  test: {
-      marginTop: '100px'
-  }
 }));
 
 const Navbar = () => {
