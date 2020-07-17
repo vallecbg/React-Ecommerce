@@ -20,7 +20,15 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  authType: {
+    type: String,
+    default: 'User'
+  },
+  purchasedProducts: [{
+    type: ObjectId,
+    ref: 'Product'
+  }]
 });
 
 userSchema.methods = {
