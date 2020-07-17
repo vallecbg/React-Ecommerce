@@ -11,31 +11,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { logout } from '../../Store/Actions'
 import { StoreContext } from '../../Store/Store'
 
-const styleSheet = {
-  list : {
-    width : 200,
-  },
-  padding : {
-    paddingRight : 30,
-    cursor : "pointer",
-  },
-
-  sideBarIcon : {
-    padding : 0,
-    color : "white",
-    cursor : "pointer",
-  },
-
-  menuIcon : {
-    paddingRight: 5
-  },
-
-  navLink : {
-    textDecoration: 'none',
-    color : 'white'
-  }
-}
-
 class AppBarAuth extends Component{
 
   constructor(props){

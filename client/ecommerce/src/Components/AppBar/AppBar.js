@@ -18,6 +18,28 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
+  list : {
+    width : 200,
+  },
+  padding : {
+    paddingRight : 30,
+    cursor : "pointer",
+  },
+
+  sideBarIcon : {
+    padding : 0,
+    color : "white",
+    cursor : "pointer",
+  },
+
+  menuIcon : {
+    paddingRight: 5
+  },
+
+  navLink : {
+    textDecoration: 'none',
+    color : 'white'
+  }
 }));
 
 const Navbar = () => {

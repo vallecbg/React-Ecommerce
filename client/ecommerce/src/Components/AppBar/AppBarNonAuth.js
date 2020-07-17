@@ -10,31 +10,6 @@ import HomeIcon from '@material-ui/icons/Home'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
 
-const styleSheet = {
-  list : {
-    width : 200,
-  },
-  padding : {
-    paddingRight : 30,
-    cursor : "pointer",
-  },
-
-  sideBarIcon : {
-    padding : 0,
-    color : "white",
-    cursor : "pointer",
-  },
-
-  menuIcon : {
-    paddingRight: 5
-  },
-
-  navLink : {
-    textDecoration: 'none',
-    color : 'white'
-  }
-}
-
 class AppBarNonAuth extends Component{
   constructor(props){
     super(props);
@@ -142,4 +117,4 @@ AppBarNonAuth.propTypes = {
 
 
 
-export default withStyles(styleSheet)(AppBarNonAuth);
+export default AppBarNonAuth;
