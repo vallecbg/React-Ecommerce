@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import Home from './Components/Home/Home'
-import SignUp from './Components/Authentication/Register/SignUp'
-import SignIn from './Components/Authentication/Login/SignIn'
 import { StoreContext } from './Store/Store'
+const Home = React.lazy(() => import('./Components/Home/Home'))
+const SignUp = React.lazy(() => import('./Components/Authentication/Register/SignUp'))
+const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
 
 const AppRouter = () => {
     const { state } = useContext(StoreContext)

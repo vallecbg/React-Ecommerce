@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import AppBarNonAuth from './Components/AppBar/AppBarNonAuth'
 import AppBarComponent from './Components/AppBar/AppBar'
 import AppRouter from './AppRouter'
 import Context from './Store/Store'
+import Spinner from './Components/Loader/Spinner'
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
           {/* TODO: merge appbar non auth and auth into one component */}
           {/* <AppBarNonAuth /> */}
           <AppBarComponent />
-          <React.Suspense fallback={<h2>Loading...</h2>}>
+          <React.Suspense fallback={<Spinner />}>
             <AppRouter />
           </React.Suspense>
         </Context>
