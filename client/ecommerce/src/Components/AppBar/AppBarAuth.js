@@ -95,6 +95,9 @@ class AppBarAuth extends Component{
       <AppBar>
         <Toolbar>
           <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><Link className={classes.navLink} to="/">Reactify</Link></Typography>
+          <Link className={classes.navLink} to="/products">
+            <Button variant = "text" className = {classes.padding} color="inherit" >Products</Button>
+          </Link>
           <Button variant = "text" className = {classes.padding} color="inherit" onClick={logoutFunction}>Logout</Button>
         </Toolbar>
       </AppBar>

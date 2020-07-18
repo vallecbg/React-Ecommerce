@@ -19,7 +19,7 @@ module.exports = {
             .catch(next)
     },
     getAllProducts: (req, res, next) => {
-        ProductModel.find({})
+        ProductModel.find({}).populate('category')
         .then((products) => {
             res.json(products)
         })

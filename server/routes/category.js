@@ -8,6 +8,6 @@ const {
 
 router.post('/create', auth(), createCategory)
 
-router.get('/all', auth(), getAllCategories)
+router.get('/all', auth(false), getAllCategories)
 
 module.exports = router

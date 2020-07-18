@@ -4,6 +4,7 @@ import { StoreContext } from './Store/Store'
 const Home = React.lazy(() => import('./Components/Home/Home'))
 const SignUp = React.lazy(() => import('./Components/Authentication/Register/SignUp'))
 const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
+const ProductsList = React.lazy(() => import('./Components/ProductsList/ProductsList'))
 
 const AppRouter = () => {
     const { state } = useContext(StoreContext)
@@ -17,6 +18,7 @@ const AppRouter = () => {
     return (
         <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/products" component={ProductsList} />
             <AuthRoute path="/register" component={SignUp} />
             <AuthRoute path="/login" component={SignIn} />
         </Switch>

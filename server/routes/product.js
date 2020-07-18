@@ -8,6 +8,6 @@ const {
 
 router.post('/create', auth(), createProduct)
 
-router.get('/all', auth(), getAllProducts)
+router.get('/all', auth(false), getAllProducts)
 
 module.exports = router

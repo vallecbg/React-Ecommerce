@@ -10,9 +10,12 @@ import {
     registerSuccess,
     registerFail,
     logoutSuccess,
-    logoutFail
+    logoutFail,
+    getAllProductsSuccess,
+    getAllProductsFail
 } from './Actions'
 import userService from '../Services/userService'
+import productService from '../Services/productService'
 
 const cookies = document.cookie.split('; ').reduce((acc, curr) => {
     const [key, value] = curr.split('=');
@@ -26,6 +29,7 @@ const initialState = {
     isAuth: !!authCookie,
     user: JSON.parse(window.localStorage.getItem('user')),
     error: null,
+    products: []
     // toast: {
     //     status: '',
     //     message: ''
@@ -65,6 +69,19 @@ const actionMap = {
         ...state,
         user: null,
         isAuth: false
+    }),
+    [ActionTypes.GetAllProducts]: (state) => ({
+        ...state,
+        error: null
+    }),
+    [ActionTypes.GetAllProductsSuccess]: (state, {products}) => ({
+        ...state,
+        products,
+        error: null
+    }),
+    [ActionTypes.GetAllProductsFail]: (state, {error}) => ({
+        ...state,
+        error
     })
 }
 
@@ -96,6 +113,14 @@ const asyncActionMap = {
             return logoutSuccess()
         })
         .catch((error) => logoutFail(error))
+    },
+    [ActionTypes.GetAllProducts]: () => {
+        return productService.getAll().then(({data}) => {
+            return getAllProductsSuccess(data)
+        })
+        .catch((error) => {
+            getAllProductsFail(error)
+        })
     }
 }
 

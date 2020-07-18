@@ -4,6 +4,7 @@ import React from 'react'
 // } from '@material-ui/core/styles'
 import Hero from './Hero';
 import TextSection from './TextSection'
+import ProductsList from '../ProductsList/ProductsList'
 
 // const useStyles = makeStyles((theme) => ({
 //   content: {},
@@ -29,6 +30,8 @@ const Home = () => {
         primaryBtnText="SIGN IN"
         primaryBtnLink="/login"
       />
+      {/* TODO: add only the popular products */}
+      <ProductsList/>
       {/* TODO: change the btn link and text */}
       <TextSection
         text="Our mission as an Reactify Shop is to provide the customer the best experience and huge promotions while shopping."
@@ -40,6 +43,7 @@ const Home = () => {
         btnText="Check our promos"
         darkBg={true}
       />
+      
     </div>
   )
 }
