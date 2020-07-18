@@ -16,5 +16,12 @@ module.exports = {
                 res.status(201).send({msg: 'Successfully created category!'})
             })
             .catch(next)
+    },
+    getAllCategories: (req, res, next) => {
+        CategoryModel.find({})
+        .then((categories) => {
+            res.json(categories)
+        })
+        .catch(next)
     }
 }

@@ -2,7 +2,6 @@ const { ProductModel } = require('../models')
 
 module.exports = {
     createProduct: (req, res, next) => {
-        console.log(req);
         const product = req.body
         const { _id } = req.user
 
@@ -18,5 +17,12 @@ module.exports = {
                 res.status(201).send({msg: 'Successfully created product!'})
             })
             .catch(next)
+    },
+    getAllProducts: (req, res, next) => {
+        ProductModel.find({})
+        .then((products) => {
+            res.json(products)
+        })
+        .catch(next)
     }
 }
