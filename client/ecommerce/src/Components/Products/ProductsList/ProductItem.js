@@ -9,16 +9,29 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory, Link } from 'react-router-dom';
 
-const ProductsList = ({product}) => {
+const useStyles = makeStyles((theme) => ({
+  navLink : {
+    textDecoration: 'none',
+  }
+}))
+
+
+const ProductItem = ({product}) => {
+  const classes = useStyles()
+  const history = useHistory()
     return (
         <Card
         style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
       >
         <CardActionArea
-        //   onClick={() => {
-        //     this.props.history.push("/details/" + this.props.item.id);
-        //   }}
+          onClick={() => {
+            history.push({
+              pathName: "/product/details/" + product._id,
+              product: product
+            });
+          }}
         >
           <CardMedia
             style={{ height: 140 }}
@@ -45,16 +58,20 @@ const ProductsList = ({product}) => {
         <CardActions
           style={{ display: "flex", alignItems: "center", height: 45 }}
         >
-          <Button
-            size="small"
-            style={{ marginRight: 60 }}
-            // onClick={() => {
-            //   this.props.history.push("/details/" + this.props.item.id);
-            // }}
-          >
-            {" "}
-            Details
-          </Button>
+          <Link className={classes.navLink} to={"/product/details/" + product._id}>
+            <Button
+              size="small"
+              style={{ marginRight: 60 }}
+              onClick={() => {
+                history.push({
+                  pathName: "/product/details/" + product._id
+                });
+              }}
+            >
+              {" "}
+              Details
+            </Button>
+          </Link>
           <Tooltip title="Add to cart">
             <IconButton
               size="small"
@@ -75,4 +92,4 @@ const ProductsList = ({product}) => {
     )
 }
 
-export default ProductsList
+export default ProductItem

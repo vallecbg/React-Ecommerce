@@ -4,7 +4,7 @@ import React from 'react'
 // } from '@material-ui/core/styles'
 import Hero from './Hero';
 import TextSection from './TextSection'
-import ProductsList from '../ProductsList/ProductsList'
+import ProductsList from '../Products/ProductsList/ProductsList'
 
 // const useStyles = makeStyles((theme) => ({
 //   content: {},

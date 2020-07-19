@@ -14,6 +14,10 @@ export const ActionTypes = {
     GetAllProducts: Symbol('[PRODUCTS] Get All Products'),
     GetAllProductsSuccess: Symbol('[PRODUCTS] Get All Products Success'),
     GetAllProductsFail: Symbol('[PRODUCTS] Get All Products Fail'),
+
+    GetProduct: Symbol('[PRODUCTS] Get One Product'),
+    GetProductSuccess: Symbol('[PRODUCTS] Get One Product Success'),
+    GetProductFail: Symbol('[PRODUCTS] Get One Product Fail'),
 }
 
 export const login = (user) => ({
@@ -65,5 +69,18 @@ export const getAllProductsSuccess = (products) => ({
 })
 export const getAllProductsFail = (error) => ({
     type: ActionTypes.GetAllProductsFail,
+    payload: { error }
+})
+
+export const getProduct = () => ({
+    type: ActionTypes.GetProduct,
+    payload: undefined
+})
+export const getProductSuccess = (product) => ({
+    type: ActionTypes.GetProduct,
+    payload: { product }
+})
+export const getProductFail = (error) => ({
+    type: ActionTypes.GetProductFail,
     payload: { error }
 })

@@ -12,7 +12,9 @@ import {
     logoutSuccess,
     logoutFail,
     getAllProductsSuccess,
-    getAllProductsFail
+    getAllProductsFail,
+    getProductSuccess,
+    getProductFail
 } from './Actions'
 import userService from '../Services/userService'
 import productService from '../Services/productService'
@@ -29,7 +31,8 @@ const initialState = {
     isAuth: !!authCookie,
     user: JSON.parse(window.localStorage.getItem('user')),
     error: null,
-    products: []
+    products: [],
+    product: []
     // toast: {
     //     status: '',
     //     message: ''
@@ -82,7 +85,20 @@ const actionMap = {
     [ActionTypes.GetAllProductsFail]: (state, {error}) => ({
         ...state,
         error
-    })
+    }),
+    [ActionTypes.GetProduct]: (state) => ({
+        ...state,
+        error: null
+    }),
+    [ActionTypes.GetProductSuccess]: (state, {product}) => ({
+        ...state,
+        product,
+        error: null
+    }),
+    [ActionTypes.GetProductFail]: (state, {error}) => ({
+        ...state,
+        error
+    }),
 }
 
 const asyncActionMap = {
@@ -120,6 +136,14 @@ const asyncActionMap = {
         })
         .catch((error) => {
             getAllProductsFail(error)
+        })
+    },
+    [ActionTypes.GetProduct]: (id) => {
+        return productService.getOne(id).then(({data}) => {
+            return getProductSuccess(data)
+        })
+        .catch((error) => {
+            getProductFail(error)
         })
     }
 }

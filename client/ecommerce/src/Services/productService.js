@@ -9,6 +9,15 @@ const productService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    getOne: function(id) {
+        console.log(id);
+        return axios.get(`${baseUrl}/details/${id}`, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 

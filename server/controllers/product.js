@@ -27,7 +27,9 @@ module.exports = {
     },
     getProduct: (req, res, next) => {
         const { id } = req.params
-        ProductModel.find({_id: id}).then((currentProduct) => {
+        ProductModel.find({_id: id}).populate('category')
+        .then((currentProduct) => {
+            console.log(currentProduct);
             res.status(200).json(currentProduct)
         })
         .catch(next)
