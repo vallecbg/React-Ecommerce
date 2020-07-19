@@ -5,6 +5,7 @@ import productService from '../../Services/productService'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Spinner from '../Loader/Spinner'
+import ProductItem from './ProductItem'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -30,8 +31,7 @@ const ProductsList = () => {
             console.log(product);
             return (
                 <Grid item xs={3} key={product._id}>
-                    <h1>{product.title}</h1>
-                    <span>Price: {product.price}, Category: {product.category.title}</span>
+                    <ProductItem product={product}/>
                 </Grid>
             )
         })
@@ -41,60 +41,9 @@ const ProductsList = () => {
             {isLoading ? (
                 <Spinner />
             ) : renderProducts}
-            {/* {(products.length ? products : state.products).map(product => (
-                <Grid item xs={3} key={product._id}>
-                    <h1>{product.title}</h1>
-                    <span>Price: {product.price}, Category: {product.category.title}</span>
-                </Grid>
-            ))} */}
         </Grid>
     )
 }
 
 export default ProductsList
-
-
-// class ProductsList extends Component {
-//     static contextType = StoreContext
-    
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             loading: false,
-//             allProducts: []
-//         }
-//     }
-
-//     async fetchData() {
-//         await this.setState({loading: true})
-//         productService.getAll().then(res => res.json()).then((data) => {
-//             this.setState({
-//                 allProducts: data
-//             }, () => {
-//                 console.log(this.state);
-//             })
-//         })
-
-
-//     }
-
-//     componentDidMount() {
-//         this.fetchData()
-//         const renderProducts = this.state.allProducts.map((product) => {
-//             console.log(product);
-//             return (
-//                 <Grid item xs={3} key={product._id}>
-//                     <h1>{product.title}</h1>
-//                     <span>Price: {product.price}, Category: {product.category}</span>
-//                 </Grid>
-//             )
-//         })
-//     }
-
-//     render() {
-//         return (
-//         <div>{this.renderProducts}</div>
-//         )
-//     }
-// }
 
