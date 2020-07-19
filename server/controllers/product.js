@@ -21,7 +21,14 @@ module.exports = {
     getAllProducts: (req, res, next) => {
         ProductModel.find({}).populate('category')
         .then((products) => {
-            res.json(products)
+            res.status(200).json(products)
+        })
+        .catch(next)
+    },
+    getProduct: (req, res, next) => {
+        const { id } = req.params
+        ProductModel.find({_id: id}).then((currentProduct) => {
+            res.status(200).json(currentProduct)
         })
         .catch(next)
     }
