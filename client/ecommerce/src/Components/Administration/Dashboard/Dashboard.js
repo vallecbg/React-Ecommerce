@@ -18,7 +18,7 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: '40px'
+    padding: '80px 40px 40px 40px'
   }
 }));
 

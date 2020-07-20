@@ -48,6 +48,7 @@ const Navbar = () => {
   const { state } = useContext(StoreContext)
   const { dispatch } = useContext(StoreContext);
 
+  // TODO: add confirmation dialog for logout and delete
 
   return (
     <div className={classes.grow}>
