@@ -18,6 +18,7 @@ import {
 } from './Actions'
 import userService from '../Services/userService'
 import productService from '../Services/productService'
+import {Constants} from './Constants'
 
 const cookies = document.cookie.split('; ').reduce((acc, curr) => {
     const [key, value] = curr.split('=');
@@ -25,10 +26,14 @@ const cookies = document.cookie.split('; ').reduce((acc, curr) => {
     return acc;
 }, {});
 
+const currentUser = JSON.parse(window.localStorage.getItem('user'))
+const isAdmin = currentUser !== null ? currentUser.role === Constants.AdminRole : false
+
 const authCookie = cookies['x-auth-cookie']
 
 const initialState = {
     isAuth: !!authCookie,
+    isAdmin,
     user: JSON.parse(window.localStorage.getItem('user')),
     error: null,
     products: [],
@@ -49,7 +54,8 @@ const actionMap = {
     [ActionTypes.LoginSuccess]: (state, {user}) => ({
         ...state,
         user,
-        isAuth: true
+        isAuth: true,
+        isAdmin: user.role === Constants.AdminRole
     }),
     [ActionTypes.LoginFail]: (state, {error}) => ({
         ...state,
@@ -62,7 +68,8 @@ const actionMap = {
     [ActionTypes.RegisterSuccess]: (state, {user}) => ({
         ...state,
         user,
-        isAuth: true
+        isAuth: true,
+        isAdmin: user.role === Constants.AdminRole
     }),
     [ActionTypes.RegisterFail]: (state, {error}) => ({
         ...state,
@@ -71,7 +78,8 @@ const actionMap = {
     [ActionTypes.Logout]: (state) => ({
         ...state,
         user: null,
-        isAuth: false
+        isAuth: false,
+        isAdmin: false
     }),
     [ActionTypes.GetAllProducts]: (state) => ({
         ...state,
@@ -104,10 +112,9 @@ const actionMap = {
 const asyncActionMap = {
     [ActionTypes.Login]: ({user}) => {
         return userService.login(user).then(({data: {user}}) => {
-            console.log(user);
             window.localStorage.setItem(
                 'user',
-                JSON.stringify({id: user._id, token: user.token})
+                JSON.stringify({id: user._id, token: user.token, role: user.role})
             )
             return loginSuccess(user)
         })
@@ -117,7 +124,7 @@ const asyncActionMap = {
         return userService.register(user).then(({data: {user}}) => {
             window.localStorage.setItem(
                 'user',
-                JSON.stringify({id: user._id, token: user.token})
+                JSON.stringify({id: user._id, token: user.token, role: user.role})
             )
             return registerSuccess(user)
         })

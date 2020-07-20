@@ -25,6 +25,7 @@ const ProductItem = ({product}) => {
         <Card
         style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
       >
+        {/* TODO: clicking the area doesn't redirect to details page */}
         <CardActionArea
           onClick={() => {
             history.push({

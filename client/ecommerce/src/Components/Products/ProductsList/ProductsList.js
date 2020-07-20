@@ -24,11 +24,8 @@ const ProductsList = () => {
         dispatch(getAllProducts())
         setIsLoading(false)
     }, [])
-    console.log('Products: ', products);
-    console.log('State Products: ', state.products);
 
         const renderProducts = (products.length ? products : state.products).map((product) => {
-            console.log(product);
             return (
                 <Grid item xs={3} key={product._id}>
                     <ProductItem product={product}/>

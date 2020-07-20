@@ -1,4 +1,5 @@
 const { ProductModel } = require('../models')
+const { authCookie: authCookieName } = require('../config/config');
 
 module.exports = {
     createProduct: (req, res, next) => {
@@ -19,6 +20,7 @@ module.exports = {
             .catch(next)
     },
     getAllProducts: (req, res, next) => {
+        console.log(req.cookies[authCookieName]);
         ProductModel.find({}).populate('category')
         .then((products) => {
             res.status(200).json(products)

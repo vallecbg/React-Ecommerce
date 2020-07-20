@@ -11,7 +11,6 @@ const productService = {
         })
     },
     getOne: function(id) {
-        console.log(id);
         return axios.get(`${baseUrl}/details/${id}`, {
             withCredentials: true
         })

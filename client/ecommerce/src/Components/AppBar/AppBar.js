@@ -57,6 +57,7 @@ const Navbar = () => {
                 classes={classes} 
                 history={history} 
                 dispatch={dispatch}
+                isAdmin={state.isAdmin}
             />
             ) : (
             <AppBarNonAuth classes={classes}/>

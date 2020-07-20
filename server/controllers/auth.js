@@ -17,7 +17,7 @@ module.exports = {
         const token = tokenCreate({ id: user._id });
         res.cookie(authCookieName, token, { httpOnly: false }).send({
           msg: 'Successful login',
-          user: { _id: user._id, email: user.email, token },
+          user: { _id: user._id, email: user.email, token, role: user.role },
         });
       })
       .catch(next);
@@ -28,12 +28,12 @@ module.exports = {
       res.status(400).send({ msg: 'Passwords don`t match' });
       return;
     }
-    UserModel.create({ email, password, firstName, lastName })
+    UserModel.create({ email, password, firstName, lastName, role: '5f15f32d266b3f13ec732a76' })
       .then((user) => {
         const token = tokenCreate({ id: user._id });
         res.cookie(authCookieName, token, { httpOnly: false }).send({
           msg: 'Successful registration',
-          user: { _id: user._id, email: user.email, token },
+          user: { _id: user._id, email: user.email, token, role: user.role },
         });
       })
       .catch((err) => {

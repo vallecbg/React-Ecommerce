@@ -29,11 +29,7 @@ const ProductDetails = (props) => {
         setIsLoading(false)
     }, [])
 
-    console.log('Product: ', product);
-    console.log('State Product: ', state.product);
-
     const renderProduct = (product.length ? product : state.product).map((currProduct) => {
-        console.log(currProduct);
         return (
             <div key={currProduct._id} style={{ padding: 10 }}>
                 <div

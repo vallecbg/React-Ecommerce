@@ -16,6 +16,9 @@ const AppRouter = () => {
     const ProtectedRoute = ({ path, component }) => {
         return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/'} />
     }
+    const AdminRoute = ({ path, component }) => {
+        return state.isAdmin ? <Route path={path} component={component} /> : <Redirect to={'/'} />
+    }
 
     return (
         <Switch>
@@ -24,7 +27,7 @@ const AppRouter = () => {
             <AuthRoute path="/login" component={SignIn} />
             <Route path="/products" component={ProductsList} />
             <Route path="/product/details/:id" component={ProductDetails} />
-            <ProtectedRoute path="/dashboard" component={Dashboard}/>
+            <AdminRoute path="/dashboard" component={Dashboard}/>
         </Switch>
     )
 }

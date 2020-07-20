@@ -21,14 +21,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  authType: {
-    type: String,
-    default: 'User'
-  },
   purchasedProducts: [{
     type: ObjectId,
     ref: 'Product'
-  }]
+  }],
+  role: {
+    type: ObjectId,
+    ref: 'UserRole'
+  }
 });
 
 userSchema.methods = {
