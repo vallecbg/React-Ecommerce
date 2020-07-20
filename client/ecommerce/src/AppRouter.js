@@ -6,15 +6,16 @@ const SignUp = React.lazy(() => import('./Components/Authentication/Register/Sig
 const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
 const ProductsList = React.lazy(() => import('./Components/Products/ProductsList/ProductsList'))
 const ProductDetails = React.lazy(() => import('./Components/Products/ProductDetails/ProductDetails'))
+const Dashboard = React.lazy(() => import('./Components/Administration/Dashboard/Dashboard'))
 
 const AppRouter = () => {
     const { state } = useContext(StoreContext)
     const AuthRoute = ({ path, component}) => {
         return state.isAuth ? <Redirect to={'/'} /> : <Route path={path} component={component} />
     }
-    // const ProtectedRoute = ({ path, component }) => {
-    //     return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/'} />
-    // }
+    const ProtectedRoute = ({ path, component }) => {
+        return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/'} />
+    }
 
     return (
         <Switch>
@@ -23,6 +24,7 @@ const AppRouter = () => {
             <AuthRoute path="/login" component={SignIn} />
             <Route path="/products" component={ProductsList} />
             <Route path="/product/details/:id" component={ProductDetails} />
+            <ProtectedRoute path="/dashboard" component={Dashboard}/>
         </Switch>
     )
 }
