@@ -20,7 +20,6 @@ module.exports = {
             .catch(next)
     },
     getAllProducts: (req, res, next) => {
-        console.log(req.cookies[authCookieName]);
         ProductModel.find({}).populate('category')
         .then((products) => {
             res.status(200).json(products)
@@ -31,7 +30,6 @@ module.exports = {
         const { id } = req.params
         ProductModel.find({_id: id}).populate('category')
         .then((currentProduct) => {
-            console.log(currentProduct);
             res.status(200).json(currentProduct)
         })
         .catch(next)
