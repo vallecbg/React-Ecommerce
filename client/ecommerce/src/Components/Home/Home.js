@@ -32,15 +32,14 @@ const Home = () => {
       />
       {/* TODO: add only the popular products */}
       <ProductsList/>
-      {/* TODO: change the btn link and text */}
       <TextSection
         text="Our mission as an Reactify Shop is to provide the customer the best experience and huge promotions while shopping."
         bgColor="#3F51B5"
         textColor="#fff"
         borderColor="#998643"
         padding="12px 0"
-        btnLink="/about/vision-charisms"
-        btnText="Check our promos"
+        btnLink="/products"
+        btnText="Check all products"
         darkBg={true}
       />
       
