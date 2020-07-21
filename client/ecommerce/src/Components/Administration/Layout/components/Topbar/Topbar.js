@@ -41,17 +41,13 @@ const Topbar = props => {
 
   const classes = useStyles();
 
-  const [notifications] = useState([]);
-
   return (
     <AppBar
       {...rest}
       className={clsx(classes.root, className)}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><RouterLink className={classes.navLink} to="/">Reactify</RouterLink></Typography>
-        </RouterLink>
+        <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><RouterLink className={classes.navLink} to="/">Reactify</RouterLink></Typography>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
           {/* <IconButton color="inherit">
