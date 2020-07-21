@@ -25,7 +25,8 @@ const ProductsList = () => {
         setIsLoading(false)
     }, [])
 
-        const renderProducts = (products.length ? products : state.products).map((product) => {
+    //TODO: the product list isn't responsive - fix it
+    const renderProducts = (products.length ? products : state.products).map((product) => {
             return (
                 <Grid item xs={3} key={product._id}>
                     <ProductItem product={product}/>

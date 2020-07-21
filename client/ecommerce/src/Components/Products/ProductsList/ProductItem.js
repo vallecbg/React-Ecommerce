@@ -25,13 +25,10 @@ const ProductItem = ({product}) => {
         <Card
         style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
       >
-        {/* TODO: clicking the area doesn't redirect to details page */}
         <CardActionArea
           onClick={() => {
-            history.push({
-              pathName: "/product/details/" + product._id,
-              product: product
-            });
+            console.log(history)
+            history.push("/product/details/" + product._id);
           }}
         >
           <CardMedia
