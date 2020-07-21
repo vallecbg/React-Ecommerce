@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
-import theme from '../../../theme'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import { ThemeProvider } from '@material-ui/styles'
 
 import {
   Budget,
@@ -18,7 +16,7 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: '80px 40px 40px 40px'
+    padding: '40px'
   }
 }));
 
@@ -26,7 +24,6 @@ const Dashboard = () => {
   const classes = useStyles();
 
   return (
-      <ThemeProvider theme={theme}>
         <div className={classes.root}>
             <Grid
                 container
@@ -106,7 +103,6 @@ const Dashboard = () => {
                 </Grid>
             </Grid>
         </div>
-    </ThemeProvider>
   );
 };
 

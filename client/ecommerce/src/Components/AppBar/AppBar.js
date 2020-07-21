@@ -45,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles()
   const history = useHistory()
-  const { state } = useContext(StoreContext)
-  const { dispatch } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext)
 
   // TODO: add confirmation dialog for logout and delete
 

@@ -6,22 +6,22 @@ import AppRouter from './AppRouter'
 import Context from './Store/Store'
 import Spinner from './Components/Loader/Spinner'
 
-// import theme from './theme'
+import theme from './theme'
 //import 'react-perfect-scrollbar/dist/css/styles.css'
 
 class App extends Component {
   render() {
     return (
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Context>
-            {/* TODO: merge appbar non auth and auth into one component */}
-            {/* <AppBarNonAuth /> */}
             <AppBarComponent />
             <React.Suspense fallback={<Spinner />}>
               <AppRouter />
             </React.Suspense>
           </Context>
         </BrowserRouter>
+      </ThemeProvider>
     )
   }
 }

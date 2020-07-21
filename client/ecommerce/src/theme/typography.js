@@ -22,13 +22,13 @@ export default {
     letterSpacing: '-0.06px',
     lineHeight: '28px'
   },
-  h4: {
-    color: palette.text.primary,
-    fontWeight: 500,
-    fontSize: '20px',
-    letterSpacing: '-0.06px',
-    lineHeight: '24px'
-  },
+  // h4: {
+  //   color: palette.text.primary,
+  //   fontWeight: 500,
+  //   fontSize: '20px',
+  //   letterSpacing: '-0.06px',
+  //   lineHeight: '24px'
+  // },
   h5: {
     color: palette.text.primary,
     fontWeight: 500,
