@@ -31,7 +31,7 @@ export default {
   // },
   h5: {
     color: palette.text.primary,
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: '16px',
     letterSpacing: '-0.05px',
     lineHeight: '20px'
