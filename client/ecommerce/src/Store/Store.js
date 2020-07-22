@@ -14,10 +14,13 @@ import {
     getAllProductsSuccess,
     getAllProductsFail,
     getProductSuccess,
-    getProductFail
+    getProductFail,
+    getAllCategoriesSuccess,
+    GetAllCategoriesFail
 } from './Actions'
 import userService from '../Services/userService'
 import productService from '../Services/productService'
+import categoryService from '../Services/categoryService'
 import {Constants} from './Constants'
 
 const cookies = document.cookie.split('; ').reduce((acc, curr) => {
@@ -37,7 +40,8 @@ const initialState = {
     user: JSON.parse(window.localStorage.getItem('user')),
     error: null,
     products: [],
-    product: []
+    product: [],
+    categories: [],
     // toast: {
     //     status: '',
     //     message: ''
@@ -107,6 +111,19 @@ const actionMap = {
         ...state,
         error
     }),
+    [ActionTypes.GetAllCategories]: (state) => ({
+        ...state,
+        error: null
+    }),
+    [ActionTypes.GetAllCategoriesSuccess]: (state, {categories}) => ({
+        ...state,
+        categories,
+        error: null
+    }),
+    [ActionTypes.GetAllCategoriesFail]: (state, {error}) => ({
+        ...state,
+        error
+    }),
 }
 
 const asyncActionMap = {
@@ -152,7 +169,15 @@ const asyncActionMap = {
         .catch((error) => {
             getProductFail(error)
         })
-    }
+    },
+    [ActionTypes.GetAllCategories]: () => {
+        return categoryService.getAll().then(({data}) => {
+            return getAllCategoriesSuccess(data)
+        })
+        .catch((error) => {
+            GetAllCategoriesFail(error)
+        })
+    },
 }
 
 const storeReducer = (state, action) => {

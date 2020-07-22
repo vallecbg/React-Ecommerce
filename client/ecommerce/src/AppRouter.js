@@ -7,7 +7,9 @@ const SignUp = React.lazy(() => import('./Components/Authentication/Register/Sig
 const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
 const ProductsList = React.lazy(() => import('./Components/Products/ProductsList/ProductsList'))
 const ProductDetails = React.lazy(() => import('./Components/Products/ProductDetails/ProductDetails'))
+//Admin panel
 const Dashboard = React.lazy(() => import('./Components/Administration/Dashboard/Dashboard'))
+const ProductCreate = React.lazy(() => import('./Components/Administration/ProductCreate/ProductCreate'))
 
 
 const AppRouter = () => {
@@ -46,6 +48,7 @@ const AppRouter = () => {
             <Route path="/products" component={ProductsList} />
             <Route path="/product/details/:id" component={ProductDetails} />
             <AdminRoute path="/dashboard" component={Dashboard} layout={MainLayout} />
+            <AdminRoute path="/productCreate" component={ProductCreate} layout={MainLayout} />
         </Switch>
     )
 }
