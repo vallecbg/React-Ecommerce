@@ -16,7 +16,7 @@ import {
     getProductSuccess,
     getProductFail,
     getAllCategoriesSuccess,
-    GetAllCategoriesFail
+    getAllCategoriesFail
 } from './Actions'
 import userService from '../Services/userService'
 import productService from '../Services/productService'
@@ -175,7 +175,7 @@ const asyncActionMap = {
             return getAllCategoriesSuccess(data)
         })
         .catch((error) => {
-            GetAllCategoriesFail(error)
+            getAllCategoriesFail(error)
         })
     },
 }
