@@ -10,6 +10,14 @@ const categoryService = {
             console.error(error)
         })
     },
+    create: function(data) {
+        return axios.post(`${baseUrl}/create`, data, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    }
 }
 
 export default categoryService

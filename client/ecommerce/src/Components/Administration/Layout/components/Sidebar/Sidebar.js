@@ -6,6 +6,7 @@ import { Divider, Drawer, colors } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import ListIcon from '@material-ui/icons/List';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
@@ -52,6 +53,11 @@ const Sidebar = props => {
       title: 'Create Product',
       href: '/productCreate',
       icon: <ShoppingBasketIcon />
+    },
+    {
+      title: 'Create Category',
+      href: '/categoryCreate',
+      icon: <ListIcon />
     },
     {
       title: 'Users',

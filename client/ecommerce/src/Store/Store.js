@@ -16,7 +16,9 @@ import {
     getProductSuccess,
     getProductFail,
     getAllCategoriesSuccess,
-    getAllCategoriesFail
+    getAllCategoriesFail,
+    createCategorySuccess,
+    CreateCategoryFail
 } from './Actions'
 import userService from '../Services/userService'
 import productService from '../Services/productService'
@@ -124,6 +126,10 @@ const actionMap = {
         ...state,
         error
     }),
+    [ActionTypes.CreateCategory]: (state) => ({
+        ...state,
+        error: null
+    })
 }
 
 const asyncActionMap = {
@@ -178,6 +184,14 @@ const asyncActionMap = {
             getAllCategoriesFail(error)
         })
     },
+    [ActionTypes.CreateCategory]: ({ category }) => {
+        return categoryService.create(category).then(() => {
+            return createCategorySuccess(category)
+        })
+        .catch((error) => {
+            CreateCategoryFail(error)
+        })
+    }
 }
 
 const storeReducer = (state, action) => {
