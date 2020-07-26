@@ -4,9 +4,12 @@ module.exports = {
     createCategory: (req, res, next) => {
         const category = req.body
 
-        //const {name, category, price, description, popular, imageUrls} = req.body
-
-        //TODO: Add validations
+        const { title } = category
+        
+        if(!title){
+            return res.status(400)
+            .send({msg: "Invalid body!"})
+        }
 
         CategoryModel.create({...category})
             .then((category) => {
