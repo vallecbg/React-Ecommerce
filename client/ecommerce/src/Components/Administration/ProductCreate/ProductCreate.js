@@ -1,216 +1,184 @@
-import React, { useContext, useCallback, useEffect, useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { colors } from '@material-ui/core'
-import Container from '@material-ui/core/Container';
-import withForm from '../../../Hocs/withForm'
-import { StoreContext } from '../../../Store/Store'
-import { login } from '../../../Store/Actions'
-import * as yup from 'yup';
-import InputField from '../../Input/InputField'
-import PropTypes from 'prop-types';
-import 'react-perfect-scrollbar/dist/css/styles.css'
-import InputAutocomplete from '../../Input/InputAutocomplete'
-import categoryService from '../../../Services/categoryService'
-import InputCheckbox from '../../Input/InputCheckbox'
-import InputNumber from '../../Input/InputNumber'
+import React, { useContext, useCallback, useEffect, useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import { colors } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import withForm from "../../../Hocs/withForm";
+import { StoreContext } from "../../../Store/Store";
+import { createProduct } from '../../../Store/Actions'
+import * as yup from "yup";
+import PropTypes from "prop-types";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import categoryService from "../../../Services/categoryService";
+import ProductFields from "../Product/ProductFields";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '40px'
+    padding: "40px",
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   linkUrl: {
-    color: '#3F59B7',
-    textDecoration: 'none'
+    color: "#3F59B7",
+    textDecoration: "none",
   },
   textH5: {
     color: colors.blueGrey[900],
     fontWeight: 400,
-    fontSize: '1.5rem',
-    letterSpacing: '0em',
-    lineHeight: '1.334'
-  }
+    fontSize: "1.5rem",
+    letterSpacing: "0em",
+    lineHeight: "1.334",
+  },
 }));
 
+const notFoundImg = 'https://res.cloudinary.com/vallec/image/upload/v1595719226/600px-No_image_available.svg_o3sq2z.png'
 
-
-const ProductCreate = ({
-  changeHandlerFactory,
-  formState,
-  runValidations,
-  runControlValidation,
-  formIsInvalid,
-  history,
-}) => {
-
+const ProductCreate = (props) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(StoreContext)
-  const [ categories, setCategories ] = useState([])
-  const [ isLoading, setIsLoading ] = useState(false)
+  const { state, dispatch } = useContext(StoreContext);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [productImages, setProductImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [popular, setPopular] = useState(false)
+  const [popular, setPopular] = useState(false);
+  let isPopularSelected = false;
 
   const handleChangePopular = (event) => {
-      setPopular(event.target.checked)
-      console.log(popular);
-  }
+    setIsLoading(true);
+    setPopular(event.target.checked);
+    isPopularSelected = event.target.checked;
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    setIsLoading(true)
-    categoryService.getAll().then(({data: categories}) => {
-        setCategories(categories)
-    })
-    setIsLoading(false)
-  }, [])
+    console.log("Popular updated ", popular);
+  }, [popular]);
 
-  const handleOnChangeTitle = changeHandlerFactory('title')
-  const handleOnChangeCategory = changeHandlerFactory('category')
-  const handleOnChangePrice = changeHandlerFactory('price')
-  const handleOnChangePassword = changeHandlerFactory('password')
+  useEffect(() => {
+    if (categories.length === 0) {
+      setIsLoading(true);
+      categoryService.getAll().then(({ data: categories }) => {
+        setCategories(categories);
+      });
+      //setCategory(categories[0])
+      setIsLoading(false);
+    }
+  }, []);
+
+  const { runValidations, formIsInvalid, history } = props;
+
+  const selectTrue = (prop1, prop2) => {
+    if (prop1) {
+      return prop1;
+    } else if (prop2) {
+      return prop2;
+    }
+    return false;
+  };
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
-        dispatch(login(formData));
+        const finalProduct = {
+          ...formData,
+          popular: selectTrue(popular, isPopularSelected),
+          category,
+          imageUrls: productImages.length === 0 ? [notFoundImg] : productImages,
+          creator: window.localStorage.getItem('user').id,
+        };
+        dispatch(createProduct(finalProduct));
         history.push('/');
       });
     },
-    [history, dispatch, runValidations]
+    [history, dispatch, runValidations, productImages]
   );
-
 
   return (
     <div className={classes.root}>
-        <Grid
-            container
-            spacing={4}
-        >
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                    <ShoppingBasketIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5" className={classes.textH5}>
-                    Create Product
-                    </Typography>
-                    <form className={classes.form} onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <InputField 
-                                    label={'Title'}
-                                    name={'title'}
-                                    changeHandler={handleOnChangeTitle}
-                                    runControlValidation={runControlValidation}
-                                    formState={formState}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <InputAutocomplete
-                                    label={'Category'}
-                                    name={'category'}
-                                    changeHandler={handleOnChangeCategory}
-                                    runControlValidation={runControlValidation}
-                                    formState={formState}
-                                    options={categories}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <InputField 
-                                    label={'Password'}
-                                    name={'password'}
-                                    type={'password'}
-                                    changeHandler={handleOnChangePassword}
-                                    runControlValidation={runControlValidation}
-                                    formState={formState}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <InputCheckbox
-                                    label={'Popular Product'}
-                                    name={'popular'}
-                                    changeHandler={handleChangePopular}
-                                    //formState={formState}
-                                    checked={popular}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <InputNumber 
-                                    label={'Price'}
-                                    name={'price'}
-                                    type={'number'}
-                                    changeHandler={handleOnChangePrice}
-                                    runControlValidation={runControlValidation}
-                                    formState={formState}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={formIsInvalid()}
-                        >
-                            Create Product
-                        </Button>
-                    </form>
-                </div>
-            </Container>
-        </Grid>
+      <Grid container spacing={4}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <ShoppingBasketIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5" className={classes.textH5}>
+              Create Product
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit}>
+              <ProductFields
+                {...props}
+                handleChangePopular={handleChangePopular}
+                popular={popular}
+                categories={categories}
+                isLoading={isLoading}
+                category={category}
+                setCategory={setCategory}
+                productImages={productImages}
+                setProductImages={setProductImages}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={formIsInvalid()}
+              >
+                Create Product
+              </Button>
+            </form>
+          </div>
+        </Container>
+      </Grid>
     </div>
-    
   );
-}
+};
 
 const schema = yup.object().shape({
   title: yup
     .string()
-    .required('Title is required')
-    .min(3, 'Title must be at least 3 symbols'),
-  category: yup
-    .string()
-    .required('Category is required'),
+    .required("Title is required ")
+    .min(3, "Title must be at least 3 symbols "),
+  //category: yup.string().required("Category is required "),
   price: yup
     .number()
-    .required('Price is required')
-    .moreThan(0, 'Price must be positive number'),
-  password: yup
+    .required("Price is required ")
+    .moreThan(0, "Price must be positive number "),
+  //popular: yup.boolean(),
+  description: yup
     .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 symbols'),
-})
+    .required("Description is required ")
+    .min(10, "Description must be at least 10 characters ")
+});
 
 const initialState = {
-  title: '',
-  category: '',
+  title: "",
   price: 0,
-  password: '',
-}
+  description: "",
+};
 
 ProductCreate.propTypes = {
   changeHandlerFactory: PropTypes.func,
@@ -221,5 +189,4 @@ ProductCreate.propTypes = {
   history: PropTypes.object,
 };
 
-export default withForm(ProductCreate, initialState, schema)
-
+export default withForm(ProductCreate, initialState, schema);

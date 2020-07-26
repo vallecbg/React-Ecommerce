@@ -4,6 +4,7 @@ const { authCookie: authCookieName } = require('../config/config');
 module.exports = {
     createProduct: (req, res, next) => {
         const product = req.body
+        console.log(product);
         const { _id } = req.user
 
         //const {name, category, price, description, popular, imageUrls} = req.body

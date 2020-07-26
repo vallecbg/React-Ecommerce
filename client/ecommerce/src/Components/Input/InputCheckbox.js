@@ -9,6 +9,7 @@ const InputCheckbox = ({ label, name, changeHandler, checked }) => {
             id={name}
             name={name} 
             checked={checked} 
+            //value={checked}
             onChange={changeHandler} 
         />
     }

@@ -86,6 +86,7 @@ class AppBarNonAuth extends Component{
 
   //Larger Screens
   destroyDrawer(){
+    //TODO: add button to all products
     const {classes} = this.props
     return (
       <AppBar>

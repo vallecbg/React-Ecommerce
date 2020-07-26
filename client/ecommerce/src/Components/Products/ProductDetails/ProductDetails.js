@@ -140,7 +140,7 @@ const ProductDetails = (props) => {
             </div>
         )
     })
-
+    //TODO: set is loading spinner
     return (
         <Grid className={classes.container} container>
             {renderProduct}

@@ -5,6 +5,7 @@ import AppBarComponent from './Components/AppBar/AppBar'
 import AppRouter from './AppRouter'
 import Context from './Store/Store'
 import Spinner from './Components/Loader/Spinner'
+import { CloudinaryContext } from "cloudinary-react";
 
 import theme from './theme'
 //import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -15,10 +16,12 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Context>
-            <AppBarComponent />
-            <React.Suspense fallback={<Spinner />}>
-              <AppRouter />
-            </React.Suspense>
+            <CloudinaryContext cloudName="vallec">
+              <AppBarComponent />
+              <React.Suspense fallback={<Spinner />}>
+                <AppRouter />
+              </React.Suspense>
+            </CloudinaryContext>
           </Context>
         </BrowserRouter>
       </ThemeProvider>

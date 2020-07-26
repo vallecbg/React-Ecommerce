@@ -26,6 +26,10 @@ export const ActionTypes = {
     CreateCategory: Symbol('[CATEGORIES] Create Category'),
     CreateCategorySuccess: Symbol('[CATEGORIES] Create Category Success'),
     CreateCategoryFail: Symbol('[CATEGORIES] Create Category Fail'),
+
+    CreateProduct: Symbol('[PRODUCTS] Create Product'),
+    CreateProductSuccess: Symbol('[PRODUCTS] Create Product Success'),
+    CreateProductFail: Symbol('[PRODUCTS] Create Product Fail'),
 }
 
 export const login = (user) => ({
@@ -114,7 +118,20 @@ export const createCategorySuccess = () => ({
     type: ActionTypes.CreateCategorySuccess,
     payload: undefined
 })
-export const CreateCategoryFail = (error) => ({
+export const createCategoryFail = (error) => ({
     type: ActionTypes.CreateCategoryFail,
+    payload: { error }
+})
+
+export const createProduct = (product) => ({
+    type: ActionTypes.CreateProduct,
+    payload: {product}
+})
+export const createProductSuccess = () => ({
+    type: ActionTypes.CreateProductSuccess,
+    payload: undefined
+})
+export const createProductFail = (error) => ({
+    type: ActionTypes.CreateProductFail,
     payload: { error }
 })
