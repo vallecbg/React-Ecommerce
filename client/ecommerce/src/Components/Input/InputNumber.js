@@ -11,6 +11,7 @@ const InputNumber = ({ label, name, changeHandler, formState, runControlValidati
       label={label}
       id={name}
       type={type}
+      inputProps={{step: 0.01}} 
       onChange={changeHandler}
       onBlur={runControlValidation(name)}
       error={!!formState.errors && !!formState.errors[name]}
