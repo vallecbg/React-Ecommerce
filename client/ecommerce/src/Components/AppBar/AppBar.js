@@ -70,7 +70,7 @@ const Navbar = () => {
                       classes={classes} 
                       history={history} 
                       dispatch={dispatch}
-                      roleName={result.role.name}
+                      roleName={result.role}
                   />
                   ) : (
                   <AppBarNonAuth classes={classes}/>

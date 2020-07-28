@@ -26,8 +26,8 @@ const userSchema = new mongoose.Schema({
     ref: 'Product'
   }],
   role: {
-    type: ObjectId,
-    ref: 'UserRole'
+    type: String,
+    default: 'User'
   }
 });
 

@@ -10,8 +10,8 @@ function admin() {
         if (blackedListToken) {
           return Promise.reject(new Error('blacklisted token'));
         }
-        UserModel.findById(data.id).populate('role').then((user) => {
-          if(user.role.name !== "Admin"){
+        UserModel.findById(data.id).then((user) => {
+          if(user.role !== "Admin"){
             res
               .status(401)
               .send({ msg: 'You are not admin!' });

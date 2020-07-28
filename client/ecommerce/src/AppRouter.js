@@ -29,7 +29,7 @@ const AppRouter = () => {
         layout: Layout,
         ...rest
     }) {
-        return result.role.name === 'Admin' ? (
+        return result.role === 'Admin' ? (
             <Route {...rest} render={(props) =>
                 <Layout {...props}>
                     <Component {...props}/>

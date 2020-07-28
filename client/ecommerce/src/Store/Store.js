@@ -145,7 +145,7 @@ const asyncActionMap = {
       .then(({ data: { user } }) => {
         window.localStorage.setItem(
           "user",
-          JSON.stringify({ id: user._id, token: user.token, role: user.role })
+          JSON.stringify({ id: user._id, token: user.token })
         );
         return loginSuccess(user);
       })
@@ -157,7 +157,7 @@ const asyncActionMap = {
       .then(({ data: { user } }) => {
         window.localStorage.setItem(
           "user",
-          JSON.stringify({ id: user._id, token: user.token, role: user.role })
+          JSON.stringify({ id: user._id, token: user.token })
         );
         return registerSuccess(user);
       })
