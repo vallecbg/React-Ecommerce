@@ -22,7 +22,6 @@ import {
 import userService from "../Services/userService";
 import productService from "../Services/productService";
 import categoryService from "../Services/categoryService";
-import { Constants } from "./Constants";
 
 const cookies = document.cookie.split("; ").reduce((acc, curr) => {
   const [key, value] = curr.split("=");
