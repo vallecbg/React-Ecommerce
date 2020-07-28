@@ -3,4 +3,5 @@ module.exports = {
     product: require('./product'),
     category: require('./category'),
     userRole: require('./userRole'),
+    user: require('./user')
 }

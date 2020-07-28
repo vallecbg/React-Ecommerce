@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useMemo } from "react";
+import { useAsync } from 'react-async-hook'
 import {
   ActionTypes,
   loginSuccess,
@@ -29,20 +30,22 @@ const cookies = document.cookie.split("; ").reduce((acc, curr) => {
   return acc;
 }, {});
 
-const currentUser = JSON.parse(window.localStorage.getItem("user"));
-const isAdmin =
-  currentUser !== null ? currentUser.role === Constants.AdminRole : false;
+// const currentUser = JSON.parse(window.localStorage.getItem("user"));
+// const isAdmin =
+//   currentUser !== null ? currentUser.role === Constants.AdminRole : false;
+
 
 const authCookie = cookies["x-auth-cookie"];
 
 const initialState = {
   isAuth: !!authCookie,
-  isAdmin,
+  //isAdmin,
   user: JSON.parse(window.localStorage.getItem("user")),
   error: null,
   products: [],
   product: [],
   categories: [],
+  userInfo: []
   // toast: {
   //     status: '',
   //     message: ''
@@ -60,7 +63,7 @@ const actionMap = {
     ...state,
     user,
     isAuth: true,
-    isAdmin: user.role === Constants.AdminRole,
+    //isAdmin: user.role === Constants.AdminRole,
   }),
   [ActionTypes.LoginFail]: (state, { error }) => ({
     ...state,
@@ -74,7 +77,7 @@ const actionMap = {
     ...state,
     user,
     isAuth: true,
-    isAdmin: user.role === Constants.AdminRole,
+    //isAdmin: user.role === Constants.AdminRole,
   }),
   [ActionTypes.RegisterFail]: (state, { error }) => ({
     ...state,
@@ -84,7 +87,7 @@ const actionMap = {
     ...state,
     user: null,
     isAuth: false,
-    isAdmin: false,
+    //isAdmin: false,
   }),
   [ActionTypes.GetAllProducts]: (state) => ({
     ...state,
@@ -229,8 +232,19 @@ const storeReducer = (state, action) => {
 
 export const StoreContext = createContext(initialState);
 
+const apiFetchUserDetails = (id) => {
+  if(typeof(id) === 'string' && id !== null){
+    return fetch(`http://localhost:8000/api/user/details/${id}`)
+    .then((res) => res.json())
+    .then((data) => data[0])
+  }
+  return null
+}
+
 const ContextStore = (props) => {
   const [state, dispatch] = useReducer(storeReducer, initialState);
+  const id = JSON.parse(window.localStorage.getItem("user")) ? JSON.parse(window.localStorage.getItem("user")).id : null;
+  const fetchUserDetails = useAsync(apiFetchUserDetails, [id])
   const store = useMemo(
     () => ({
       state,
@@ -241,9 +255,12 @@ const ContextStore = (props) => {
         }
         dispatch(action);
       },
+      fetchUserDetails
     }),
-    [state, dispatch]
+    [state, dispatch, fetchUserDetails]
   );
+
+  console.log("Store: ", store);
 
   return (
     <StoreContext.Provider value={store}>

@@ -14,23 +14,22 @@ const CategoryCreate = React.lazy(() => import('./Components/Administration/Cate
 
 
 const AppRouter = () => {
-    const { state } = useContext(StoreContext)
+    const { state, fetchUserDetails } = useContext(StoreContext)
+    const { result, error, loading } = fetchUserDetails
+
     const AuthRoute = ({ path, component}) => {
         return state.isAuth ? <Redirect to={'/'} /> : <Route path={path} component={component} />
     }
     const ProtectedRoute = ({ path, component }) => {
         return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/'} />
     }
-    // const AdminRoute = ({ path, component }) => {
-    //     return state.isAdmin ? <Route path={path} component={component}/> : <Redirect to={'/'} />
-    // }
 
     function AdminRoute({
         component: Component,
         layout: Layout,
         ...rest
     }) {
-        return state.isAdmin ? (
+        return result.role.name === 'Admin' ? (
             <Route {...rest} render={(props) =>
                 <Layout {...props}>
                     <Component {...props}/>

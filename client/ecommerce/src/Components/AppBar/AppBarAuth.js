@@ -84,7 +84,7 @@ class AppBarAuth extends Component{
 
   //Larger Screens
   destroyDrawer(){
-    const {classes, history, dispatch, isAdmin} = this.props
+    const {classes, history, dispatch, roleName} = this.props
 
     const logoutFunction = () => {
         dispatch(logout())
@@ -98,11 +98,11 @@ class AppBarAuth extends Component{
           <Link className={classes.navLink} to="/products">
             <Button variant = "text" className = {classes.padding} color="inherit" >Products</Button>
           </Link>
-          {isAdmin ? (
-            <Link className={classes.navLink} to="/dashboard">
-            <Button variant = "text" className = {classes.padding} color="inherit" >Admin Panel</Button>
-          </Link>
-          ): null}
+            {roleName === 'Admin' ? (
+              <Link className={classes.navLink} to="/dashboard">
+              <Button variant = "text" className = {classes.padding} color="inherit" >Admin Panel</Button>
+            </Link>
+            ): null}
           <Button variant = "text" className = {classes.padding} color="inherit" onClick={logoutFunction}>Logout</Button>
         </Toolbar>
       </AppBar>
