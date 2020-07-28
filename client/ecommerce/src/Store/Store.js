@@ -260,8 +260,6 @@ const ContextStore = (props) => {
     [state, dispatch, fetchUserDetails]
   );
 
-  console.log("Store: ", store);
-
   return (
     <StoreContext.Provider value={store}>
       {props.children}
