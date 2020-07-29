@@ -9,7 +9,7 @@ const CartButton = (props) => {
     const { cartLength } = props
     return (
         <IconButton aria-label="cart" style={{ color: grey[50] }}>
-            <Badge badgeContent={cartLength} color="error">
+            <Badge badgeContent={cartLength} color="error" showZero>
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
