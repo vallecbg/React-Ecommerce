@@ -9,6 +9,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
+import CartButton from '../Cart/CartButton'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+
 
 class AppBarNonAuth extends Component{
   constructor(props){
@@ -35,7 +38,7 @@ class AppBarNonAuth extends Component{
 
   //Small Screens
   createDrawer(){
-    const {classes} = this.props
+    const {classes, cartLength} = this.props
     return (
       <div>
         <AppBar >
@@ -46,7 +49,9 @@ class AppBarNonAuth extends Component{
                 onClick={()=>{this.setState({drawer:true})}} />
 
               <Typography color="inherit" variant = "h6">Reactify</Typography>
-              <Typography color="inherit" variant = "h1"></Typography>
+              <Typography color="inherit" variant = "h1">
+                <CartButton cartLength={cartLength} />
+              </Typography>
             </Grid>
           </Toolbar>
         </AppBar>
@@ -55,7 +60,6 @@ class AppBarNonAuth extends Component{
          open={this.state.drawer}
          onClose={()=>{this.setState({drawer:false})}}
          onOpen={()=>{this.setState({drawer:true})}}>
-           {/* TODO: add links */}
            <Typography color="inherit" variant = "h6">Reactify</Typography>
            <div
              tabIndex={0}
@@ -63,18 +67,30 @@ class AppBarNonAuth extends Component{
              onClick={()=>{this.setState({drawer:false})}}
              onKeyDown={()=>{this.setState({drawer:false})}}>
             <List className = {this.props.classes.list}>
-               <ListItem key = {1} button divider> 
-                <HomeIcon className={classes.menuIcon}/>
-                Home 
-               </ListItem>
-               <ListItem key = {2} button divider> 
-                <AccountCircleIcon className = {classes.menuIcon}/>  
-                Login 
-               </ListItem>
-               <ListItem key = {3} button divider> 
-               <PersonOutlineIcon className = {classes.menuIcon}/>
-                Register 
-               </ListItem>
+                <Link className={classes.navLinkMobile} to='/'>
+                  <ListItem key = {2} button divider> 
+                    <HomeIcon className={classes.menuIcon}/>
+                    Home 
+                  </ListItem>
+                </Link>
+                <Link className={classes.navLinkMobile} to='/products'>
+                  <ListItem key = {3} button divider> 
+                    <ShoppingBasketIcon className={classes.menuIcon}/>
+                    All Products 
+                  </ListItem>
+                </Link>
+                <Link className={classes.navLinkMobile} to='/login'>
+                  <ListItem key = {2} button divider> 
+                    <AccountCircleIcon className = {classes.menuIcon}/>  
+                    Login 
+                  </ListItem>
+                </Link>
+                <Link className={classes.navLinkMobile} to='/register'>
+                  <ListItem key = {3} button divider> 
+                  <PersonOutlineIcon className = {classes.menuIcon}/>
+                    Register 
+                  </ListItem>
+                </Link>
              </List>
 
          </div>
@@ -86,7 +102,6 @@ class AppBarNonAuth extends Component{
 
   //Larger Screens
   destroyDrawer(){
-    //TODO: add button to all products
     const {classes} = this.props
     return (
       <AppBar>

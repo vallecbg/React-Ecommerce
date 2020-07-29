@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
   navLink : {
     textDecoration: 'none',
     color : 'white'
+  },
+  navLinkMobile : {
+    textDecoration: 'none',
+    color: 'black'
   }
 }));
 
@@ -57,6 +61,8 @@ const Navbar = () => {
     setResult(result)
   })
 
+  console.log(state.productsCart.length);
+
   // TODO: add confirmation dialog for logout and delete
 
   return (
@@ -71,9 +77,13 @@ const Navbar = () => {
                       history={history} 
                       dispatch={dispatch}
                       roleName={result.role}
+                      cartLength={state.productsCart.length}
                   />
                   ) : (
-                  <AppBarNonAuth classes={classes}/>
+                  <AppBarNonAuth 
+                      classes={classes} 
+                      cartLength={state.productsCart.length}
+                  />
               )}
             </div>
         </div>
