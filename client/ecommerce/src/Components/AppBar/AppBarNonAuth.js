@@ -102,17 +102,20 @@ class AppBarNonAuth extends Component{
 
   //Larger Screens
   destroyDrawer(){
-    const {classes} = this.props
+    const {classes, cartLength} = this.props
     return (
       <AppBar>
         <Toolbar>
           <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><Link className={classes.navLink} to="/">Reactify</Link></Typography>
+          
           <Link className={classes.navLink} to="/login">
             <Button variant = "text" className = {classes.padding} color="inherit" >Login</Button>
           </Link>
           <Link className={classes.navLink} to="/register">
             <Button variant = "text" className = {classes.padding} color="inherit" >Register</Button>
           </Link>
+
+          <CartButton cartLength={cartLength} />
         </Toolbar>
       </AppBar>
     )
