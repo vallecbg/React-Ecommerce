@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useContext } from 'react'
+import React, { Component, useState, useEffect, useContext, useCallback } from 'react'
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,6 +10,8 @@ import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, Link } from 'react-router-dom';
+import { StoreContext } from '../../../Store/Store'
+import { addProductToCart } from '../../../Store/Actions'
 
 const useStyles = makeStyles((theme) => ({
   navLink : {
@@ -21,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
 const ProductItem = ({product}) => {
   const classes = useStyles()
   const history = useHistory()
-    return (
+  const { dispatch } = useContext(StoreContext)
+
+  const handleAddToCart = useCallback((product) => {
+    console.log(product)
+    dispatch(addProductToCart(product))
+  }, [dispatch, product])
+
+  return (
         <Card
         style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
       >
@@ -73,12 +82,7 @@ const ProductItem = ({product}) => {
           <Tooltip title="Add to cart">
             <IconButton
               size="small"
-            //   onClick={e => {
-            //     e.stopPropagation();
-            //     this.props.dispatch(
-            //       addItemInCart({ ...this.props.item, quantity: 1 })
-            //     );
-            //   }}
+              onClick={() => handleAddToCart(product)}
               color="primary"
               aria-label="Add to shopping cart"
             >

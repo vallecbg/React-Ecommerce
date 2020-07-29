@@ -30,6 +30,23 @@ export const ActionTypes = {
     CreateProduct: Symbol('[PRODUCTS] Create Product'),
     CreateProductSuccess: Symbol('[PRODUCTS] Create Product Success'),
     CreateProductFail: Symbol('[PRODUCTS] Create Product Fail'),
+
+    AddProductToCart: Symbol('[PRODUCTS] Add Product To Cart'),
+    AddProductToCartSuccess: Symbol('[PRODUCTS] Add Product To Cart Success'),
+    AddProductToCartFail: Symbol('[PRODUCTS] Add Product To Cart Fail'),
+
+    RemoveProductFromCart: Symbol('[PRODUCTS] Remove Product From Cart'),
+    RemoveProductFromCartSuccess: Symbol('[PRODUCTS] Remove Product From Cart Success'),
+    RemoveProductFromCartFail: Symbol('[PRODUCTS] Remove Product From Cart Fail'),
+
+    UpdateCart: Symbol('[PRODUCTS] Update Cart'),
+    UpdateCartSuccess: Symbol('[PRODUCTS] Update Cart Success'),
+    UpdateCartFail: Symbol('[PRODUCTS] Update Cart Fail'),
+
+    ResetCart: Symbol('[PRODUCTS] Reset Cart'),
+    ResetCartSuccess: Symbol('[PRODUCTS] Reset Cart Success'),
+    ResetCartFail: Symbol('[PRODUCTS] Reset Cart Fail'),
+
 }
 
 export const login = (user) => ({
@@ -134,4 +151,56 @@ export const createProductSuccess = () => ({
 export const createProductFail = (error) => ({
     type: ActionTypes.CreateProductFail,
     payload: { error }
+})
+
+export const addProductToCart = (product) => ({
+    type: ActionTypes.AddProductToCart,
+    payload: {product}
+})
+export const addProductToCartSuccess = (product) => ({
+    type: ActionTypes.AddProductToCartSuccess,
+    payload: {product}
+})
+export const addProductToCartFail = (error) => ({
+    type: ActionTypes.AddProductToCartFail,
+    payload: { error }
+})
+
+export const removeProductFromCart = (product) => ({
+    type: ActionTypes.RemoveProductFromCart,
+    payload: {product}
+})
+export const removeProductFromCartSuccess = (product) => ({
+    type: ActionTypes.RemoveProductFromCartSuccess,
+    payload: {product}
+})
+export const removeProductFromCartFail = (error) => ({
+    type: ActionTypes.RemoveProductFromCartFail,
+    payload: { error }
+})
+
+export const updateCart = ({product, value}) => ({
+    type: ActionTypes.UpdateCart,
+    payload: { product, value }
+})
+export const updateCartSuccess = ({ product, value }) => ({
+    type: ActionTypes.UpdateCartSuccess,
+    payload: { product, value }
+})
+export const updateCartFail = (error) => ({
+    type: ActionTypes.UpdateCartFail,
+    payload: { error }
+})
+
+export const resetCart = () => ({
+    type: ActionTypes.ResetCart,
+    payload: undefined
+})
+export const resetCartSuccess = () => ({
+    type: ActionTypes.ResetCartSuccess,
+    payload: undefined
+})
+export const resetCartFail = (error) => ({
+    type: ActionTypes.ResetCartFail,
+    payload: {error}
 })

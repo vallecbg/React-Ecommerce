@@ -17,7 +17,9 @@ import {
   createCategorySuccess,
   createCategoryFail,
   createProductSuccess,
-  createProductFail
+  createProductFail,
+  addProductToCartSuccess,
+  addProductToCartFail
 } from "./Actions";
 import userService from "../Services/userService";
 import productService from "../Services/productService";
@@ -44,7 +46,7 @@ const initialState = {
   products: [],
   product: [],
   categories: [],
-  userInfo: []
+  productsCart: JSON.parse(window.localStorage.getItem('cart')) || []
   // toast: {
   //     status: '',
   //     message: ''
@@ -135,6 +137,87 @@ const actionMap = {
     ...state,
     error: null,
   }),
+  [ActionTypes.AddProductToCart]: (state) => ({
+    ...state,
+    error: null
+  }),
+  [ActionTypes.AddProductToCartSuccess]: (state, {product}) => {
+    let productsArr = [...state.productsCart]
+    const productFound = productsArr.find(item => item._id === product._id)
+    console.log(productFound);
+    if (productFound) {
+      state.productsCart[state.productsCart.indexOf(productFound)] = {
+        ...productFound,
+        quantity: productFound.quantity++
+      }
+    } else {
+      productsArr = productsArr.concat({ ...product, quantity: 1 })
+    }
+
+    window.localStorage.setItem('cart', JSON.stringify(productsArr))
+
+    return {
+      ...state,
+      productsCart: productsArr
+    }
+  },
+
+  [ActionTypes.addProductToCartFail]: (state, {error}) => ({
+    ...state,
+    error
+  }),
+  [ActionTypes.UpdateCartSuccess]: (state, { product, value }) => {
+    let productsArr = [...state.productsCart]
+    const productFound = productsArr.find((item) => item._id === product._id)
+    productsArr[productsArr.indexOf(productFound)] = {
+      ...productFound,
+      quantity: value
+    }
+    
+    window.localStorage.setItem('cart', JSON.stringify(productsArr))
+
+    return {
+      ...state,
+      productsCart: productsArr
+    }
+  },
+  [ActionTypes.UpdateCartFail]: (state, {error}) => ({
+    ...state,
+    error
+  }),
+  [ActionTypes.RemoveProductFromCart]: (state) => ({
+    ...state,
+    error: null
+  }),
+  [ActionTypes.RemoveProductFromCartSuccess]: (state, { product }) => {
+    const productsArr = state.productsCart.filter((item) => item._id !== product._id)
+    window.localStorage.setItem('cart', JSON.stringify(productsArr))
+
+    return {
+      ...state,
+      productsCart: productsArr
+    }
+  },
+  [ActionTypes.RemoveProductFromCartFail]: (state, {error}) => ({
+    ...state,
+    error
+  }),
+  [ActionTypes.ResetCart]: (state) => ({
+    ...state,
+    error: null
+  }),
+  [ActionTypes.ResetCartSuccess]: (state) => {
+    window.localStorage.setItem('cart', [])
+
+    return {
+      ...state,
+      productsCart: []
+    }
+  },
+  [ActionTypes.ResetCartFail]: (state, {error}) => ({
+    ...state,
+    error
+  })
 };
 
 const asyncActionMap = {
@@ -221,6 +304,14 @@ const asyncActionMap = {
         createProductFail(error);
       });
   },
+  [ActionTypes.AddProductToCart]: ({ product }) => {
+    return productService
+      .getOne(product._id)
+      .then(({data}) => {
+        return addProductToCartSuccess(data[0])
+      })
+      .catch((error) => addProductToCartFail(error))
+  }
 };
 
 const storeReducer = (state, action) => {
