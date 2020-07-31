@@ -37,9 +37,9 @@ const useStyles = makeStyles((theme) =>
       marginTop: "12vh",
     },
     productImage: {
-        width: theme.spacing(8),
-        height: theme.spacing(8),
-        marginRight: 10
+      width: theme.spacing(8),
+      height: theme.spacing(8),
+      marginRight: 10,
     },
   })
 );
@@ -54,7 +54,11 @@ const Cart = () => {
       <React.Fragment key={product._id}>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar className={classes.productImage} alt="Product" src={product.imageUrls[0]} />
+            <Avatar
+              className={classes.productImage}
+              alt="Product"
+              src={product.imageUrls[0]}
+            />
           </ListItemAvatar>
           <ListItemText
             primary={product.title}
@@ -86,13 +90,10 @@ const Cart = () => {
         <Divider variant="inset" component="li" />
       </React.Fragment>
     );
-    //TODO: render total price
-    // <ListItem className={classes.listItem}>
-      //     <Typography variant="subtitle1" className={classes.total}>
-
-      //     </Typography>
-      // </ListItem>
   });
+
+  const renderTotalPrice =
+    (cart || []).reduce((acc, current) => (acc += current.price), 0) / 100;
 
   return (
     <Container maxWidth="md" className={classes.underHeader}>
@@ -105,6 +106,13 @@ const Cart = () => {
         </Typography>
         <List className={classes.root}>
           {renderProducts.length ? renderProducts : null}
+          <ListItem className={classes.listItem}>
+            <Typography variant="subtitle1" className={classes.total}>
+              Total: &#36;{renderProducts.length ? (
+                  renderTotalPrice
+              ): 0.00}
+            </Typography>
+          </ListItem>
         </List>
       </Box>
     </Container>
