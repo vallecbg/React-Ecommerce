@@ -5,6 +5,7 @@ import { Main as MainLayout } from './Components/Administration/Layout'
 const Home = React.lazy(() => import('./Components/Home/Home'))
 const SignUp = React.lazy(() => import('./Components/Authentication/Register/SignUp'))
 const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
+const Cart = React.lazy(() => import('./Components/Cart/Cart'))
 const ProductsList = React.lazy(() => import('./Components/Products/ProductsList/ProductsList'))
 const ProductDetails = React.lazy(() => import('./Components/Products/ProductDetails/ProductDetails'))
 //Admin panel
@@ -46,6 +47,7 @@ const AppRouter = () => {
             <AuthRoute path="/register" component={SignUp} />
             <AuthRoute path="/login" component={SignIn} />
             <Route path="/products" component={ProductsList} />
+            <Route path="/cart" component={Cart} />
             <Route path="/product/details/:id" component={ProductDetails} />
             <AdminRoute path="/dashboard" component={Dashboard} layout={MainLayout} />
             <AdminRoute path="/productCreate" component={ProductCreate} layout={MainLayout} />
