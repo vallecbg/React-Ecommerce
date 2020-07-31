@@ -169,10 +169,16 @@ const actionMap = {
   [ActionTypes.UpdateCartSuccess]: (state, { product, value }) => {
     let productsArr = [...state.productsCart]
     const productFound = productsArr.find((item) => item._id === product._id)
-    productsArr[productsArr.indexOf(productFound)] = {
-      ...productFound,
-      quantity: value
+    console.log("Quantity: ", value);
+    if(productFound){
+      productsArr[productsArr.indexOf(productFound)] = {
+        ...productFound,
+        quantity: value
+      }
+    } else {
+      productsArr = productsArr.concat({ ...product, quantity: value })
     }
+    
     
     window.localStorage.setItem('cart', JSON.stringify(productsArr))
 
