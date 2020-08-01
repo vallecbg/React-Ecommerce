@@ -69,7 +69,6 @@ class AppBarAuth extends Component{
          open={this.state.drawer}
          onClose={()=>{this.setState({drawer:false})}}
          onOpen={()=>{this.setState({drawer:true})}}>
-           {/* TODO: add links */}
            <ListItem key={1} divider>
             <Typography color="inherit" variant = "h6">Reactify</Typography>
            </ListItem>

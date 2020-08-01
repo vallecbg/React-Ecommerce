@@ -108,6 +108,9 @@ class AppBarNonAuth extends Component{
         <Toolbar>
           <Typography variant = "h6" style={{flexGrow:1}} color="inherit" ><Link className={classes.navLink} to="/">Reactify</Link></Typography>
           
+          <Link className={classes.navLink} to="/products">
+            <Button variant = "text" className = {classes.padding} color="inherit" >Products</Button>
+          </Link>
           <Link className={classes.navLink} to="/login">
             <Button variant = "text" className = {classes.padding} color="inherit" >Login</Button>
           </Link>
