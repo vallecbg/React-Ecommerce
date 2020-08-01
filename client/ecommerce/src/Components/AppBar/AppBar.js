@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, withRouter } from 'react-router-dom';
+import { useHistory, withRouter, useLocation } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBarNonAuth from './AppBarNonAuth'
 import AppBarAuth from './AppBarAuth'
@@ -54,6 +54,7 @@ const Navbar = () => {
   const [ result, setResult ] = useState()
   const [ loading, setLoading ] = useState(false)
   const [ error, setError ] = useState()
+  const location = useLocation()
   useEffect(() => {
     const { result, error, loading } = fetchUserDetails
     setLoading(loading)
@@ -61,7 +62,7 @@ const Navbar = () => {
     setResult(result)
   })
 
-  console.log(state.productsCart.length);
+  console.log(location.pathname);
 
   // TODO: add confirmation dialog for logout and delete
 
@@ -70,22 +71,25 @@ const Navbar = () => {
         <div>
           {loading && <Spinner/> }
           {error && <div>Error: {error.message}</div>}
-          <div>
-              {state.isAuth && result ? (
-                  <AppBarAuth 
-                      classes={classes} 
-                      history={history} 
-                      dispatch={dispatch}
-                      roleName={result.role}
-                      cartLength={state.productsCart.length}
-                  />
-                  ) : (
-                  <AppBarNonAuth 
-                      classes={classes} 
-                      cartLength={state.productsCart.length}
-                  />
-              )}
-            </div>
+          {location.pathname !== '/checkout' ? (
+            <div>
+            {state.isAuth && result ? (
+                <AppBarAuth 
+                    classes={classes} 
+                    history={history} 
+                    dispatch={dispatch}
+                    roleName={result.role}
+                    cartLength={state.productsCart.length}
+                />
+                ) : (
+                <AppBarNonAuth 
+                    classes={classes} 
+                    cartLength={state.productsCart.length}
+                />
+            )}
+          </div>
+          ) : null}
+          
         </div>
         
     </div>
