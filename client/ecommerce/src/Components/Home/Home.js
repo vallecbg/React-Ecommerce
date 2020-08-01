@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 // import {
 //   makeStyles
 // } from '@material-ui/core/styles'
 import Hero from './Hero';
 import TextSection from './TextSection'
 import ProductsList from '../Products/ProductsList/ProductsList'
+import { StoreContext } from '../../Store/Store'
 
 // const useStyles = makeStyles((theme) => ({
 //   content: {},
@@ -19,6 +20,9 @@ const heroImages = [
 ]
 
 const Home = () => {
+  const { state } = useContext(StoreContext)
+  console.log(state);
+
   return (
     <div>
       <Hero
@@ -27,8 +31,8 @@ const Home = () => {
         subtitleText={
           <span>50% SALE TO ALL LAPTOPS &#8226; 25% TO ALL SMARTPHONES</span>
         }
-        primaryBtnText="SIGN IN"
-        primaryBtnLink="/login"
+        primaryBtnText={state.isAuth ? "VIEW MORE" : "SIGN IN"}
+        primaryBtnLink={state.isAuth ? "/products" : "/login"}
       />
       {/* TODO: add only the popular products */}
       <ProductsList/>
