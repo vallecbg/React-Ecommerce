@@ -6,6 +6,7 @@ const Home = React.lazy(() => import('./Components/Home/Home'))
 const SignUp = React.lazy(() => import('./Components/Authentication/Register/SignUp'))
 const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
 const Cart = React.lazy(() => import('./Components/Cart/Cart'))
+const Checkout = React.lazy(() => import('./Components/Checkout/Checkout'))
 const ProductsList = React.lazy(() => import('./Components/Products/ProductsList/ProductsList'))
 const ProductDetails = React.lazy(() => import('./Components/Products/ProductDetails/ProductDetails'))
 //Admin panel
@@ -22,7 +23,7 @@ const AppRouter = () => {
         return state.isAuth ? <Redirect to={'/'} /> : <Route path={path} component={component} />
     }
     const ProtectedRoute = ({ path, component }) => {
-        return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/'} />
+        return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/login'} />
     }
 
     function AdminRoute({
@@ -49,6 +50,7 @@ const AppRouter = () => {
             <Route path="/products" component={ProductsList} />
             <Route path="/cart" component={Cart} />
             <Route path="/product/details/:id" component={ProductDetails} />
+            <ProtectedRoute path="/checkout" component={Checkout} />
             <AdminRoute path="/dashboard" component={Dashboard} layout={MainLayout} />
             <AdminRoute path="/productCreate" component={ProductCreate} layout={MainLayout} />
             <AdminRoute path="/categoryCreate" component={CategoryCreate} layout={MainLayout} />

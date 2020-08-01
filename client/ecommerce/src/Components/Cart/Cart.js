@@ -22,6 +22,7 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) =>
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) =>
 const Cart = () => {
   const { state, dispatch } = useContext(StoreContext);
   const classes = useStyles();
+  const history = useHistory();
 
   const removeProduct = (product) => {
     dispatch(removeProductFromCartSuccess(product));
@@ -173,6 +175,9 @@ const Cart = () => {
               variant="contained"
               color="primary"
               disabled={renderProducts.length <= 0}
+              onClick={() => {
+                history.push("/checkout");
+              }}
             >
               <ShoppingCartIcon />
               Checkout
