@@ -82,6 +82,7 @@ const Cart = () => {
 
   const cart = JSON.parse(window.localStorage.getItem("cart"));
   const renderProducts = (cart || []).map((product) => {
+      //TODO: determine shipping - set shipping price or free in the product entity
     return (
       <React.Fragment key={product._id}>
         <ListItem alignItems="flex-start">
@@ -102,7 +103,7 @@ const Cart = () => {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  &#36;{(product.price / 100).toFixed(2)}
+                  &#36;{(product.price).toFixed(2)}
                 </Typography>
                 {` — ${product.description}`} <br />
                 <Typography
@@ -152,7 +153,7 @@ const Cart = () => {
     (cart || []).reduce(
       (acc, current) => (acc += current.price * current.quantity),
       0
-    ) / 100;
+    );
 
   return (
     <Container maxWidth="md" className={classes.underHeader}>
@@ -167,7 +168,7 @@ const Cart = () => {
           {renderProducts.length ? renderProducts : null}
           <ListItem>
             <Typography variant="subtitle1" className={classes.total}>
-              Total: &#36;{renderProducts.length ? renderTotalPrice : 0.0}
+              Total: &#36;{renderProducts.length ? renderTotalPrice.toFixed(2) : 0.0}
             </Typography>
           </ListItem>
           <ListItem className={classes.listItem}>
