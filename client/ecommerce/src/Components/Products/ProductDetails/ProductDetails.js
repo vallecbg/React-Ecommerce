@@ -56,6 +56,7 @@ const ProductDetails = (props) => {
           >
             {currProduct.title}
           </div>
+          {/* TODO: add react image gallery */}
           <div style={{ display: "flex" }}>
             <img
               src={currProduct.imageUrls[0]}
