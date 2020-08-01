@@ -67,7 +67,6 @@ class TextSection extends Component {
     const ButtonComponent = (
       <Grid item className={classes.heroBtn} xs={12}>
         <Link className={classes.navLink} to={btnLink}>
-            {/* TODO: Change the button link to all products page or smth else */}
             <Button
             title={btnText}
             className={darkBg ? classes.invertedBtnDark : classes.invertedBtn}

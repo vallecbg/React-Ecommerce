@@ -42,8 +42,8 @@ const Home = () => {
         textColor="#fff"
         borderColor="#998643"
         padding="12px 0"
-        btnLink="/products"
-        btnText="Check all products"
+        btnLink={state.isAuth ? "/products" : "/login"}
+        btnText={state.isAuth ? "Check All Products" : "Sign In Now"}
         darkBg={true}
       />
       
