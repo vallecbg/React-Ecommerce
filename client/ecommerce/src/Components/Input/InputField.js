@@ -1,10 +1,10 @@
 import React from 'react';
 import { TextField } from '@material-ui/core/';
-const InputField = ({ label, name, changeHandler, formState, runControlValidation, type }) => {
+const InputField = ({ label, name, changeHandler, formState, runControlValidation, type, notRequired }) => {
   return (
     <TextField
       variant="outlined"
-      required
+      required={notRequired ? null : 'true'}
       fullWidth
       autoFocus
       name={name}

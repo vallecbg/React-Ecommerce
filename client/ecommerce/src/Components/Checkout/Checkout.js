@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
 import Review from './Review';
 
 function Copyright() {
@@ -62,15 +61,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Review your order'];
 
-function getStepContent(step) {
+function getStepContent(step, handleNext) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm
+        activeStep={step}
+        handleNext={handleNext}
+      />;
     case 1:
-      return <PaymentForm />;
-    case 2:
       return <Review />;
     default:
       throw new Error('Unknown step');
@@ -124,21 +124,21 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, handleNext)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
                       Back
                     </Button>
                   )}
-                  <Button
+                  {/* <Button
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
+                  </Button> */}
                 </div>
               </React.Fragment>
             )}

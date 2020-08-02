@@ -44,7 +44,7 @@ export default function Review() {
   const cart = JSON.parse(window.localStorage.getItem("cart"));
 
   const renderProducts = (cart || []).map((product) => {
-      //TODO: determine shipping - set shipping price or free in the product entity
+    //TODO: determine shipping - set shipping price or free in the product entity
     return (
       <ListItem className={classes.listItem} key={product.title}>
         <ListItemText primary={product.title} secondary={product.description} />
@@ -53,12 +53,10 @@ export default function Review() {
     );
   });
 
-
-  const renderTotalPrice =
-    (cart || []).reduce(
-      (acc, current) => (acc += current.price * current.quantity),
-      0
-    );
+  const renderTotalPrice = (cart || []).reduce(
+    (acc, current) => (acc += current.price * current.quantity),
+    0
+  );
 
   return (
     <React.Fragment>
@@ -67,6 +65,13 @@ export default function Review() {
       </Typography>
       <List disablePadding>
         {renderProducts.length > 0 ? renderProducts : null}
+        <ListItem className={classes.listItem} key={"Shipping"}>
+          <ListItemText
+            primary={"Shipping"}
+            secondary={""}
+          />
+          <Typography variant="body2">Free</Typography>
+        </ListItem>
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>

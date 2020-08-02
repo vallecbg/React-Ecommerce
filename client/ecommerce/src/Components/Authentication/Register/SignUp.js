@@ -1,50 +1,50 @@
-import React, { useContext, useCallback } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { Link } from 'react-router-dom'
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { colors } from '@material-ui/core'
-import Container from '@material-ui/core/Container';
-import withForm from '../../../Hocs/withForm'
-import { StoreContext } from '../../../Store/Store'
-import { register } from '../../../Store/Actions'
-import * as yup from 'yup';
-import InputField from '../../Input/InputField'
-import PropTypes from 'prop-types';
+import React, { useContext, useCallback } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import { colors } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import withForm from "../../../Hocs/withForm";
+import { StoreContext } from "../../../Store/Store";
+import { register } from "../../../Store/Actions";
+import * as yup from "yup";
+import InputField from "../../Input/InputField";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   linkUrl: {
-    color: '#3F59B7',
-    textDecoration: 'none'
+    color: "#3F59B7",
+    textDecoration: "none",
   },
   textH5: {
     color: colors.blueGrey[900],
     fontWeight: 400,
-    fontSize: '1.5rem',
-    letterSpacing: '0em',
-    lineHeight: '1.334'
-  }
+    fontSize: "1.5rem",
+    letterSpacing: "0em",
+    lineHeight: "1.334",
+  },
 }));
 
 const Register = ({
@@ -55,27 +55,25 @@ const Register = ({
   formIsInvalid,
   history,
 }) => {
-
   const classes = useStyles();
-  const { dispatch } = useContext(StoreContext)
+  const { dispatch } = useContext(StoreContext);
 
-  const handleOnChangeFirstName = changeHandlerFactory('firstName')
-  const handleOnChangeLastName = changeHandlerFactory('lastName')
-  const handleOnChangeEmail = changeHandlerFactory('email')
-  const handleOnChangePassword = changeHandlerFactory('password')
-  const handleOnChangeRePassword = changeHandlerFactory('rePassword')
+  const handleOnChangeFirstName = changeHandlerFactory("firstName");
+  const handleOnChangeLastName = changeHandlerFactory("lastName");
+  const handleOnChangeEmail = changeHandlerFactory("email");
+  const handleOnChangePassword = changeHandlerFactory("password");
+  const handleOnChangeRePassword = changeHandlerFactory("rePassword");
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
         dispatch(register(formData));
-        history.push('/');
+        history.push("/");
       });
     },
     [history, dispatch, runValidations]
   );
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -90,47 +88,47 @@ const Register = ({
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <InputField 
-                label={'First Name'}
-                name={'firstName'}
+              <InputField
+                label={"First Name"}
+                name={"firstName"}
                 changeHandler={handleOnChangeFirstName}
                 runControlValidation={runControlValidation}
                 formState={formState}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <InputField 
-                label={'Last Name'}
-                name={'lastName'}
+              <InputField
+                label={"Last Name"}
+                name={"lastName"}
                 changeHandler={handleOnChangeLastName}
                 runControlValidation={runControlValidation}
                 formState={formState}
               />
             </Grid>
             <Grid item xs={12}>
-              <InputField 
-                label={'Email Address'}
-                name={'email'}
+              <InputField
+                label={"Email Address"}
+                name={"email"}
                 changeHandler={handleOnChangeEmail}
                 runControlValidation={runControlValidation}
                 formState={formState}
               />
             </Grid>
             <Grid item xs={12}>
-              <InputField 
-                label={'Password'}
-                name={'password'}
-                type={'password'}
+              <InputField
+                label={"Password"}
+                name={"password"}
+                type={"password"}
                 changeHandler={handleOnChangePassword}
                 runControlValidation={runControlValidation}
                 formState={formState}
               />
             </Grid>
             <Grid item xs={12}>
-              <InputField 
-                label={'Repeat Password'}
-                name={'rePassword'}
-                type={'password'}
+              <InputField
+                label={"Repeat Password"}
+                name={"rePassword"}
+                type={"password"}
                 changeHandler={handleOnChangeRePassword}
                 runControlValidation={runControlValidation}
                 formState={formState}
@@ -158,33 +156,33 @@ const Register = ({
       </div>
     </Container>
   );
-}
+};
 
 const schema = yup.object().shape({
-  firstName: yup.string().required('First Name is required'),
-  lastName: yup.string().required('Last Name is required'),
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
   email: yup
     .string()
-    .email('Must be valid email')
-    .required('Email is required'),
+    .email("Must be valid email")
+    .required("Email is required"),
   password: yup
     .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 symbols'),
-    rePassword: yup
+    .required("Password is required")
+    .min(6, "Password must be at least 6 symbols"),
+  rePassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Password don`t match')
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 symbols'),
-})
+    .oneOf([yup.ref("password"), null], "Password don`t match")
+    .required("Password is required")
+    .min(6, "Password must be at least 6 symbols"),
+});
 
 const initialState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  rePassword: ''
-}
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  rePassword: "",
+};
 
 Register.propTypes = {
   changeHandlerFactory: PropTypes.func,
@@ -195,4 +193,4 @@ Register.propTypes = {
   history: PropTypes.object,
 };
 
-export default withForm(Register, initialState, schema)
+export default withForm(Register, initialState, schema);
