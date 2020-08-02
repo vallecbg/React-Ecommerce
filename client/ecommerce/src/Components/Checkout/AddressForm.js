@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useCallback } from "react";
 import {
   Typography,
   TextField,
@@ -12,6 +12,7 @@ import withForm from "../../Hocs/withForm";
 import InputField from "../Input/InputField";
 import PropTypes from "prop-types";
 import * as yup from "yup";
+import { StoreContext } from '../../Store/Store'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -28,14 +29,29 @@ const AddressForm = ({
   formIsInvalid,
   history,
   activeStep,
-  handleNext
+  handleNext,
+  handleUserDataSubmit
 }) => {
   const classes = useStyles()
-  const steps = ['Shipping address', 'Review your order'];
-  console.log("Active Step:", activeStep);
-  console.log("handleNext:", handleNext);
-  
+  const { dispatch } = useContext(StoreContext);
 
+  const steps = ['Shipping address', 'Review your order'];
+  //console.log("Active Step:", activeStep);
+  //console.log("handleNext:", handleNext);
+  
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      runValidations().then((formData) => {
+        handleNext()
+        handleUserDataSubmit(formData)
+        console.log(formData);
+        //dispatch(register(formData));
+        //history.push("/");
+      });
+    },
+    [history, dispatch, runValidations]
+  );
 
   const handleOnChangeFirstName = changeHandlerFactory("firstName");
   const handleOnChangeLastName = changeHandlerFactory("lastName");
@@ -129,7 +145,7 @@ const AddressForm = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={handleNext}
+          onClick={handleSubmit}
           className={classes.button}
           disabled={formIsInvalid()}
         >

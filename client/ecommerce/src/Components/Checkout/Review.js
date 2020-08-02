@@ -39,9 +39,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review() {
+export default function Review({ userData }) {
   const classes = useStyles();
   const cart = JSON.parse(window.localStorage.getItem("cart"));
+  console.log(userData);
+  // const {
+  //   firstName,
+  //   lastName,
+  //   address1,
+  //   address2,
+  //   city,
+  //   country,
+  //   state,
+  //   zip,
+  // } = userData;
 
   const renderProducts = (cart || []).map((product) => {
     //TODO: determine shipping - set shipping price or free in the product entity
@@ -58,6 +69,33 @@ export default function Review() {
     0
   );
 
+  // const renderShippingInfo = () => {
+  //   return (
+  //     <div>
+  //       {userData ? (
+  //         <Grid item xs={12} sm={6}>
+  //           <Typography variant="h6" gutterBottom className={classes.title}>
+  //             Shipping
+  //           </Typography>
+  //           <Typography gutterBottom>
+  //             {userData.firstName} {userData.lastName}
+  //           </Typography>
+  //           <Typography gutterBottom>
+  //             {userData.address1}, {userData.city} [{userData.zip}],{" "}
+  //             {userData.state}, {userData.country}
+  //           </Typography>
+  //           {userData.address2 !== "" ? (
+  //             <Typography gutterBottom>
+  //               {userData.address2}, {userData.city} [{userData.zip}],{" "}
+  //               {userData.state}, {userData.country}
+  //             </Typography>
+  //           ) : null}
+  //         </Grid>
+  //       ) : null}
+  //     </div>
+  //   );
+  // };
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -66,10 +104,7 @@ export default function Review() {
       <List disablePadding>
         {renderProducts.length > 0 ? renderProducts : null}
         <ListItem className={classes.listItem} key={"Shipping"}>
-          <ListItemText
-            primary={"Shipping"}
-            secondary={""}
-          />
+          <ListItemText primary={"Shipping"} secondary={""} />
           <Typography variant="body2">Free</Typography>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -80,14 +115,27 @@ export default function Review() {
         </ListItem>
       </List>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        {userData ? (
+          <Grid item xs={12} sm={12}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>
+            {userData.firstName} {userData.lastName}
+          </Typography>
+          <Typography gutterBottom>
+            {userData.address1}, {userData.city} [{userData.zip}],{" "}
+            {userData.state}, {userData.country}
+          </Typography>
+          {userData.address2 !== "" ? (
+            <Typography gutterBottom>
+              {userData.address2}, {userData.city} [{userData.zip}],{" "}
+              {userData.state}, {userData.country}
+            </Typography>
+          ) : null}
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
+        ) : null}
+        {/* <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Payment details
           </Typography>
@@ -103,7 +151,7 @@ export default function Review() {
               </React.Fragment>
             ))}
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </React.Fragment>
   );
