@@ -67,9 +67,9 @@ function getStepContent(step, handleNext, handleUserDataSubmit, userData) {
   switch (step) {
     case 0:
       return <AddressForm
-        activeStep={step}
         handleNext={handleNext}
         handleUserDataSubmit={handleUserDataSubmit}
+        userData={userData}
       />;
     case 1:
       return <Review 
@@ -84,6 +84,8 @@ export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [userData, setUserData] = useState()
+
+  
 
   const handleUserDataSubmit = (formData) => {
     setUserData(formData)

@@ -82,7 +82,6 @@ const Cart = () => {
 
   const cart = JSON.parse(window.localStorage.getItem("cart"));
   const renderProducts = (cart || []).map((product) => {
-      //TODO: determine shipping - set shipping price or free in the product entity
     return (
       <React.Fragment key={product._id}>
         <ListItem alignItems="flex-start">

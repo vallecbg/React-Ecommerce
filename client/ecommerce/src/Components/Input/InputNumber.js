@@ -16,6 +16,7 @@ const InputNumber = ({ label, name, changeHandler, formState, runControlValidati
       onBlur={runControlValidation(name)}
       error={!!formState.errors && !!formState.errors[name]}
       helperText={formState.errors && formState.errors[name]}
+      value={formState.form[name]}
     />
   );
 };

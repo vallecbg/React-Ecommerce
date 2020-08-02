@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import {
   Typography,
   TextField,
@@ -28,16 +28,18 @@ const AddressForm = ({
   runControlValidation,
   formIsInvalid,
   history,
-  activeStep,
   handleNext,
-  handleUserDataSubmit
+  handleUserDataSubmit,
+  userData
 }) => {
   const classes = useStyles()
   const { dispatch } = useContext(StoreContext);
 
-  const steps = ['Shipping address', 'Review your order'];
-  //console.log("Active Step:", activeStep);
-  //console.log("handleNext:", handleNext);
+  useEffect(() => {
+    console.log(formState.form);
+    console.log(userData);
+    Object.assign(formState.form, { ...formState.form, ...userData });
+  }, []);
   
   const handleSubmit = useCallback(
     (e) => {
@@ -149,7 +151,7 @@ const AddressForm = ({
           className={classes.button}
           disabled={formIsInvalid()}
         >
-          {activeStep === steps.length - 1 ? "Place order" : "Next"}
+          {"Next"}
         </Button>
       </Grid>
     </React.Fragment>
