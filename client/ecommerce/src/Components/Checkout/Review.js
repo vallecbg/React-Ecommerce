@@ -66,8 +66,13 @@ export default function Review({ userData }) {
     );
   });
 
+  const renderTotalDelivery = (cart || []).reduce(
+    (acc, current) => (acc += current.delivery),
+    0
+  );
+
   const renderTotalPrice = (cart || []).reduce(
-    (acc, current) => (acc += current.price * current.quantity),
+    (acc, current) => (acc += (current.price * current.quantity) + current.delivery),
     0
   );
 
@@ -107,7 +112,9 @@ export default function Review({ userData }) {
         {renderProducts.length > 0 ? renderProducts : null}
         <ListItem className={classes.listItem} key={"Shipping"}>
           <ListItemText primary={"Shipping"} secondary={""} />
-          <Typography variant="body2">Free</Typography>
+        <Typography variant="body2">{renderTotalDelivery > 0 ? (
+          `$${renderTotalDelivery.toFixed(2)}`
+        ) : `Free Shipping`}</Typography>
         </ListItem>
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />

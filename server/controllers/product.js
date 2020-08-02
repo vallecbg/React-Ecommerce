@@ -7,14 +7,14 @@ module.exports = {
         console.log(product);
         const { _id } = req.user
 
-        const {title, price, description, popular, category, imageUrls} = product
+        const {title, price, delivery, description, popular, category, imageUrls} = product
         if(!title || !description || !category || !imageUrls){
             return res.status(400)
             .send({msg: "Invalid body!"})
         }
-        if(isNaN(price)) {
+        if(isNaN(price) || isNaN(delivery)) {
             return res.status(400)
-            .send({msg: "Price must be a number!"})
+            .send({msg: "Price and delivery must be numbers!"})
         }
 
         ProductModel.create({...product, creator: _id})

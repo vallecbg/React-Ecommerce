@@ -82,7 +82,17 @@ const ProductDetails = (props) => {
                   fontSize: 16,
                 }}
               >
-                Price: {currProduct.price} $
+                Price: ${currProduct.price.toFixed(2)}
+              </div>
+              <div
+                style={{
+                  fontSize: 14,
+                  marginTop: 5
+                }}
+              >
+                {currProduct.delivery > 0 ? (
+                  `Delivery: $${currProduct.delivery.toFixed(2)}`
+                ) : `Free Delivery`}
               </div>
               {currProduct.popular && (
                 <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>

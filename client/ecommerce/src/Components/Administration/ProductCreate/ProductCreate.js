@@ -101,6 +101,7 @@ const ProductCreate = (props) => {
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
+        console.log(formData);
         const finalProduct = {
           ...formData,
           popular: selectTrue(popular, isPopularSelected),
@@ -167,6 +168,9 @@ const schema = yup.object().shape({
     .number()
     .required("Price is required ")
     .moreThan(0, "Price must be positive number "),
+  delivery: yup
+    .number()
+    .min(0, 'Delivery must be at least 0.00'),
   //popular: yup.boolean(),
   description: yup
     .string()
@@ -177,6 +181,7 @@ const schema = yup.object().shape({
 const initialState = {
   title: "",
   price: 0,
+  delivery: 0,
   description: "",
 };
 

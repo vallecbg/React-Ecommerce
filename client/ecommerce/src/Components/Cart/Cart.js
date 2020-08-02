@@ -110,6 +110,16 @@ const Cart = () => {
                   component="span"
                   variant="body1"
                   className={classes.inline}
+                  color="textSecondary"
+                >
+                  {product.delivery > 0 ? (
+                    `Delivery: $${product.delivery.toFixed(2)}`
+                  ) : `Free Delivery`}
+                </Typography> <br />
+                <Typography
+                  component="span"
+                  variant="body1"
+                  className={classes.inline}
                   color="error"
                 >
                   {`Quantity : ${product.quantity}`}
@@ -151,7 +161,7 @@ const Cart = () => {
 
   const renderTotalPrice =
     (cart || []).reduce(
-      (acc, current) => (acc += current.price * current.quantity),
+      (acc, current) => (acc += (current.price * current.quantity) + current.delivery),
       0
     );
 

@@ -301,6 +301,7 @@ const asyncActionMap = {
       });
   },
   [ActionTypes.CreateProduct]: ({ product }) => {
+    console.log("Store product: ", product);
     return productService
       .create(product)
       .then(() => {

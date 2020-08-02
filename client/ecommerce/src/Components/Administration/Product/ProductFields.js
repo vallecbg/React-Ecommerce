@@ -56,6 +56,7 @@ const ProductFields = ({
 
   const handleOnChangeTitle = changeHandlerFactory("title");
   const handleOnChangePrice = changeHandlerFactory("price");
+  const handleOnChangeDelivery = changeHandlerFactory("delivery");
   const handleOnChangeDescription = changeHandlerFactory("description");
 
   //TODO: set loading component
@@ -88,6 +89,16 @@ const ProductFields = ({
               name={"price"}
               type={"number"}
               changeHandler={handleOnChangePrice}
+              runControlValidation={runControlValidation}
+              formState={formState}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <InputNumber
+              label={"Delivery"}
+              name={"delivery"}
+              type={"number"}
+              changeHandler={handleOnChangeDelivery}
               runControlValidation={runControlValidation}
               formState={formState}
             />
