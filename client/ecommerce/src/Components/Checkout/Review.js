@@ -48,7 +48,7 @@ export default function Review() {
     return (
       <ListItem className={classes.listItem} key={product.title}>
         <ListItemText primary={product.title} secondary={product.description} />
-        <Typography variant="body2">${product.price}</Typography>
+        <Typography variant="body2">${product.price.toFixed(2)}</Typography>
       </ListItem>
     );
   });
@@ -70,7 +70,7 @@ export default function Review() {
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            ${renderProducts.length ? renderTotalPrice : null}
+            ${renderProducts.length ? renderTotalPrice.toFixed(2) : 0.0}
           </Typography>
         </ListItem>
       </List>
