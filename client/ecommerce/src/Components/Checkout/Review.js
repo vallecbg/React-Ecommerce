@@ -59,7 +59,9 @@ export default function Review({ userData }) {
     return (
       <ListItem className={classes.listItem} key={product.title}>
         <ListItemText primary={product.title} secondary={product.description} />
-        <Typography variant="body2">${product.price.toFixed(2)}</Typography>
+        <Typography variant="body2">
+          ${product.price.toFixed(2)} x {product.quantity}
+        </Typography>
       </ListItem>
     );
   });
@@ -117,23 +119,23 @@ export default function Review({ userData }) {
       <Grid container spacing={2}>
         {userData ? (
           <Grid item xs={12} sm={12}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>
-            {userData.firstName} {userData.lastName}
-          </Typography>
-          <Typography gutterBottom>
-            {userData.address1}, {userData.city} [{userData.zip}],{" "}
-            {userData.state}, {userData.country}
-          </Typography>
-          {userData.address2 !== "" ? (
+            <Typography variant="h6" gutterBottom className={classes.title}>
+              Shipping
+            </Typography>
             <Typography gutterBottom>
-              {userData.address2}, {userData.city} [{userData.zip}],{" "}
+              {userData.firstName} {userData.lastName}
+            </Typography>
+            <Typography gutterBottom>
+              {userData.address1}, {userData.city} [{userData.zip}],{" "}
               {userData.state}, {userData.country}
             </Typography>
-          ) : null}
-        </Grid>
+            {userData.address2 !== "" ? (
+              <Typography gutterBottom>
+                {userData.address2}, {userData.city} [{userData.zip}],{" "}
+                {userData.state}, {userData.country}
+              </Typography>
+            ) : null}
+          </Grid>
         ) : null}
         {/* <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
