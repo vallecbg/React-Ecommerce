@@ -126,13 +126,13 @@ export default function Review({ userData }) {
               {userData.firstName} {userData.lastName}
             </Typography>
             <Typography gutterBottom>
-              {userData.address1}, {userData.city} [{userData.zip}],{" "}
-              {userData.state}, {userData.country}
+              {userData.address1}, {userData.city} [{userData.zip}], 
+              {userData.state !== "" ? `${userData.state},` : null} {userData.country}
             </Typography>
             {userData.address2 !== "" ? (
               <Typography gutterBottom>
-                {userData.address2}, {userData.city} [{userData.zip}],{" "}
-                {userData.state}, {userData.country}
+                {userData.address2}, {userData.city} [{userData.zip}], 
+                {userData.state !== "" ? `${userData.state},` : null} {userData.country}
               </Typography>
             ) : null}
           </Grid>
