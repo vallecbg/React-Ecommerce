@@ -55,7 +55,6 @@ export default function Review({ userData }) {
   // } = userData;
 
   const renderProducts = (cart || []).map((product) => {
-    //TODO: determine shipping - set shipping price or free in the product entity
     return (
       <ListItem className={classes.listItem} key={product.title}>
         <ListItemText primary={product.title} secondary={product.description} />
@@ -75,33 +74,6 @@ export default function Review({ userData }) {
     (acc, current) => (acc += (current.price * current.quantity) + current.delivery),
     0
   );
-
-  // const renderShippingInfo = () => {
-  //   return (
-  //     <div>
-  //       {userData ? (
-  //         <Grid item xs={12} sm={6}>
-  //           <Typography variant="h6" gutterBottom className={classes.title}>
-  //             Shipping
-  //           </Typography>
-  //           <Typography gutterBottom>
-  //             {userData.firstName} {userData.lastName}
-  //           </Typography>
-  //           <Typography gutterBottom>
-  //             {userData.address1}, {userData.city} [{userData.zip}],{" "}
-  //             {userData.state}, {userData.country}
-  //           </Typography>
-  //           {userData.address2 !== "" ? (
-  //             <Typography gutterBottom>
-  //               {userData.address2}, {userData.city} [{userData.zip}],{" "}
-  //               {userData.state}, {userData.country}
-  //             </Typography>
-  //           ) : null}
-  //         </Grid>
-  //       ) : null}
-  //     </div>
-  //   );
-  // };
 
   return (
     <React.Fragment>
@@ -134,12 +106,12 @@ export default function Review({ userData }) {
             </Typography>
             <Typography gutterBottom>
               {userData.address1}, {userData.city} [{userData.zip}], 
-              {userData.state !== "" ? `${userData.state},` : null} {userData.country}
+              {userData.state !== "" ? ` ${userData.state},` : null} {userData.country}
             </Typography>
             {userData.address2 !== "" ? (
               <Typography gutterBottom>
                 {userData.address2}, {userData.city} [{userData.zip}], 
-                {userData.state !== "" ? `${userData.state},` : null} {userData.country}
+                {userData.state !== "" ? ` ${userData.state},` : null} {userData.country}
               </Typography>
             ) : null}
           </Grid>
