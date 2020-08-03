@@ -24,11 +24,12 @@ const ProductDetails = (props) => {
 
   const handleAddToCart = useCallback(
     (currProduct) => {
-      console.log("Quantity from details: ", currProduct.quantity);
+      console.log("Current product: ", currProduct);
+      console.log("Quantity from details: ", quantity);
       dispatch(
         updateCartSuccess({
           product: currProduct,
-          value: currProduct.quantity
+          value: currProduct.quantity ? currProduct.quantity : quantity
         })
       );
     },
@@ -118,12 +119,6 @@ const ProductDetails = (props) => {
                 variant="outlined"
                 onClick={() => {
                     handleAddToCart(currProduct)
-                //   this.props.dispatch(
-                //     addItemInCart({
-                //       ...this.state.item,
-                //       quantity: this.state.quantity,
-                //     })
-                //   );
                 }}
               >
                 Add to Cart <AddShoppingCartIcon style={{ marginLeft: 5 }} />
