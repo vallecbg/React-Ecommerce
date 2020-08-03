@@ -6,6 +6,8 @@ import AppRouter from './AppRouter'
 import Context from './Store/Store'
 import Spinner from './Components/Loader/Spinner'
 import { CloudinaryContext } from "cloudinary-react";
+import { SnackbarProvider } from 'notistack'
+import Notification from './Components/Notification/Notification'
 
 import theme from './theme'
 //import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -17,10 +19,13 @@ class App extends Component {
         <BrowserRouter>
           <Context>
             <CloudinaryContext cloudName="vallec">
-              <AppBarComponent />
-              <React.Suspense fallback={<Spinner />}>
-                <AppRouter />
-              </React.Suspense>
+              <SnackbarProvider maxSnack={3}>
+                <Notification />
+                <AppBarComponent />
+                <React.Suspense fallback={<Spinner />}>
+                  <AppRouter />
+                </React.Suspense>
+              </SnackbarProvider>
             </CloudinaryContext>
           </Context>
         </BrowserRouter>

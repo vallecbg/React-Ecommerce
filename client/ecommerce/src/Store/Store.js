@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useMemo } from "react";
-import { useAsync } from 'react-async-hook'
+import { useAsync } from "react-async-hook";
 import {
   ActionTypes,
   loginSuccess,
@@ -21,12 +21,12 @@ import {
   addProductToCartSuccess,
   addProductToCartFail,
   createOrderSuccess,
-  createOrderFail
+  createOrderFail,
 } from "./Actions";
 import userService from "../Services/userService";
 import productService from "../Services/productService";
 import categoryService from "../Services/categoryService";
-import orderService from '../Services/orderService';
+import orderService from "../Services/orderService";
 
 const cookies = document.cookie.split("; ").reduce((acc, curr) => {
   const [key, value] = curr.split("=");
@@ -38,7 +38,6 @@ const cookies = document.cookie.split("; ").reduce((acc, curr) => {
 // const isAdmin =
 //   currentUser !== null ? currentUser.role === Constants.AdminRole : false;
 
-
 const authCookie = cookies["x-auth-cookie"];
 
 const initialState = {
@@ -49,12 +48,14 @@ const initialState = {
   products: [],
   product: [],
   categories: [],
-  productsCart: window.localStorage['cart'] ? JSON.parse(window.localStorage.getItem('cart')) : [],
-  order: []
-  // toast: {
-  //     status: '',
-  //     message: ''
-  // },
+  productsCart: window.localStorage["cart"]
+    ? JSON.parse(window.localStorage.getItem("cart"))
+    : [],
+  order: [],
+  notification: {
+    variant: "",
+    message: "",
+  },
 };
 
 //TODO: add toast notifications when something is made to inform the user
@@ -63,174 +64,224 @@ const actionMap = {
   [ActionTypes.Login]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.LoginSuccess]: (state, { user }) => ({
     ...state,
     user,
     isAuth: true,
-    //isAdmin: user.role === Constants.AdminRole,
+    notification: {variant: "success", message: "Successfully logged in!"}
   }),
   [ActionTypes.LoginFail]: (state, { error }) => ({
     ...state,
     error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.Register]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.RegisterSuccess]: (state, { user }) => ({
     ...state,
     user,
     isAuth: true,
+    notification: {variant: "success", message: "Successfully registered!"}
     //isAdmin: user.role === Constants.AdminRole,
   }),
   [ActionTypes.RegisterFail]: (state, { error }) => ({
     ...state,
     error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.Logout]: (state) => ({
     ...state,
     user: null,
     isAuth: false,
+    notification: {variant: "success", message: "Successfully logged out!"}
     //isAdmin: false,
   }),
   [ActionTypes.GetAllProducts]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.GetAllProductsSuccess]: (state, { products }) => ({
     ...state,
     products,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.GetAllProductsFail]: (state, { error }) => ({
     ...state,
     error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.GetProduct]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.GetProductSuccess]: (state, { product }) => ({
     ...state,
     product,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.GetProductFail]: (state, { error }) => ({
     ...state,
     error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.GetAllCategories]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.GetAllCategoriesSuccess]: (state, { categories }) => ({
     ...state,
     categories,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.GetAllCategoriesFail]: (state, { error }) => ({
     ...state,
     error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.CreateCategory]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.CreateProduct]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
+  }),
+  [ActionTypes.CreateProductSuccess]: (state) => ({
+    ...state,
+    error: null,
+    notification: {variant: "success", message: "Successfully created product!"}
+  }),
+  [ActionTypes.CreateProductFail]: (state, { error }) => ({
+    ...state,
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.AddProductToCart]: (state) => ({
     ...state,
-    error: null
+    error: null,
+    notification: {variant: "", message: ""}
   }),
-  [ActionTypes.AddProductToCartSuccess]: (state, {product}) => {
-    let productsArr = [...state.productsCart]
-    const productFound = productsArr.find(item => item._id === product._id)
+  [ActionTypes.AddProductToCartSuccess]: (state, { product }) => {
+    let productsArr = [...state.productsCart];
+    const productFound = productsArr.find((item) => item._id === product._id);
     console.log(productFound);
     if (productFound) {
       state.productsCart[state.productsCart.indexOf(productFound)] = {
         ...productFound,
-        quantity: productFound.quantity++
-      }
+        quantity: productFound.quantity++,
+      };
     } else {
-      productsArr = productsArr.concat({ ...product, quantity: 1 })
+      productsArr = productsArr.concat({ ...product, quantity: 1 });
     }
 
-    window.localStorage.setItem('cart', JSON.stringify(productsArr))
+    window.localStorage.setItem("cart", JSON.stringify(productsArr));
 
     return {
       ...state,
-      productsCart: productsArr
-    }
+      productsCart: productsArr,
+      notification: {variant: "success", message: "Successfully added product to cart!"}
+    };
   },
 
-  [ActionTypes.addProductToCartFail]: (state, {error}) => ({
+  [ActionTypes.addProductToCartFail]: (state, { error }) => ({
     ...state,
-    error
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.UpdateCartSuccess]: (state, { product, value }) => {
-    let productsArr = [...state.productsCart]
-    const productFound = productsArr.find((item) => item._id === product._id)
+    let productsArr = [...state.productsCart];
+    const productFound = productsArr.find((item) => item._id === product._id);
     console.log("Quantity: ", value);
-    if(productFound){
+    if (productFound) {
       productsArr[productsArr.indexOf(productFound)] = {
         ...productFound,
-        quantity: value
-      }
+        quantity: value,
+      };
     } else {
-      productsArr = productsArr.concat({ ...product, quantity: value })
+      productsArr = productsArr.concat({ ...product, quantity: value });
     }
-    
-    
-    window.localStorage.setItem('cart', JSON.stringify(productsArr))
+
+    window.localStorage.setItem("cart", JSON.stringify(productsArr));
 
     return {
       ...state,
-      productsCart: productsArr
-    }
+      productsCart: productsArr,
+      notification: productFound ? {variant: "", message: ""} : {variant: "success", message: "Successfully added product to cart!"}
+    };
   },
-  [ActionTypes.UpdateCartFail]: (state, {error}) => ({
+  [ActionTypes.UpdateCartFail]: (state, { error }) => ({
     ...state,
-    error
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.RemoveProductFromCart]: (state) => ({
     ...state,
-    error: null
+    error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.RemoveProductFromCartSuccess]: (state, { product }) => {
-    const productsArr = state.productsCart.filter((item) => item._id !== product._id)
-    window.localStorage.setItem('cart', JSON.stringify(productsArr))
+    const productsArr = state.productsCart.filter(
+      (item) => item._id !== product._id
+    );
+    window.localStorage.setItem("cart", JSON.stringify(productsArr));
 
     return {
       ...state,
-      productsCart: productsArr
-    }
+      productsCart: productsArr,
+      notification: {variant: "success", message: "Successfully removed product from cart!"}
+    };
   },
-  [ActionTypes.RemoveProductFromCartFail]: (state, {error}) => ({
+  [ActionTypes.RemoveProductFromCartFail]: (state, { error }) => ({
     ...state,
-    error
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.ResetCart]: (state) => ({
     ...state,
-    error: null
+    error: null,
+    notification: {variant: "", message: ""}
   }),
   [ActionTypes.ResetCartSuccess]: (state) => {
-    window.localStorage.setItem('cart', [])
+    window.localStorage.setItem("cart", []);
 
     return {
       ...state,
-      productsCart: []
-    }
+      productsCart: [],
+      notification: {variant: "", message: ""}
+    };
   },
-  [ActionTypes.ResetCartFail]: (state, {error}) => ({
+  [ActionTypes.ResetCartFail]: (state, { error }) => ({
     ...state,
-    error
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
   [ActionTypes.CreateOrder]: (state) => ({
     ...state,
     error: null,
+    notification: {variant: "", message: ""}
+  }),
+  [ActionTypes.CreateOrderSuccess]: (state) => ({
+    ...state,
+    error: null,
+    notification: {variant: "success", message: "Successfully created order!"}
+  }),
+  [ActionTypes.CreateOrderFail]: (state, {error}) => ({
+    ...state,
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
   }),
 };
 
@@ -322,10 +373,10 @@ const asyncActionMap = {
   [ActionTypes.AddProductToCart]: ({ product }) => {
     return productService
       .getOne(product._id)
-      .then(({data}) => {
-        return addProductToCartSuccess(data[0])
+      .then(({ data }) => {
+        return addProductToCartSuccess(data[0]);
       })
-      .catch((error) => addProductToCartFail(error))
+      .catch((error) => addProductToCartFail(error));
   },
   [ActionTypes.CreateOrder]: ({ order }) => {
     return orderService
@@ -348,18 +399,20 @@ const storeReducer = (state, action) => {
 export const StoreContext = createContext(initialState);
 
 const apiFetchUserDetails = (id) => {
-  if(typeof(id) === 'string' && id !== null){
+  if (typeof id === "string" && id !== null) {
     return fetch(`http://localhost:8000/api/user/details/${id}`)
-    .then((res) => res.json())
-    .then((data) => data[0])
+      .then((res) => res.json())
+      .then((data) => data[0]);
   }
-  return null
-}
+  return null;
+};
 
 const ContextStore = (props) => {
   const [state, dispatch] = useReducer(storeReducer, initialState);
-  const id = JSON.parse(window.localStorage.getItem("user")) ? JSON.parse(window.localStorage.getItem("user")).id : null;
-  const fetchUserDetails = useAsync(apiFetchUserDetails, [id])
+  const id = JSON.parse(window.localStorage.getItem("user"))
+    ? JSON.parse(window.localStorage.getItem("user")).id
+    : null;
+  const fetchUserDetails = useAsync(apiFetchUserDetails, [id]);
   const store = useMemo(
     () => ({
       state,
@@ -370,7 +423,7 @@ const ContextStore = (props) => {
         }
         dispatch(action);
       },
-      fetchUserDetails
+      fetchUserDetails,
     }),
     [state, dispatch, fetchUserDetails]
   );
