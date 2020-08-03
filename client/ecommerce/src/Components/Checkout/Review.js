@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { useHistory } from 'react-router-dom'
 import { StoreContext } from '../../Store/Store'
-import { createOrder, resetCartSuccess } from '../../Store/Actions'
+import { createOrder, resetCartSuccess, createOrderFail } from '../../Store/Actions'
 import {
   Typography,
   List,
@@ -70,24 +70,30 @@ export default function Review({ userData, handleBack }) {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      const finalOrder = {
-        creator: window.localStorage.getItem('user').id,
-        products: cartProductsIds,
-        totalPrice: renderTotalPrice,
-        status: 'Processing',
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        address1: userData.address1,
-        address2: userData.address2,
-        city: userData.city,
-        state: userData.state,
-        zip: userData.zip,
-        country: userData.country,
-      };
-      console.log(finalOrder);
-      dispatch(createOrder(finalOrder));
-      dispatch(resetCartSuccess())
-      history.push('/');
+      console.log(cartProductsIds);
+      if(cartProductsIds.length > 0){
+        const finalOrder = {
+          creator: window.localStorage.getItem('user').id,
+          products: cartProductsIds,
+          totalPrice: renderTotalPrice,
+          status: 'Processing',
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          address1: userData.address1,
+          address2: userData.address2,
+          city: userData.city,
+          state: userData.state,
+          zip: userData.zip,
+          country: userData.country,
+        };
+        console.log(finalOrder);
+        dispatch(createOrder(finalOrder));
+        dispatch(resetCartSuccess())
+        history.push('/');
+      } else {
+        dispatch(createOrderFail("Error"));
+        history.push('/');
+      }
     },
     [history, dispatch, userData]
   );
