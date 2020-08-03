@@ -19,11 +19,14 @@ import {
   createProductSuccess,
   createProductFail,
   addProductToCartSuccess,
-  addProductToCartFail
+  addProductToCartFail,
+  createOrderSuccess,
+  createOrderFail
 } from "./Actions";
 import userService from "../Services/userService";
 import productService from "../Services/productService";
 import categoryService from "../Services/categoryService";
+import orderService from '../Services/orderService';
 
 const cookies = document.cookie.split("; ").reduce((acc, curr) => {
   const [key, value] = curr.split("=");
@@ -46,7 +49,8 @@ const initialState = {
   products: [],
   product: [],
   categories: [],
-  productsCart: JSON.parse(window.localStorage.getItem('cart')) || []
+  productsCart: window.localStorage['cart'] ? JSON.parse(window.localStorage.getItem('cart')) : [],
+  order: []
   // toast: {
   //     status: '',
   //     message: ''
@@ -223,7 +227,11 @@ const actionMap = {
   [ActionTypes.ResetCartFail]: (state, {error}) => ({
     ...state,
     error
-  })
+  }),
+  [ActionTypes.CreateOrder]: (state) => ({
+    ...state,
+    error: null,
+  }),
 };
 
 const asyncActionMap = {
@@ -255,7 +263,7 @@ const asyncActionMap = {
     return userService
       .logout()
       .then(() => {
-        window.localStorage.clear();
+        window.localStorage.removeItem("user");
         return logoutSuccess();
       })
       .catch((error) => logoutFail(error));
@@ -318,7 +326,17 @@ const asyncActionMap = {
         return addProductToCartSuccess(data[0])
       })
       .catch((error) => addProductToCartFail(error))
-  }
+  },
+  [ActionTypes.CreateOrder]: ({ order }) => {
+    return orderService
+      .create(order)
+      .then(() => {
+        return createOrderSuccess(order);
+      })
+      .catch((error) => {
+        createOrderFail(error);
+      });
+  },
 };
 
 const storeReducer = (state, action) => {

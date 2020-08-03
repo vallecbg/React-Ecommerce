@@ -6,20 +6,20 @@ import {
   Checkbox,
   Grid,
   makeStyles,
-  Button
+  Button,
 } from "@material-ui/core";
 import withForm from "../../Hocs/withForm";
 import InputField from "../Input/InputField";
 import PropTypes from "prop-types";
 import * as yup from "yup";
-import { StoreContext } from '../../Store/Store'
+import { StoreContext } from "../../Store/Store";
 
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
-}))
+}));
 
 const AddressForm = ({
   changeHandlerFactory,
@@ -30,23 +30,21 @@ const AddressForm = ({
   history,
   handleNext,
   handleUserDataSubmit,
-  userData
+  userData,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   const { dispatch } = useContext(StoreContext);
 
   useEffect(() => {
-    console.log(formState.form);
-    console.log(userData);
     Object.assign(formState.form, { ...formState.form, ...userData });
   }, []);
-  
+
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
-        handleNext()
-        handleUserDataSubmit(formData)
+        handleNext();
+        handleUserDataSubmit(formData);
         console.log(formData);
         //dispatch(register(formData));
         //history.push("/");
@@ -144,15 +142,17 @@ const AddressForm = ({
             formState={formState}
           />
         </Grid>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          className={classes.button}
-          disabled={formIsInvalid()}
-        >
-          {"Next"}
-        </Button>
+        <Grid item xs={12} sm={12} container spacing={24} justify="flex-end">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            className={classes.button}
+            disabled={formIsInvalid()}
+          >
+            {"Next"}
+          </Button>
+        </Grid>
       </Grid>
     </React.Fragment>
   );

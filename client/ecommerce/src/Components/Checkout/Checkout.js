@@ -50,20 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
+  }
 }));
 
 const steps = ['Shipping address', 'Review your order'];
 
-function getStepContent(step, handleNext, handleUserDataSubmit, userData) {
+function getStepContent(step, handleNext, handleUserDataSubmit, userData, handleBack) {
   switch (step) {
     case 0:
       return <AddressForm
@@ -74,6 +66,7 @@ function getStepContent(step, handleNext, handleUserDataSubmit, userData) {
     case 1:
       return <Review 
         userData={userData}
+        handleBack={handleBack}
       />;
     default:
       throw new Error('Unknown step');
@@ -134,22 +127,22 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep, handleNext, handleUserDataSubmit, userData)}
-                <div className={classes.buttons}>
+                {getStepContent(activeStep, handleNext, handleUserDataSubmit, userData, handleBack)}
+                {/* <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
                       Back
                     </Button>
                   )}
-                  {/* <Button
+                  <Button
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button> */}
-                </div>
+                  </Button>
+                </div> */}
               </React.Fragment>
             )}
           </React.Fragment>

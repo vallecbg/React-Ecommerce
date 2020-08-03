@@ -80,7 +80,7 @@ const Cart = () => {
     );
   };
 
-  const cart = JSON.parse(window.localStorage.getItem("cart"));
+  const cart = window.localStorage['cart'] ? JSON.parse(window.localStorage.getItem('cart')) : [];
   const renderProducts = (cart || []).map((product) => {
     return (
       <React.Fragment key={product._id}>

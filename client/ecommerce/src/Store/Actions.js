@@ -47,6 +47,9 @@ export const ActionTypes = {
     ResetCartSuccess: Symbol('[PRODUCTS] Reset Cart Success'),
     ResetCartFail: Symbol('[PRODUCTS] Reset Cart Fail'),
 
+    CreateOrder: Symbol('[ORDERS] Create Order'),
+    CreateOrderSuccess: Symbol('[ORDERS] Create Order Success'),
+    CreateOrderFail: Symbol('[ORDERS] Create Order Fail'),
 }
 
 export const login = (user) => ({
@@ -203,4 +206,17 @@ export const resetCartSuccess = () => ({
 export const resetCartFail = (error) => ({
     type: ActionTypes.ResetCartFail,
     payload: {error}
+})
+
+export const createOrder = (order) => ({
+    type: ActionTypes.CreateOrder,
+    payload: {order}
+})
+export const createOrderSuccess = () => ({
+    type: ActionTypes.CreateOrderSuccess,
+    payload: undefined
+})
+export const createOrderFail = (error) => ({
+    type: ActionTypes.createOrderFail,
+    payload: { error }
 })

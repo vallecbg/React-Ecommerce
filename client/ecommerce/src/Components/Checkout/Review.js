@@ -1,31 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Grid from "@material-ui/core/Grid";
-
-const products = [
-  { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-  { name: "Product 2", desc: "Another thing", price: "$3.45" },
-  { name: "Product 3", desc: "Something else", price: "$6.51" },
-  { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-  { name: "Shipping", desc: "", price: "Free" },
-];
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA",
-];
-const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" },
-];
+import React, { useCallback, useContext } from "react";
+import { useHistory } from 'react-router-dom'
+import { StoreContext } from '../../Store/Store'
+import { createOrder, resetCartSuccess } from '../../Store/Actions'
+import {
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  makeStyles,
+  Button,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -37,22 +22,21 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(2),
   },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
 }));
 
-export default function Review({ userData }) {
+export default function Review({ userData, handleBack }) {
   const classes = useStyles();
-  const cart = JSON.parse(window.localStorage.getItem("cart"));
-  console.log(userData);
-  // const {
-  //   firstName,
-  //   lastName,
-  //   address1,
-  //   address2,
-  //   city,
-  //   country,
-  //   state,
-  //   zip,
-  // } = userData;
+  const { state, dispatch } = useContext(StoreContext)
+  const history = useHistory()
+  const cart = window.localStorage['cart'] ? JSON.parse(window.localStorage.getItem('cart')) : [];
 
   const renderProducts = (cart || []).map((product) => {
     return (
@@ -65,14 +49,47 @@ export default function Review({ userData }) {
     );
   });
 
+  const cartProductsIds = (cart || []).map((product) => {
+    return {
+      _id: product._id,
+      quantity: product.quantity
+    }
+  })
+
   const renderTotalDelivery = (cart || []).reduce(
     (acc, current) => (acc += current.delivery),
     0
   );
 
   const renderTotalPrice = (cart || []).reduce(
-    (acc, current) => (acc += (current.price * current.quantity) + current.delivery),
+    (acc, current) =>
+      (acc += ((current.price * current.quantity) + current.delivery)),
     0
+  );
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const finalOrder = {
+        creator: window.localStorage.getItem('user').id,
+        products: cartProductsIds,
+        totalPrice: renderTotalPrice,
+        status: 'Processing',
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        address1: userData.address1,
+        address2: userData.address2,
+        city: userData.city,
+        state: userData.state,
+        zip: userData.zip,
+        country: userData.country,
+      };
+      console.log(finalOrder);
+      dispatch(createOrder(finalOrder));
+      dispatch(resetCartSuccess())
+      history.push('/');
+    },
+    [history, dispatch, userData]
   );
 
   return (
@@ -84,9 +101,11 @@ export default function Review({ userData }) {
         {renderProducts.length > 0 ? renderProducts : null}
         <ListItem className={classes.listItem} key={"Shipping"}>
           <ListItemText primary={"Shipping"} secondary={""} />
-        <Typography variant="body2">{renderTotalDelivery > 0 ? (
-          `$${renderTotalDelivery.toFixed(2)}`
-        ) : `Free Shipping`}</Typography>
+          <Typography variant="body2">
+            {renderTotalDelivery > 0
+              ? `$${renderTotalDelivery.toFixed(2)}`
+              : `Free Shipping`}
+          </Typography>
         </ListItem>
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
@@ -105,34 +124,34 @@ export default function Review({ userData }) {
               {userData.firstName} {userData.lastName}
             </Typography>
             <Typography gutterBottom>
-              {userData.address1}, {userData.city} [{userData.zip}], 
-              {userData.state !== "" ? ` ${userData.state},` : null} {userData.country}
+              {userData.address1}, {userData.city} [{userData.zip}],
+              {userData.state !== "" ? ` ${userData.state},` : null}{" "}
+              {userData.country}
             </Typography>
             {userData.address2 !== "" ? (
               <Typography gutterBottom>
-                {userData.address2}, {userData.city} [{userData.zip}], 
-                {userData.state !== "" ? ` ${userData.state},` : null} {userData.country}
+                {userData.address2}, {userData.city} [{userData.zip}],
+                {userData.state !== "" ? ` ${userData.state},` : null}{" "}
+                {userData.country}
               </Typography>
             ) : null}
           </Grid>
         ) : null}
-        {/* <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid> */}
+        <Grid item xs={12} sm={12} container spacing={24} justify="flex-end">
+          <div className={classes.buttons}>
+            <Button onClick={handleBack} className={classes.button}>
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              className={classes.button}
+            >
+              {"Place Order"}
+            </Button>
+          </div>
+        </Grid>
       </Grid>
     </React.Fragment>
   );
