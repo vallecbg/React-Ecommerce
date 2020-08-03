@@ -4,7 +4,7 @@ const InputField = ({ label, name, changeHandler, formState, runControlValidatio
   return (
     <TextField
       variant="outlined"
-      required={notRequired ? null : 'true'}
+      required={notRequired ? null : true}
       fullWidth
       autoFocus
       name={name}

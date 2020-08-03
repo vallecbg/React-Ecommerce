@@ -143,7 +143,7 @@ export default function Review({ userData, handleBack }) {
             ) : null}
           </Grid>
         ) : null}
-        <Grid item xs={12} sm={12} container spacing={24} justify="flex-end">
+        <Grid item xs={12} sm={12} container spacing={0} justify="flex-end">
           <div className={classes.buttons}>
             <Button onClick={handleBack} className={classes.button}>
               Back
