@@ -21,9 +21,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  purchasedProducts: [{
+  orders: [{
     type: ObjectId,
-    ref: 'Product'
+    ref: 'Order'
   }],
   role: {
     type: String,
