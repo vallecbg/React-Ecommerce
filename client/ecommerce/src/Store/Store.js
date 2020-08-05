@@ -22,8 +22,10 @@ import {
   addProductToCartFail,
   createOrderSuccess,
   createOrderFail,
+  getAllOrdersSuccess,
+  getAllOrdersFail
 } from "./Actions";
-import userService from "../Services/userService";
+import authService from "../Services/authService";
 import productService from "../Services/productService";
 import categoryService from "../Services/categoryService";
 import orderService from "../Services/orderService";
@@ -56,6 +58,7 @@ const initialState = {
     variant: "",
     message: "",
   },
+  orders: []
 };
 
 //TODO: add toast notifications when something is made to inform the user
@@ -283,11 +286,27 @@ const actionMap = {
     error,
     notification: {variant: "error", message: "An error occurred!"}
   }),
+  [ActionTypes.GetAllOrders]: (state) => ({
+    ...state,
+    error: null,
+    notification: {variant: "", message: ""}
+  }),
+  [ActionTypes.GetAllOrdersSuccess]: (state, { orders }) => ({
+    ...state,
+    orders,
+    error: null,
+    notification: {variant: "", message: ""}
+  }),
+  [ActionTypes.GetAllOrdersFail]: (state, { error }) => ({
+    ...state,
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
+  }),
 };
 
 const asyncActionMap = {
   [ActionTypes.Login]: ({ user }) => {
-    return userService
+    return authService
       .login(user)
       .then(({ data: { user } }) => {
         window.localStorage.setItem(
@@ -299,7 +318,7 @@ const asyncActionMap = {
       .catch((error) => loginFail(error));
   },
   [ActionTypes.Register]: ({ user }) => {
-    return userService
+    return authService
       .register(user)
       .then(({ data: { user } }) => {
         window.localStorage.setItem(
@@ -311,7 +330,7 @@ const asyncActionMap = {
       .catch((error) => registerFail(error));
   },
   [ActionTypes.Logout]: () => {
-    return userService
+    return authService
       .logout()
       .then(() => {
         window.localStorage.removeItem("user");
@@ -386,6 +405,16 @@ const asyncActionMap = {
       })
       .catch((error) => {
         createOrderFail(error);
+      });
+  },
+  [ActionTypes.GetAllOrders]: () => {
+    return orderService
+      .getAll()
+      .then(({ data }) => {
+        return getAllOrdersSuccess(data);
+      })
+      .catch((error) => {
+        getAllOrdersFail(error);
       });
   },
 };

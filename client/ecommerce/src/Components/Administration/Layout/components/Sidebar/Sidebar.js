@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { StoreContext } from '../../../../../Store/Store'
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
 
@@ -40,6 +41,16 @@ const useStyles = makeStyles(theme => ({
 
 const Sidebar = props => {
   const { open, variant, onClose, className, ...rest } = props;
+  const { state, dispatch, fetchUserDetails } = useContext(StoreContext)
+  const [ result, setResult ] = useState()
+  const [ loading, setLoading ] = useState(false)
+  const [ error, setError ] = useState()
+  useEffect(() => {
+    const { result, error, loading } = fetchUserDetails
+    setLoading(loading)
+    setError(error)
+    setResult(result)
+  }, [fetchUserDetails])
 
   const classes = useStyles();
 
@@ -108,7 +119,7 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <Profile />
+        {result && <Profile currentUser={result} />}
         <Divider className={classes.divider} />
         <SidebarNav
           className={classes.nav}

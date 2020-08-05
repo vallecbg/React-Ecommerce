@@ -9,5 +9,13 @@ module.exports = {
             res.status(200).json(currentUser)
         })
         .catch(next)
+    },
+    getAll: (req, res, next) => {
+        UserModel.find({})
+        .then((currentUsers) => {
+            console.log(currentUsers);
+            res.status(200).json(currentUsers)
+        })
+        .catch(next)
     }
 }

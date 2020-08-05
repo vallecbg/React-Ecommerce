@@ -50,6 +50,10 @@ export const ActionTypes = {
     CreateOrder: Symbol('[ORDERS] Create Order'),
     CreateOrderSuccess: Symbol('[ORDERS] Create Order Success'),
     CreateOrderFail: Symbol('[ORDERS] Create Order Fail'),
+
+    GetAllOrders: Symbol('[ORDERS] Get All Orders'),
+    GetAllOrdersSuccess: Symbol('[ORDERS] Get All Orders Success'),
+    GetAllOrdersFail: Symbol('[ORDERS] Get All Orders Fail'),
 }
 
 export const login = (user) => ({
@@ -218,5 +222,18 @@ export const createOrderSuccess = () => ({
 })
 export const createOrderFail = (error) => ({
     type: ActionTypes.createOrderFail,
+    payload: { error }
+})
+
+export const getAllOrders = () => ({
+    type: ActionTypes.GetAllOrders,
+    payload: undefined
+})
+export const getAllOrdersSuccess = (orders) => ({
+    type: ActionTypes.GetAllOrdersSuccess,
+    payload: { orders }
+})
+export const getAllOrdersFail = (error) => ({
+    type: ActionTypes.GetAllOrdersFail,
     payload: { error }
 })

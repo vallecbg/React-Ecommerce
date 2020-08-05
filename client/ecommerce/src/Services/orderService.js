@@ -9,7 +9,15 @@ const orderService = {
         .catch((error) => {
             console.error(error)
         })
-    }
+    },
+    getAll: function() {
+        return axios.get(`${baseUrl}/all`, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    },
 }
 
 export default orderService

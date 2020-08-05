@@ -60,7 +60,7 @@ const Navbar = () => {
     setLoading(loading)
     setError(error)
     setResult(result)
-  })
+  }, [fetchUserDetails])
 
   console.log(location.pathname);
 

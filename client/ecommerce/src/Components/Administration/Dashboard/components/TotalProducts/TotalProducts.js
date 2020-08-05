@@ -2,14 +2,19 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Avatar,
+  LinearProgress
+} from '@material-ui/core';
+import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '100%',
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
+    height: '100%'
   },
   content: {
     alignItems: 'center',
@@ -19,19 +24,22 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   avatar: {
-    backgroundColor: theme.palette.white,
-    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
     height: 56,
     width: 56
   },
   icon: {
     height: 32,
     width: 32
+  },
+  progress: {
+    marginTop: theme.spacing(3)
   }
 }));
 
-const TotalProfit = props => {
-  const { className, ...rest } = props;
+const TotalProducts = props => {
+  const { className, products, ...rest } = props;
 
   const classes = useStyles();
 
@@ -48,22 +56,17 @@ const TotalProfit = props => {
           <Grid item>
             <Typography
               className={classes.title}
-              color="inherit"
+              color="textSecondary"
               gutterBottom
               variant="body2"
             >
-              TOTAL PROFIT
+              TOTAL PRODUCTS
             </Typography>
-            <Typography
-              color="inherit"
-              variant="h3"
-            >
-              $23,200
-            </Typography>
+            <Typography variant="h3">{products}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <AttachMoneyIcon className={classes.icon} />
+              <InsertChartIcon className={classes.icon} />
             </Avatar>
           </Grid>
         </Grid>
@@ -72,8 +75,8 @@ const TotalProfit = props => {
   );
 };
 
-TotalProfit.propTypes = {
+TotalProducts.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalProfit;
+export default TotalProducts;
