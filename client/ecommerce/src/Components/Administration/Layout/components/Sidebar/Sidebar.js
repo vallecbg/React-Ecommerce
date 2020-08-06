@@ -1,110 +1,106 @@
-import React, { useContext, useEffect, useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import { Divider, Drawer, colors } from '@material-ui/core';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import ListIcon from '@material-ui/icons/List';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import SettingsIcon from '@material-ui/icons/Settings';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { StoreContext } from '../../../../../Store/Store'
+import React, { useContext, useEffect, useState } from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/styles";
+import { Divider, Drawer, colors } from "@material-ui/core";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleIcon from "@material-ui/icons/People";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import ListIcon from "@material-ui/icons/List";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import ListAltIcon from "@material-ui/icons/ListAlt";
 
-import { Profile, SidebarNav, UpgradePlan } from './components';
+import { StoreContext } from "../../../../../Store/Store";
 
-const useStyles = makeStyles(theme => ({
+import { Profile, SidebarNav } from "./components";
+
+const useStyles = makeStyles((theme) => ({
   drawer: {
     width: 240,
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       marginTop: 64,
-      height: 'calc(100% - 64px)'
-    }
+      height: "calc(100% - 64px)",
+    },
   },
   root: {
     backgroundColor: theme.palette.white,
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    padding: theme.spacing(2)
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    padding: theme.spacing(2),
   },
   divider: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(2, 0),
   },
   nav: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
 }));
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   const { open, variant, onClose, className, ...rest } = props;
-  const { state, dispatch, fetchUserDetails } = useContext(StoreContext)
-  const [ result, setResult ] = useState()
-  const [ loading, setLoading ] = useState(false)
-  const [ error, setError ] = useState()
+  const { state, dispatch, fetchUserDetails } = useContext(StoreContext);
+  const [result, setResult] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
   useEffect(() => {
-    const { result, error, loading } = fetchUserDetails
-    setLoading(loading)
-    setError(error)
-    setResult(result)
-  }, [fetchUserDetails])
+    const { result, error, loading } = fetchUserDetails;
+    setLoading(loading);
+    setError(error);
+    setResult(result);
+  }, [fetchUserDetails]);
 
   const classes = useStyles();
 
-  const pages = [
+  const pagesAdmin = [
     {
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: <DashboardIcon />
+      title: "Dashboard",
+      href: "/dashboard",
+      icon: <DashboardIcon />,
     },
     {
-      title: 'Create Product',
-      href: '/productCreate',
-      icon: <ShoppingBasketIcon />
+      title: "Create Product",
+      href: "/productCreate",
+      icon: <ShoppingBasketIcon />,
     },
     {
-      title: 'Create Category',
-      href: '/categoryCreate',
-      icon: <ListIcon />
+      title: "Create Category",
+      href: "/categoryCreate",
+      icon: <ListIcon />,
     },
     {
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />
+      title: "Users",
+      href: "/users",
+      icon: <PeopleIcon />,
     },
     {
-      title: 'Products',
-      href: '/productList',
-      icon: <ShoppingBasketIcon />
+      title: "Products",
+      href: "/productList",
+      icon: <ShoppingBasketIcon />,
     },
     {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
+      title: "My Orders",
+      href: "/orders",
+      icon: <ListAltIcon />,
     },
     {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
+      title: "My Account",
+      href: "/account",
+      icon: <AccountBoxIcon />,
+    },
+  ];
+
+  const pagesUser = [
+    {
+      title: "My Orders",
+      href: "/orders",
+      icon: <ListAltIcon />,
     },
     {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
+      title: "Account",
+      href: "/account",
+      icon: <AccountBoxIcon />,
     },
-    {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
-    },
-    {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
-    }
   ];
 
   return (
@@ -115,17 +111,10 @@ const Sidebar = props => {
       open={open}
       variant={variant}
     >
-      <div
-        {...rest}
-        className={clsx(classes.root, className)}
-      >
+      <div {...rest} className={clsx(classes.root, className)}>
         {result && <Profile currentUser={result} />}
         <Divider className={classes.divider} />
-        <SidebarNav
-          className={classes.nav}
-          pages={pages}
-        />
-        <UpgradePlan />
+        {result && <SidebarNav className={classes.nav} pages={result.role === "Admin" ? pagesAdmin : pagesUser} />}
       </div>
     </Drawer>
   );
@@ -135,7 +124,7 @@ Sidebar.propTypes = {
   className: PropTypes.string,
   onClose: PropTypes.func,
   open: PropTypes.bool.isRequired,
-  variant: PropTypes.string.isRequired
+  variant: PropTypes.string.isRequired,
 };
 
 export default Sidebar;
