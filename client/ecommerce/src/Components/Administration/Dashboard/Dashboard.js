@@ -63,7 +63,7 @@ const Dashboard = () => {
           <TotalPrice price={renderTotalPrice.toFixed(2)}/>
         </Grid>
         <Grid item lg={8} md={12} xl={9} xs={12}>
-          <LatestSales />
+          <LatestSales orders={orders}/>
         </Grid>
         <Grid item lg={4} md={6} xl={3} xs={12}>
           <UsersByDevice />

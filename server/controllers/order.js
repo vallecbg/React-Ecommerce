@@ -6,7 +6,7 @@ module.exports = {
     console.log(order);
     const { _id } = req.user;
 
-    OrderModel.create({ ...order, creator: _id })
+    OrderModel.create({ ...order, creator: _id, createdOn: Date.now() })
       .then((order) => {
         Promise.all([
           order,
