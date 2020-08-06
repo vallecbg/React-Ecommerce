@@ -82,7 +82,7 @@ const Dashboard = () => {
           <LatestProducts allProducts={products.sort(compareDates).slice(0, 5)} />
         </Grid>
         <Grid item lg={8} md={12} xl={9} xs={12}>
-          <LatestOrders />
+          <LatestOrders allOrders={orders.sort(compareDates).slice(0, 6)} />
         </Grid>
         <Grid item lg={12} md={12} xl={12} xs={12}>
           <LatestSales orders={orders}/>

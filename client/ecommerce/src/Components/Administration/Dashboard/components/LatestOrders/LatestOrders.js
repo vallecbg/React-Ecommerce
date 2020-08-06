@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState } from "react";
+import clsx from "clsx";
+import moment from "moment";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardActions,
@@ -17,61 +17,69 @@ import {
   TableHead,
   TableRow,
   Tooltip,
-  TableSortLabel
-} from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+  TableSortLabel,
+} from "@material-ui/core";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import StatusBullet from "../../../../StatusBullet/StatusBullet";
 
-import mockData from './data';
-import StatusBullet from '../../../../StatusBullet/StatusBullet';
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   content: {
-    padding: 0
+    padding: 0,
   },
   inner: {
-    minWidth: 800
+    minWidth: 800,
   },
   statusContainer: {
-    display: 'flex',
-    alignItems: 'center'
+    display: "flex",
+    alignItems: "center",
   },
   status: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   actions: {
-    justifyContent: 'flex-end'
-  }
+    justifyContent: "flex-end",
+  },
 }));
 
 const statusColors = {
-  delivered: 'success',
-  pending: 'info',
-  refunded: 'danger'
+  Delivered: "success",
+  Processing: "info",
+  Cancelled: "danger",
 };
 
-const LatestOrders = props => {
-  const { className, ...rest } = props;
-
+const LatestOrders = (props) => {
+  const { className, allOrders, ...rest } = props;
   const classes = useStyles();
 
-  const [orders] = useState(mockData);
+  const renderAllOrders = allOrders.map((currOrder) => {
+    return (
+      <TableRow hover key={currOrder._id}>
+        <TableCell>{currOrder._id}</TableCell>
+        <TableCell>
+          {currOrder.firstName} {currOrder.lastName}
+        </TableCell>
+        <TableCell>${currOrder.totalPrice.toFixed(2)}</TableCell>
+        <TableCell>
+          {moment(new Date(currOrder.createdOn)).format("DD/MM/YYYY")}
+        </TableCell>
+        <TableCell>
+          <div className={classes.statusContainer}>
+            <StatusBullet
+              className={classes.status}
+              color={statusColors[currOrder.status]}
+              size="sm"
+            />
+            {currOrder.status}
+          </div>
+        </TableCell>
+      </TableRow>
+    );
+  });
 
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card {...rest} className={clsx(classes.root, className)}>
       <CardHeader
-        action={
-          <Button
-            color="primary"
-            size="small"
-            variant="outlined"
-          >
-            New entry
-          </Button>
-        }
         title="Latest Orders"
       />
       <Divider />
@@ -83,57 +91,19 @@ const LatestOrders = props => {
                 <TableRow>
                   <TableCell>Order Ref</TableCell>
                   <TableCell>Customer</TableCell>
-                  <TableCell sortDirection="desc">
-                    <Tooltip
-                      enterDelay={300}
-                      title="Sort"
-                    >
-                      <TableSortLabel
-                        active
-                        direction="desc"
-                      >
-                        Date
-                      </TableSortLabel>
-                    </Tooltip>
-                  </TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Total</TableCell>
                   <TableCell>Status</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {orders.map(order => (
-                  <TableRow
-                    hover
-                    key={order.id}
-                  >
-                    <TableCell>{order.ref}</TableCell>
-                    <TableCell>{order.customer.name}</TableCell>
-                    <TableCell>
-                      {moment(order.createdAt).format('DD/MM/YYYY')}
-                    </TableCell>
-                    <TableCell>
-                      <div className={classes.statusContainer}>
-                        <StatusBullet
-                          className={classes.status}
-                          color={statusColors[order.status]}
-                          size="sm"
-                        />
-                        {order.status}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+              <TableBody>{renderAllOrders}</TableBody>
             </Table>
           </div>
         </PerfectScrollbar>
       </CardContent>
       <Divider />
       <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          size="small"
-          variant="text"
-        >
+        <Button color="primary" size="small" variant="text">
           View all <ArrowRightIcon />
         </Button>
       </CardActions>
@@ -142,7 +112,7 @@ const LatestOrders = props => {
 };
 
 LatestOrders.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default LatestOrders;
