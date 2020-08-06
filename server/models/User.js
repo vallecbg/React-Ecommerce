@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { String, ObjectId } = mongoose.Schema.Types;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
@@ -21,14 +21,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  orders: [{
-    type: ObjectId,
-    ref: 'Order'
-  }],
+  orders: [
+    {
+      type: ObjectId,
+      ref: "Order",
+    },
+  ],
   role: {
     type: String,
-    default: 'User'
-  }
+    default: "User",
+  },
+  createdOn: {
+    type: Date,
+    required: true,
+  },
+  lastLogin: {
+    type: Date,
+    required: true,
+  },
 });
 
 userSchema.methods = {
@@ -37,9 +47,8 @@ userSchema.methods = {
   },
 };
 
-userSchema.pre('save', function (next) {
-  
-  if (this.isModified('password')) {
+userSchema.pre("save", function (next) {
+  if (this.isModified("password")) {
     bcrypt.genSalt(saltRounds, (err, salt) => {
       bcrypt.hash(this.password, salt, (err, hash) => {
         if (err) {
@@ -53,4 +62,4 @@ userSchema.pre('save', function (next) {
   }
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
