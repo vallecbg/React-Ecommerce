@@ -14,6 +14,7 @@ const Dashboard = React.lazy(() => import('./Components/Administration/Dashboard
 const ProductCreate = React.lazy(() => import('./Components/Administration/ProductCreate/ProductCreate'))
 const CategoryCreate = React.lazy(() => import('./Components/Administration/CategoryCreate/CategoryCreate'))
 const UserList = React.lazy(() => import('./Components/Administration/UserList/UserList'))
+const ProductList = React.lazy(() => import('./Components/Administration/ProductList/ProductList'))
 
 
 const AppRouter = () => {
@@ -56,6 +57,7 @@ const AppRouter = () => {
             <AdminRoute path="/productCreate" component={ProductCreate} layout={MainLayout} />
             <AdminRoute path="/categoryCreate" component={CategoryCreate} layout={MainLayout} />
             <AdminRoute path="/users" component={UserList} layout={MainLayout} />
+            <AdminRoute path="/productList" component={ProductList} layout={MainLayout} />
         </Switch>
     )
 }
