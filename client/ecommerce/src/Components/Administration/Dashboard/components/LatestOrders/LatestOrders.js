@@ -91,8 +91,8 @@ const LatestOrders = (props) => {
                 <TableRow>
                   <TableCell>Order Ref</TableCell>
                   <TableCell>Customer</TableCell>
-                  <TableCell>Date</TableCell>
                   <TableCell>Total</TableCell>
+                  <TableCell>Date</TableCell>
                   <TableCell>Status</TableCell>
                 </TableRow>
               </TableHead>
