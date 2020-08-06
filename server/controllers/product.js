@@ -17,7 +17,7 @@ module.exports = {
             .send({msg: "Price and delivery must be numbers!"})
         }
 
-        ProductModel.create({...product, creator: _id})
+        ProductModel.create({...product, creator: _id, createdOn: Date.now()})
             .then((product) => {
                 Promise.all([product])
             })

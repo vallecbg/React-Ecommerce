@@ -35,6 +35,19 @@ const Dashboard = () => {
     0
   );
 
+  function compareDates(a, b) {
+    const aDate = new Date(a.createdOn)
+    const bDate = new Date(b.createdOn)
+
+    if(aDate < bDate){
+      return 1
+    } else if (aDate > bDate){
+      return -1
+    } else {
+      return 0
+    }
+  }
+
   useEffect(() => {
     orderService.getAll().then(({ data: currOrders }) => {
       setOrders(currOrders);
@@ -62,17 +75,17 @@ const Dashboard = () => {
         <Grid item lg={3} sm={6} xl={3} xs={12}>
           <TotalPrice price={renderTotalPrice.toFixed(2)}/>
         </Grid>
-        <Grid item lg={8} md={12} xl={9} xs={12}>
-          <LatestSales orders={orders}/>
-        </Grid>
-        <Grid item lg={4} md={6} xl={3} xs={12}>
+        {/* <Grid item lg={4} md={6} xl={3} xs={12}>
           <UsersByDevice />
-        </Grid>
-        <Grid item lg={4} md={6} xl={3} xs={12}>
-          <LatestProducts />
+        </Grid> */}
+        <Grid item lg={4} md={12} xl={3} xs={12}>
+          <LatestProducts allProducts={products.sort(compareDates).slice(0, 5)} />
         </Grid>
         <Grid item lg={8} md={12} xl={9} xs={12}>
           <LatestOrders />
+        </Grid>
+        <Grid item lg={12} md={12} xl={12} xs={12}>
+          <LatestSales orders={orders}/>
         </Grid>
       </Grid>
     </div>

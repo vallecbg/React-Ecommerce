@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState } from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardHeader,
@@ -13,81 +13,84 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  IconButton
-} from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+  IconButton,
+  Avatar,
+} from "@material-ui/core";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import moment from "moment";
 
-import mockData from './data';
-
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%'
+    height: "100%",
   },
   content: {
-    padding: 0
+    padding: 0,
   },
   image: {
     height: 48,
-    width: 48
+    width: 48,
   },
   actions: {
-    justifyContent: 'flex-end'
-  }
+    justifyContent: "flex-end",
+  },
+  productImage: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    marginRight: 10,
+  },
 }));
 
-const LatestProducts = props => {
-  const { className, ...rest } = props;
+const LatestProducts = (props) => {
+  const { className, allProducts, ...rest } = props;
 
   const classes = useStyles();
 
-  const [products] = useState(mockData);
-
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card {...rest} className={clsx(classes.root, className)}>
       <CardHeader
-        subtitle={`${products.length} in total`}
+        subtitle={`${allProducts.length} in total`}
         title="Latest products"
       />
       <Divider />
       <CardContent className={classes.content}>
         <List>
-          {products.map((product, i) => (
-            <ListItem
-              divider={i < products.length - 1}
-              key={product.id}
-            >
-              <ListItemAvatar>
-                <img
-                  alt="Product"
-                  className={classes.image}
-                  src={product.imageUrl}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={product.name}
-                secondary={`Updated ${product.updatedAt.fromNow()}`}
-              />
-              <IconButton
-                edge="end"
-                size="small"
+          {allProducts.map((currProduct, i) => {
+            
+
+            return (
+              <ListItem
+                divider={i < allProducts.length - 1}
+                key={currProduct._id}
               >
-                <MoreVertIcon />
-              </IconButton>
-            </ListItem>
-          ))}
+                <ListItemAvatar>
+                  {/* <img
+                    alt="Product"
+                    className={classes.image}
+                    src={currProduct.imageUrls[0]}
+                  /> */}
+                  <Avatar
+                    className={classes.productImage}
+                    alt="Product"
+                    src={currProduct.imageUrls[0]}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={currProduct.title}
+                  secondary={`Updated ${moment(new Date(currProduct.createdOn)).fromNow()}`}
+                />
+                <IconButton edge="end" size="small">
+                  <MoreVertIcon />
+                </IconButton>
+              </ListItem>
+            );
+          })}
+          {/* {renderProducts} */}
         </List>
       </CardContent>
       <Divider />
       <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          size="small"
-          variant="text"
-        >
+        <Button color="primary" size="small" variant="text">
           View all <ArrowRightIcon />
         </Button>
       </CardActions>
@@ -96,7 +99,7 @@ const LatestProducts = props => {
 };
 
 LatestProducts.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default LatestProducts;

@@ -32,7 +32,11 @@ const productSchema = new mongoose.Schema({
     },
     imageUrls: [{
         type: String
-    }]
+    }],
+    createdOn: {
+        type: Date,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Product', productSchema);
