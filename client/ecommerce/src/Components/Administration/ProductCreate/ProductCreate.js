@@ -180,7 +180,7 @@ const schema = yup.object().shape({
 
 const initialState = {
   title: "",
-  price: 0,
+  price: 0.01,
   delivery: 0,
   description: "",
 };
