@@ -61,8 +61,6 @@ const initialState = {
   orders: []
 };
 
-//TODO: add toast notifications when something is made to inform the user
-
 const actionMap = {
   [ActionTypes.Login]: (state) => ({
     ...state,

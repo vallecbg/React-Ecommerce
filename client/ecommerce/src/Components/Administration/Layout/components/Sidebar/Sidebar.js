@@ -7,8 +7,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import ListIcon from "@material-ui/icons/List";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ListAltIcon from "@material-ui/icons/ListAlt";
+import HomeIcon from '@material-ui/icons/Home';
 
 import { StoreContext } from "../../../../../Store/Store";
 
@@ -54,6 +54,11 @@ const Sidebar = (props) => {
 
   const pagesAdmin = [
     {
+      title: "Home Page",
+      href: "/",
+      icon: <HomeIcon />,
+    },
+    {
       title: "Dashboard",
       href: "/dashboard",
       icon: <DashboardIcon />,
@@ -88,23 +93,18 @@ const Sidebar = (props) => {
       href: "/myOrders",
       icon: <ListAltIcon />,
     },
-    {
-      title: "My Account",
-      href: "/account",
-      icon: <AccountBoxIcon />,
-    },
   ];
 
   const pagesUser = [
     {
+      title: "Home Page",
+      href: "/",
+      icon: <HomeIcon />,
+    },
+    {
       title: "My Orders",
       href: "/myOrders",
       icon: <ListAltIcon />,
-    },
-    {
-      title: "Account",
-      href: "/account",
-      icon: <AccountBoxIcon />,
     },
   ];
 

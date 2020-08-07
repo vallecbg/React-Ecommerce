@@ -25,6 +25,14 @@ const authService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    edit: function(data) {
+        return axios.post(`${baseUrl}/edit`, data, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 

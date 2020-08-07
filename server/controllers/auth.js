@@ -60,4 +60,15 @@ module.exports = {
       })
       .catch(next);
   },
+  edit: (req, res, next) => {
+    const { email, firstName, lastName } = req.body;
+
+    UserModel.findOneAndUpdate({ email }, { firstName, lastName })
+      .then((user) => {
+        return Promise.all([user]);
+      })
+      .catch((err) => {
+        next(err);
+      });
+  },
 };

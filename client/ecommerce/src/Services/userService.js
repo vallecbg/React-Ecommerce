@@ -9,6 +9,14 @@ const userService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    details: function(id) {
+        return axios.get(`${baseUrl}/details/${id}`, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 
