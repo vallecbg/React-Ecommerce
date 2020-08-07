@@ -79,8 +79,13 @@ const Sidebar = (props) => {
       icon: <ShoppingBasketIcon />,
     },
     {
-      title: "My Orders",
+      title: "Orders",
       href: "/orders",
+      icon: <ListAltIcon />,
+    },
+    {
+      title: "My Orders",
+      href: "/myOrders",
       icon: <ListAltIcon />,
     },
     {
@@ -93,7 +98,7 @@ const Sidebar = (props) => {
   const pagesUser = [
     {
       title: "My Orders",
-      href: "/orders",
+      href: "/myOrders",
       icon: <ListAltIcon />,
     },
     {

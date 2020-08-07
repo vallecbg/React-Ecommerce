@@ -15,6 +15,7 @@ const ProductCreate = React.lazy(() => import('./Components/Administration/Produ
 const CategoryCreate = React.lazy(() => import('./Components/Administration/CategoryCreate/CategoryCreate'))
 const UserList = React.lazy(() => import('./Components/Administration/UserList/UserList'))
 const ProductList = React.lazy(() => import('./Components/Administration/ProductList/ProductList'))
+const OrderList = React.lazy(() => import('./Components/Administration/OrderList/OrderList'))
 
 
 const AppRouter = () => {
@@ -26,6 +27,21 @@ const AppRouter = () => {
     }
     const ProtectedRoute = ({ path, component }) => {
         return state.isAuth ? <Route path={path} component={component} /> : <Redirect to={'/login'} />
+    }
+
+    function ProtectedRouteLayout({
+        component: Component,
+        layout: Layout,
+        ...rest
+    }) {
+        return state.isAuth ? (
+            <Route {...rest} render={(props) => 
+                <Layout {...props}>
+                    <Component {...props} />
+                </Layout>
+            } 
+            />
+        ) : <Redirect to={'/login'} />
     }
 
     function AdminRoute({
@@ -58,6 +74,7 @@ const AppRouter = () => {
             <AdminRoute path="/categoryCreate" component={CategoryCreate} layout={MainLayout} />
             <AdminRoute path="/users" component={UserList} layout={MainLayout} />
             <AdminRoute path="/productList" component={ProductList} layout={MainLayout} />
+            <AdminRoute path="/orders" component={OrderList} layout={MainLayout} />
         </Switch>
     )
 }

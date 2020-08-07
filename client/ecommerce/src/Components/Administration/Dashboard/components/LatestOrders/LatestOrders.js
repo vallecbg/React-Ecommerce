@@ -21,6 +21,7 @@ import {
 } from "@material-ui/core";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import StatusBullet from "../../../../StatusBullet/StatusBullet";
+import { NavLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -40,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: "flex-end",
   },
+  navLink: {
+    textDecoration: "none"
+  }
 }));
 
 const statusColors = {
@@ -103,9 +107,11 @@ const LatestOrders = (props) => {
       </CardContent>
       <Divider />
       <CardActions className={classes.actions}>
-        <Button color="primary" size="small" variant="text">
-          View all <ArrowRightIcon />
-        </Button>
+        <NavLink to="/orders" className={classes.navLink}>
+          <Button color="primary" size="small" variant="text">
+            View all <ArrowRightIcon />
+          </Button>
+        </NavLink>
       </CardActions>
     </Card>
   );

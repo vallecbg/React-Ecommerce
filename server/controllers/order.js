@@ -21,11 +21,7 @@ module.exports = {
   getAllOrders: (req, res, next) => {
     OrderModel.find({}).populate('products').lean()
     .then((orders) => {
-        //console.log(orders[5].products[0]);
-        // ProductModel.find({_id: orders[5].products[0]._id}).then((currentProduct) => {
-        //     console.log(currentProduct);
-        // })
-        res.status(200).json(orders)
+      res.status(200).json(orders)
     })
     .catch(next)
 },

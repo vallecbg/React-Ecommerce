@@ -51,7 +51,7 @@ export default function Review({ userData, handleBack }) {
 
   const cartProductsIds = (cart || []).map((product) => {
     return {
-      _id: product._id,
+      product: product.title,
       quantity: product.quantity
     }
   })
