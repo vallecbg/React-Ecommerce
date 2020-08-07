@@ -133,7 +133,11 @@ class AppBarAuth extends Component{
               <Link className={classes.navLink} to="/dashboard">
                 <Button variant = "text" className = {classes.padding} color="inherit" >Admin Panel</Button>
               </Link>
-            ): null}
+            ): (
+              <Link className={classes.navLink} to="/myOrders">
+                <Button variant = "text" className = {classes.padding} color="inherit" >Dashboard</Button>
+              </Link>
+            )}
           
           <Button variant = "text" className = {classes.padding} color="inherit" onClick={logoutFunction}>Logout</Button>
 
