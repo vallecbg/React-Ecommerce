@@ -16,6 +16,7 @@ const CategoryCreate = React.lazy(() => import('./Components/Administration/Cate
 const UserList = React.lazy(() => import('./Components/Administration/UserList/UserList'))
 const ProductList = React.lazy(() => import('./Components/Administration/ProductList/ProductList'))
 const OrderList = React.lazy(() => import('./Components/Administration/OrderList/OrderList'))
+const MyOrders = React.lazy(() => import('./Components/Administration/OrderList/MyOrders'))
 
 
 const AppRouter = () => {
@@ -75,6 +76,7 @@ const AppRouter = () => {
             <AdminRoute path="/users" component={UserList} layout={MainLayout} />
             <AdminRoute path="/productList" component={ProductList} layout={MainLayout} />
             <AdminRoute path="/orders" component={OrderList} layout={MainLayout} />
+            <ProtectedRouteLayout path="/myOrders" component={MyOrders} layout={MainLayout} />
         </Switch>
     )
 }

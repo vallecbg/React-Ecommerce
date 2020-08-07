@@ -87,7 +87,7 @@ const OrdersTable = (props) => {
                     </TableCell>
                     <TableCell>
                       {order.products.map((product) => (
-                        <div>
+                        <div key={product._id}>
                           {product.product} - {product.quantity}x
                         </div>
                       ))}
@@ -131,7 +131,6 @@ const OrdersTable = (props) => {
 
 OrdersTable.propTypes = {
   className: PropTypes.string,
-  products: PropTypes.array.isRequired,
 };
 
 export default OrdersTable;
