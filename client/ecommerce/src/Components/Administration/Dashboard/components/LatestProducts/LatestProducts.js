@@ -72,7 +72,7 @@ const LatestProducts = (props) => {
                   <Avatar
                     className={classes.productImage}
                     alt="Product"
-                    src={currProduct.imageUrls[0]}
+                    src={currProduct.imageUrls[0].url}
                   />
                 </ListItemAvatar>
                 <ListItemText

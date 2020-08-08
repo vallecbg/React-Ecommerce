@@ -17,6 +17,9 @@ const UserList = React.lazy(() => import('./Components/Administration/UserList/U
 const ProductList = React.lazy(() => import('./Components/Administration/ProductList/ProductList'))
 const OrderList = React.lazy(() => import('./Components/Administration/OrderList/OrderList'))
 const MyOrders = React.lazy(() => import('./Components/Administration/OrderList/MyOrders'))
+const ProductEdit = React.lazy(() => import('./Components/Administration/ProductEdit/ProductEdit'))
+
+//TODO: add 404 route
 
 
 const AppRouter = () => {
@@ -77,6 +80,7 @@ const AppRouter = () => {
             <AdminRoute path="/productList" component={ProductList} layout={MainLayout} />
             <AdminRoute path="/orders" component={OrderList} layout={MainLayout} />
             <ProtectedRouteLayout path="/myOrders" component={MyOrders} layout={MainLayout} />
+            <AdminRoute path="/productEdit/:id" component={ProductEdit} layout={MainLayout} />
         </Switch>
     )
 }
