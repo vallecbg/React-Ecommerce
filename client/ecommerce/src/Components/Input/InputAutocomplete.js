@@ -11,7 +11,7 @@ const InputAutocomplete = ({ label, name, changeHandler, options }) => {
       onChange={changeHandler}
       // error={!!formState.errors && !!formState.errors[name]}
       // helperText={formState.errors && formState.errors[name]}
-      renderInput={(params) => <TextField {...params} label={label} variant="outlined"  />}
+      renderInput={(params) => <TextField {...params} label={label} variant="outlined" />}
     />
   );
 };

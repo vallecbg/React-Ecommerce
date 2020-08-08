@@ -10,7 +10,7 @@ import { colors } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import withForm from "../../../Hocs/withForm";
 import { StoreContext } from "../../../Store/Store";
-import { createProduct } from '../../../Store/Actions'
+import { createProduct } from "../../../Store/Actions";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -51,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const notFoundImg = 'https://res.cloudinary.com/vallec/image/upload/v1595719226/600px-No_image_available.svg_o3sq2z.png'
+const notFoundImg =
+  "https://res.cloudinary.com/vallec/image/upload/v1595719226/600px-No_image_available.svg_o3sq2z.png";
 
 const ProductCreate = (props) => {
   const classes = useStyles();
@@ -101,20 +102,34 @@ const ProductCreate = (props) => {
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
-        console.log(formData);
-        const finalProduct = {
-          ...formData,
-          popular: selectTrue(popular, isPopularSelected),
-          category,
-          imageUrls: productImages.length === 0 ? [{url: notFoundImg}] : productImages,
-          creator: window.localStorage.getItem('user').id,
-        };
-        dispatch(createProduct(finalProduct));
-        history.push('/');
+        if (category === null) {
+          alert("Category is null");
+        } else {
+          console.log(formData);
+          const finalProduct = {
+            ...formData,
+            popular: selectTrue(popular, isPopularSelected),
+            category,
+            imageUrls:
+              productImages.length === 0
+                ? [{ url: notFoundImg }]
+                : productImages,
+            creator: window.localStorage.getItem("user").id,
+          };
+          dispatch(createProduct(finalProduct));
+          history.push("/");
+        }
       });
     },
     [history, dispatch, runValidations, productImages]
   );
+
+  const makeValue = (event, value) => {
+    if (value) {
+      console.log("Category value ", value.title);
+      setCategory(value.title);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -135,8 +150,7 @@ const ProductCreate = (props) => {
                 popular={popular}
                 categories={categories}
                 isLoading={isLoading}
-                category={category}
-                setCategory={setCategory}
+                handleChangeCategory={makeValue}
                 productImages={productImages}
                 setProductImages={setProductImages}
               />
@@ -168,14 +182,12 @@ const schema = yup.object().shape({
     .number()
     .required("Price is required ")
     .moreThan(0, "Price must be positive number "),
-  delivery: yup
-    .number()
-    .min(0, 'Delivery must be at least 0.00'),
+  delivery: yup.number().min(0, "Delivery must be at least 0.00"),
   //popular: yup.boolean(),
   description: yup
     .string()
     .required("Description is required ")
-    .min(10, "Description must be at least 10 characters ")
+    .min(10, "Description must be at least 10 characters "),
 });
 
 const initialState = {

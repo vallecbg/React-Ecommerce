@@ -20,16 +20,8 @@ const ProductFields = ({
   popular,
   categories,
   isLoading,
-  category,
-  setCategory,
+  handleChangeCategory
 }) => {
-  const makeValue = (event, value) => {
-    if (value) {
-      setCategory(value._id);
-    } else {
-      setCategory(null);
-    }
-  };
 
 //   useEffect(() => {
 //       fetchPhotos("image", setProductImages)
@@ -79,7 +71,7 @@ const ProductFields = ({
             <InputAutocomplete
               label={"Category"}
               name={"category"}
-              changeHandler={makeValue}
+              changeHandler={handleChangeCategory}
               options={categories}
             />
           </Grid>
