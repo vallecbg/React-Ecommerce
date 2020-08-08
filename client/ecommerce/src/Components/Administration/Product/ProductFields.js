@@ -46,7 +46,7 @@ const ProductFields = ({
         console.log(photos);
         if(photos.event === 'success'){
           //TODO: add product image id to get it for thumbnail in details
-            setProductImages([...productImages, photos.info.url])
+            setProductImages([...productImages, {url: photos.info.url, imgId: photos.info.public_id}])
         }
       } else {
         console.log(error);

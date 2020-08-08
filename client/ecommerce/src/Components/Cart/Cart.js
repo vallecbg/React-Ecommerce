@@ -89,7 +89,7 @@ const Cart = () => {
             <Avatar
               className={classes.productImage}
               alt="Product"
-              src={product.imageUrls[0]}
+              src={product.imageUrls[0].url}
             />
           </ListItemAvatar>
           <ListItemText

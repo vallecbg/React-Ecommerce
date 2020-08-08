@@ -9,7 +9,6 @@ import {
   CardActions,
   CardContent,
   Avatar,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -17,7 +16,9 @@ import {
   TableRow,
   Typography,
   TablePagination,
+  Button
 } from "@material-ui/core";
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: "flex-end",
   },
+  navLink: {
+    textDecoration: 'none'
+  }
 }));
 
 const ProductsTable = (props) => {
@@ -69,6 +73,7 @@ const ProductsTable = (props) => {
                   <TableCell>Delivery</TableCell>
                   <TableCell>Is Popular</TableCell>
                   <TableCell>Created on</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -82,7 +87,7 @@ const ProductsTable = (props) => {
                       <div className={classes.nameContainer}>
                         <Avatar
                           className={classes.avatar}
-                          src={product.imageUrls[0]}
+                          src={product.imageUrls[0].url}
                         />
                         <Typography variant="body1">{product.title}</Typography>
                       </div>
@@ -97,6 +102,17 @@ const ProductsTable = (props) => {
                     <TableCell>{product.popular ? "Yes" : "No"}</TableCell>
                     <TableCell>
                       {moment(new Date(product.createdOn)).format("DD/MM/YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      <Link className={classes.navLink} to={"/productEdit/" + product._id}>
+                        <Button
+                          fullWidth
+                          variant="contained"
+                          color="primary"
+                        >
+                          Edit
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))}

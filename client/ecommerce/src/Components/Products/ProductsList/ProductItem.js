@@ -42,7 +42,7 @@ const ProductItem = ({product}) => {
         >
           <CardMedia
             style={{ height: 140 }}
-            image={product.imageUrls[0]}
+            image={product.imageUrls[0].url}
           />
           <CardContent style={{ height: 50 }}>
             <div

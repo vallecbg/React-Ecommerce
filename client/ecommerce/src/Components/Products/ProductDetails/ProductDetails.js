@@ -60,7 +60,7 @@ const ProductDetails = (props) => {
           {/* TODO: add react image gallery */}
           <div style={{ display: "flex" }}>
             <img
-              src={currProduct.imageUrls[0]}
+              src={currProduct.imageUrls[0].url}
               alt=""
               width={250}
               height={250}
