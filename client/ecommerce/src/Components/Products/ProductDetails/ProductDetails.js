@@ -7,6 +7,7 @@ import productService from "../../../Services/productService";
 import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import TextField from "@material-ui/core/TextField";
+import ImageGallery from "react-image-gallery";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,7 +30,7 @@ const ProductDetails = (props) => {
       dispatch(
         updateCartSuccess({
           product: currProduct,
-          value: currProduct.quantity ? currProduct.quantity : quantity
+          value: currProduct.quantity ? currProduct.quantity : quantity,
         })
       );
     },
@@ -44,22 +45,34 @@ const ProductDetails = (props) => {
     setIsLoading(false);
   }, []);
 
+  // const images = [
+  //   {
+  //     original: "https://picsum.photos/id/1018/1000/600/",
+  //     thumbnail: "https://picsum.photos/id/1018/1000/600/",
+  //   },
+  //   {
+  //     original: "https://picsum.photos/id/1015/1000/600/",
+  //     thumbnail: "https://picsum.photos/id/1015/250/150/",
+  //   },
+  //   {
+  //     original: "https://picsum.photos/id/1019/1000/600/",
+  //     thumbnail: "https://picsum.photos/id/1019/250/150/",
+  //   },
+  // ];
+
   const renderProduct = (product.length ? product : state.product).map(
     (currProduct) => {
+      const productImages = currProduct.imageUrls.map((currImage) => {
+        return {original: currImage.url, thumbnail: currImage.url}
+      })
+      console.log(productImages);
+
       return (
         <div key={currProduct._id} style={{ padding: 10 }}>
-          <div
-            style={{
-              marginBottom: 20,
-              marginTop: 10,
-              fontSize: 22,
-            }}
-          >
-            {currProduct.title}
-          </div>
           {/* TODO: add react image gallery */}
           <div style={{ display: "flex" }}>
-            <img
+            <ImageGallery items={productImages} />
+            {/* <img
               src={currProduct.imageUrls[0].url}
               alt=""
               width={250}
@@ -69,7 +82,8 @@ const ProductDetails = (props) => {
                 borderRadius: "5px",
                 objectFit: "cover",
               }}
-            />
+            /> */}
+
             <div
               style={{
                 flex: 1,
@@ -80,6 +94,15 @@ const ProductDetails = (props) => {
             >
               <div
                 style={{
+                  marginBottom: 20,
+                  marginTop: 10,
+                  fontSize: 22,
+                }}
+              >
+                {currProduct.title}
+              </div>
+              <div
+                style={{
                   fontSize: 16,
                 }}
               >
@@ -88,12 +111,12 @@ const ProductDetails = (props) => {
               <div
                 style={{
                   fontSize: 14,
-                  marginTop: 5
+                  marginTop: 5,
                 }}
               >
-                {currProduct.delivery > 0 ? (
-                  `Delivery: $${currProduct.delivery.toFixed(2)}`
-                ) : `Free Delivery`}
+                {currProduct.delivery > 0
+                  ? `Delivery: $${currProduct.delivery.toFixed(2)}`
+                  : `Free Delivery`}
               </div>
               {currProduct.popular && (
                 <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
@@ -108,9 +131,9 @@ const ProductDetails = (props) => {
                 label="Quantity"
                 inputProps={{ min: 1, max: 10, step: 1 }}
                 onChange={(e) => {
-                    currProduct.quantity = parseInt(e.target.value)
-                    console.log("Curr product: ", currProduct.quantity);
-                    setQuantity(parseInt(e.target.value));
+                  currProduct.quantity = parseInt(e.target.value);
+                  console.log("Curr product: ", currProduct.quantity);
+                  setQuantity(parseInt(e.target.value));
                 }}
               />
               <Button
@@ -118,7 +141,7 @@ const ProductDetails = (props) => {
                 color="primary"
                 variant="outlined"
                 onClick={() => {
-                    handleAddToCart(currProduct)
+                  handleAddToCart(currProduct);
                 }}
               >
                 Add to Cart <AddShoppingCartIcon style={{ marginLeft: 5 }} />
