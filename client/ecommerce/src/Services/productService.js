@@ -25,6 +25,14 @@ const productService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    edit: function(data) {
+        return axios.put(`${baseUrl}/edit/${data._id}`, data, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 

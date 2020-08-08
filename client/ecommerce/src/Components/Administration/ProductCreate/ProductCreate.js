@@ -121,13 +121,15 @@ const ProductCreate = (props) => {
         }
       });
     },
-    [history, dispatch, runValidations, productImages]
+    [history, dispatch, runValidations, productImages, category, popular]
   );
 
   const makeValue = (event, value) => {
     if (value) {
       console.log("Category value ", value.title);
-      setCategory(value.title);
+      setCategory(value._id);
+    } else {
+      setCategory(null)
     }
   };
 

@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 const notFoundImg =
   "https://res.cloudinary.com/vallec/image/upload/v1595719226/600px-No_image_available.svg_o3sq2z.png";
 
-
 //TODO
 
 const ProductEdit = (props) => {
@@ -67,7 +66,7 @@ const ProductEdit = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const productId = props.match.params.id;
 
-  const { runValidations, formIsInvalid, history, formState, product } = props;
+  const { runValidations, formIsInvalid, history, formState } = props;
 
   const [popular, setPopular] = useState(false);
   let isPopularSelected = false;
@@ -81,10 +80,15 @@ const ProductEdit = (props) => {
 
   useEffect(() => {
     productService.getOne(productId).then((currProduct) => {
-        console.log(currProduct.data[0]);
-        Object.assign(formState.form, { ...formState.form, ...currProduct.data[0] });
-    })
-  });
+      console.log(currProduct.data[0]);
+      Object.assign(formState.form, {
+        ...formState.form,
+        ...currProduct.data[0],
+      });
+      setPopular(currProduct.data[0].popular);
+      //setCategory(currProduct.data[0].category.title);
+    });
+  }, []);
 
   useEffect(() => {
     console.log("Popular updated ", popular);
@@ -115,20 +119,40 @@ const ProductEdit = (props) => {
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
-        console.log(formData);
-        const finalProduct = {
-          ...formData,
-          popular: selectTrue(popular, isPopularSelected),
-          category,
-          imageUrls: productImages.length === 0 ? [notFoundImg] : productImages,
-          creator: window.localStorage.getItem("user").id,
-        };
-        dispatch(createProduct(finalProduct));
-        history.push("/");
+        if (category === null) {
+          alert("Category is null!");
+        } else {
+          const finalProduct = {
+            ...formData,
+            popular: selectTrue(popular, isPopularSelected),
+            category,
+            imageUrls:
+              productImages.length === 0
+                ? [{ url: notFoundImg }]
+                : productImages,
+          };
+          console.log("Final product: ", finalProduct);
+          productService.edit(finalProduct)
+            .then(() => {
+              //TODO: add notifications
+              history.push("/");
+            })
+            .catch((error) => console.error(error))
+          //dispatch(createProduct(finalProduct));
+        }
       });
     },
-    [history, dispatch, runValidations, productImages]
+    [history, dispatch, runValidations, productImages, category, popular]
   );
+
+  const makeValue = (event, value) => {
+    if (value) {
+      console.log("Category value ", value.title);
+      setCategory(value._id);
+    } else {
+      setCategory(null);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -142,6 +166,7 @@ const ProductEdit = (props) => {
             <Typography component="h1" variant="h5" className={classes.textH5}>
               Edit Product
             </Typography>
+
             <form className={classes.form} onSubmit={handleSubmit}>
               <ProductFields
                 {...props}
@@ -149,8 +174,7 @@ const ProductEdit = (props) => {
                 popular={popular}
                 categories={categories}
                 isLoading={isLoading}
-                category={category}
-                setCategory={setCategory}
+                handleChangeCategory={makeValue}
                 productImages={productImages}
                 setProductImages={setProductImages}
               />
