@@ -27,7 +27,6 @@ const MyOrders = () => {
     const id = JSON.parse(window.localStorage.getItem("user"))
     ? JSON.parse(window.localStorage.getItem("user")).id
     : null;
-    console.log(id);
     userService.details(id).then(({data: currUser}) => {
       console.log(currUser);
       setOrders(currUser[0].orders)
