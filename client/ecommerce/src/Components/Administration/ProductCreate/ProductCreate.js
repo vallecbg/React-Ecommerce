@@ -106,7 +106,7 @@ const ProductCreate = (props) => {
           ...formData,
           popular: selectTrue(popular, isPopularSelected),
           category,
-          imageUrls: productImages.length === 0 ? [notFoundImg] : productImages,
+          imageUrls: productImages.length === 0 ? [{url: notFoundImg}] : productImages,
           creator: window.localStorage.getItem('user').id,
         };
         dispatch(createProduct(finalProduct));
