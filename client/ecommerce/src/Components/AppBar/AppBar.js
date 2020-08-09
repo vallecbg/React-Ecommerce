@@ -51,22 +51,17 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles()
   const history = useHistory()
-  const { state, dispatch } = useContext(StoreContext)
+  const { state, dispatch, fetchUserDetails } = useContext(StoreContext)
+  const [ result, setResult ] = useState()
+  const [ loading, setLoading ] = useState(false)
+  const [ error, setError ] = useState()
   const location = useLocation()
-
-  const [ role, setRole ] = useState()
-
   useEffect(() => {
-    const id = JSON.parse(window.localStorage.getItem("user"))
-      ? JSON.parse(window.localStorage.getItem("user")).id
-      : null;
-    if (id !== null) {
-      userService.details(id).then(({ data: currUser }) => {
-        console.log(currUser[0]);
-        setRole(currUser[0].role);
-      });
-    }
-  }, [])
+    const { result, error, loading } = fetchUserDetails
+    setLoading(loading)
+    setError(error)
+    setResult(result)
+  }, [fetchUserDetails])
 
   console.log(location.pathname);
 
@@ -75,14 +70,16 @@ const Navbar = () => {
   return (
     <div className={classes.grow}>
         <div>
+          {loading && <Spinner/> }
+          {error && <div>Error: {error.message}</div>}
           {location.pathname !== '/checkout' ? (
             <div>
-            {state.isAuth ? (
+            {state.isAuth && result ? (
                 <AppBarAuth 
                     classes={classes} 
                     history={history} 
                     dispatch={dispatch}
-                    roleName={role}
+                    roleName={result.role}
                     cartLength={state.productsCart.length}
                 />
                 ) : (
@@ -98,6 +95,7 @@ const Navbar = () => {
         
     </div>
   );
+
 };
 
 export default withRouter(Navbar);
