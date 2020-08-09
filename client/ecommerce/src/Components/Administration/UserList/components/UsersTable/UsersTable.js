@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import moment from "moment";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardActions,
   CardContent,
-  Avatar,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
   TablePagination,
 } from "@material-ui/core";
 
-//import { getInitials } from 'helpers';
+import CurrentUser from './CurrentUser'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -71,34 +68,12 @@ const UsersTable = (props) => {
                   <TableCell>Role</TableCell>
                   <TableCell>Registration date</TableCell>
                   <TableCell>Last login</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {users.slice(0, rowsPerPage).map((user) => (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={user._id}
-                  >
-                    <TableCell>
-                      <div className={classes.nameContainer}>
-                        <Typography variant="body1">
-                          {user.firstName} {user.lastName}
-                        </Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.orders.length}
-                    </TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>
-                      {moment(new Date(user.createdOn)).format("DD/MM/YYYY")}
-                    </TableCell>
-                    <TableCell>
-                      {moment(new Date(user.lastLogin)).fromNow()}
-                    </TableCell>
-                  </TableRow>
+                  <CurrentUser user={user} classes={classes} key={user._id} />
                 ))}
               </TableBody>
             </Table>

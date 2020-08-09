@@ -17,6 +17,14 @@ const userService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    setRole: function(id, role) {
+        return axios.post(`${baseUrl}/setRole/${id}`, role, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 

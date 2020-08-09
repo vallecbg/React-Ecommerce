@@ -17,5 +17,17 @@ module.exports = {
             res.status(200).json(currentUsers)
         })
         .catch(next)
-    }
+    },
+    setRole: (req, res, next) => {
+        const { id } = req.params;
+        const {role} = req.body;
+        
+        UserModel.findOneAndUpdate({_id: id}, {role})
+          .then((user) => {
+            res.status(200).json(user)
+          })
+          .catch((err) => {
+            next(err);
+          });
+      }
 }
