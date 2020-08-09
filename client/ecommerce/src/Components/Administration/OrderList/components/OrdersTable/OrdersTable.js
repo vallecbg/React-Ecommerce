@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import moment from "moment";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardActions,
   CardContent,
-  Avatar,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -17,7 +14,9 @@ import {
   TableRow,
   Typography,
   TablePagination,
+  Button,
 } from "@material-ui/core";
+import CurrentOrder from './CurrentOrder'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,10 +36,21 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: "flex-end",
   },
+  status: {
+    marginRight: theme.spacing(1),
+  },
+  cancelBtn: {
+    backgroundColor: theme.palette.error.light,
+    color: 'white'
+  },
+  deliverBtn: {
+    backgroundColor: theme.palette.success.light,
+    color: 'white'
+  }
 }));
 
 const OrdersTable = (props) => {
-  const { className, orders, ...rest } = props;
+  const { className, orders, controls, ...rest } = props;
   console.log(orders);
 
   const classes = useStyles();
@@ -70,44 +80,17 @@ const OrdersTable = (props) => {
                   <TableCell>Total Price</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Ordered on</TableCell>
+                  {controls ? (
+                    <TableCell></TableCell>
+                  ) : null}
+                  {controls ? (
+                    <TableCell></TableCell>
+                  ) : null}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {orders.slice(0, rowsPerPage).map((order) => (
-                  <TableRow className={classes.tableRow} hover key={order._id}>
-                    <TableCell>
-                      {order.firstName} {order.lastName}
-                    </TableCell>
-                    <TableCell>
-                      {order.address1},{" "}
-                      {order.address2 !== "" ? `[${order.address2}], ` : null}{" "}
-                      {order.city} [{order.zip}],
-                      {order.state !== "" ? ` ${order.state},` : null}{" "}
-                      {order.country}
-                    </TableCell>
-                    <TableCell>
-                      {order.products.map((product) => (
-                        <div key={product._id}>
-                          {product.product} - {product.quantity}x
-                        </div>
-                      ))}
-                    </TableCell>
-                    <TableCell>
-                      <div className={classes.nameContainer}>
-                        <Typography variant="body1">
-                          ${order.totalPrice.toFixed(2)}
-                        </Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                        {order.status}
-                    </TableCell>
-                    <TableCell>
-                      {moment(new Date(order.createdOn)).format(
-                        "DD/MM/YYYY HH:mm"
-                      )}
-                    </TableCell>
-                  </TableRow>
+                  <CurrentOrder order={order} classes={classes} controls={controls} key={order._id}/>
                 ))}
               </TableBody>
             </Table>

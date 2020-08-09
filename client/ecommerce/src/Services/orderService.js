@@ -18,6 +18,15 @@ const orderService = {
             console.error(error)
         })
     },
+    setStatus: function(id, status) {
+        console.log("Status: ", status);
+        return axios.post(`${baseUrl}/setStatus/${id}`, status, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    }
 }
 
 export default orderService

@@ -51,7 +51,7 @@ const MyOrders = () => {
                 />
               </Grid>
             </Grid>
-            <OrdersTable orders={orders} />
+            <OrdersTable orders={orders} controls={false} />
           </div>
         )}
       </div>

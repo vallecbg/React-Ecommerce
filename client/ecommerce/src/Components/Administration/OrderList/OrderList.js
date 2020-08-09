@@ -26,7 +26,7 @@ const OrderList = () => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        <OrdersTable orders={orders} />
+        <OrdersTable orders={orders} controls={true} />
       </div>
     </div>
   );
