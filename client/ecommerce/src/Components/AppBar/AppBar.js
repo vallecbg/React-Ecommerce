@@ -66,7 +66,7 @@ const Navbar = () => {
         setRole(currUser[0].role);
       });
     }
-  })
+  }, [])
 
   console.log(location.pathname);
 
