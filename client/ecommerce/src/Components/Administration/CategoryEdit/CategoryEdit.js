@@ -10,7 +10,7 @@ import { colors } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import withForm from "../../../Hocs/withForm";
 import { StoreContext } from "../../../Store/Store";
-import { createProduct } from "../../../Store/Actions";
+import { editCategory } from "../../../Store/Actions";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -79,14 +79,8 @@ const CategoryEdit = (props) => {
         const finalCategory = {
           ...formData,
         };
-        console.log("finalCategory: ", finalCategory);
-        categoryService
-          .edit(finalCategory)
-          .then(() => {
-            //TODO: add notifications
-            history.push("/");
-          })
-          .catch((error) => console.error(error));
+        dispatch(editCategory(finalCategory))
+        history.push("/")
       });
     },
     [history, dispatch, runValidations]

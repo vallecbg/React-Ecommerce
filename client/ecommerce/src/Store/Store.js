@@ -23,7 +23,9 @@ import {
   createOrderSuccess,
   createOrderFail,
   getAllOrdersSuccess,
-  getAllOrdersFail
+  getAllOrdersFail,
+  editCategorySuccess,
+  editCategoryFail
 } from "./Actions";
 import authService from "../Services/authService";
 import productService from "../Services/productService";
@@ -161,6 +163,21 @@ const actionMap = {
     notification: {variant: "success", message: "Successfully created category!"}
   }),
   [ActionTypes.CreateCategoryFail]: (state, { error }) => ({
+    ...state,
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
+  }),
+  [ActionTypes.EditCategory]: (state) => ({
+    ...state,
+    error: null,
+    notification: {variant: "", message: ""}
+  }),
+  [ActionTypes.EditCategorySuccess]: (state) => ({
+    ...state,
+    error: null,
+    notification: {variant: "success", message: "Successfully edited category!"}
+  }),
+  [ActionTypes.EditCategoryFail]: (state, { error }) => ({
     ...state,
     error,
     notification: {variant: "error", message: "An error occurred!"}
@@ -384,6 +401,16 @@ const asyncActionMap = {
       })
       .catch((error) => {
         createCategoryFail(error);
+      });
+  },
+  [ActionTypes.EditCategory]: ({ category }) => {
+    return categoryService
+      .edit(category)
+      .then(() => {
+        return editCategorySuccess(category);
+      })
+      .catch((error) => {
+        editCategoryFail(error);
       });
   },
   [ActionTypes.CreateProduct]: ({ product }) => {
