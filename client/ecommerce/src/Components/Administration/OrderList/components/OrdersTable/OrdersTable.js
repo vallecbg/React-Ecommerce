@@ -55,17 +55,6 @@ const OrdersTable = (props) => {
 
   const classes = useStyles();
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
-
-  const handlePageChange = (event, page) => {
-    setPage(page);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(event.target.value);
-  };
-
   return (
     <Card {...rest} className={clsx(classes.root, className)}>
       <CardContent className={classes.content}>
@@ -89,7 +78,7 @@ const OrdersTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders.slice(0, rowsPerPage).map((order) => (
+                {orders.map((order) => (
                   <CurrentOrder order={order} classes={classes} controls={controls} key={order._id}/>
                 ))}
               </TableBody>
@@ -97,17 +86,6 @@ const OrdersTable = (props) => {
           </div>
         </PerfectScrollbar>
       </CardContent>
-      <CardActions className={classes.actions}>
-        <TablePagination
-          component="div"
-          count={orders.length}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handleRowsPerPageChange}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
-      </CardActions>
     </Card>
   );
 };

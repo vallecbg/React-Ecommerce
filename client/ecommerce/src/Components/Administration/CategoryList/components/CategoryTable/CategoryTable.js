@@ -54,17 +54,6 @@ const CategoryTable = (props) => {
 
   const classes = useStyles();
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
-
-  const handlePageChange = (event, page) => {
-    setPage(page);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(event.target.value);
-  };
-
   function handleDelete (id) {
     dispatch(deleteCategory(id))
   }
@@ -84,7 +73,7 @@ const CategoryTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {categories.slice(0, rowsPerPage).map((category) => (
+                {categories.map((category) => (
                   <TableRow
                     className={classes.tableRow}
                     hover
@@ -123,17 +112,6 @@ const CategoryTable = (props) => {
           </div>
         </PerfectScrollbar>
       </CardContent>
-      <CardActions className={classes.actions}>
-        <TablePagination
-          component="div"
-          count={categories.length}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handleRowsPerPageChange}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
-      </CardActions>
     </Card>
   );
 };

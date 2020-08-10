@@ -43,17 +43,6 @@ const UsersTable = (props) => {
 
   const classes = useStyles();
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
-
-  const handlePageChange = (event, page) => {
-    setPage(page);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(event.target.value);
-  };
-
   return (
     <Card {...rest} className={clsx(classes.root, className)}>
       <CardContent className={classes.content}>
@@ -72,7 +61,7 @@ const UsersTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.slice(0, rowsPerPage).map((user) => (
+                {users.map((user) => (
                   <CurrentUser user={user} classes={classes} key={user._id} />
                 ))}
               </TableBody>
@@ -80,17 +69,6 @@ const UsersTable = (props) => {
           </div>
         </PerfectScrollbar>
       </CardContent>
-      <CardActions className={classes.actions}>
-        <TablePagination
-          component="div"
-          count={users.length}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handleRowsPerPageChange}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
-      </CardActions>
     </Card>
   );
 };
