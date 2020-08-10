@@ -33,6 +33,14 @@ const categoryService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    delete: function(id) {
+        return axios.delete(`${baseUrl}/delete/${id}`, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 

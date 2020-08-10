@@ -1,4 +1,4 @@
-const { ProductModel } = require("../models");
+const { ProductModel, CategoryModel } = require("../models");
 const { authCookie: authCookieName } = require("../config/config");
 
 module.exports = {
@@ -27,7 +27,10 @@ module.exports = {
 
     ProductModel.create({ ...product, creator: _id, createdOn: Date.now() })
       .then((product) => {
-        Promise.all([product]);
+        Promise.all([
+          product,
+          CategoryModel.updateOne({ _id: category }, { $push: { products: product._id } }),
+        ]);
       })
       .then(() => {
         res.status(201).send({ msg: "Successfully created product!" });

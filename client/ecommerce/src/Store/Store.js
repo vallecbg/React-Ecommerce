@@ -25,7 +25,9 @@ import {
   getAllOrdersSuccess,
   getAllOrdersFail,
   editCategorySuccess,
-  editCategoryFail
+  editCategoryFail,
+  deleteCategorySuccess,
+  deleteCategoryFail,
 } from "./Actions";
 import authService from "../Services/authService";
 import productService from "../Services/productService";
@@ -60,147 +62,174 @@ const initialState = {
     variant: "",
     message: "",
   },
-  orders: []
+  orders: [],
 };
 
 const actionMap = {
   [ActionTypes.Login]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.LoginSuccess]: (state, { user }) => ({
     ...state,
     user,
     isAuth: true,
-    notification: {variant: "success", message: "Successfully logged in!"}
+    notification: { variant: "success", message: "Successfully logged in!" },
   }),
   [ActionTypes.LoginFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.Register]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.RegisterSuccess]: (state, { user }) => ({
     ...state,
     user,
     isAuth: true,
-    notification: {variant: "success", message: "Successfully registered!"}
+    notification: { variant: "success", message: "Successfully registered!" },
     //isAdmin: user.role === Constants.AdminRole,
   }),
   [ActionTypes.RegisterFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.Logout]: (state) => ({
     ...state,
     user: null,
     isAuth: false,
-    notification: {variant: "success", message: "Successfully logged out!"}
+    notification: { variant: "success", message: "Successfully logged out!" },
     //isAdmin: false,
   }),
   [ActionTypes.GetAllProducts]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetAllProductsSuccess]: (state, { products }) => ({
     ...state,
     products,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetAllProductsFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.GetProduct]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetProductSuccess]: (state, { product }) => ({
     ...state,
     product,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetProductFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.GetAllCategories]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetAllCategoriesSuccess]: (state, { categories }) => ({
     ...state,
     categories,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetAllCategoriesFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.CreateCategory]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.CreateCategorySuccess]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "success", message: "Successfully created category!"}
+    notification: {
+      variant: "success",
+      message: "Successfully created category!",
+    },
   }),
   [ActionTypes.CreateCategoryFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.EditCategory]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.EditCategorySuccess]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "success", message: "Successfully edited category!"}
+    notification: {
+      variant: "success",
+      message: "Successfully edited category!",
+    },
   }),
   [ActionTypes.EditCategoryFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
+  }),
+  [ActionTypes.DeleteCategory]: (state) => ({
+    ...state,
+    error: null,
+    notification: { variant: "", message: "" },
+  }),
+  [ActionTypes.DeleteCategorySuccess]: (state) => ({
+    ...state,
+    error: null,
+    notification: {
+      variant: "success",
+      message: "Successfully deleted category!",
+    },
+  }),
+  [ActionTypes.DeleteCategoryFail]: (state, { error }) => ({
+    ...state,
+    error,
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.CreateProduct]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.CreateProductSuccess]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "success", message: "Successfully created product!"}
+    notification: {
+      variant: "success",
+      message: "Successfully created product!",
+    },
   }),
   [ActionTypes.CreateProductFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.AddProductToCart]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.AddProductToCartSuccess]: (state, { product }) => {
     let productsArr = [...state.productsCart];
@@ -220,14 +249,17 @@ const actionMap = {
     return {
       ...state,
       productsCart: productsArr,
-      notification: {variant: "success", message: "Successfully added product to cart!"}
+      notification: {
+        variant: "success",
+        message: "Successfully added product to cart!",
+      },
     };
   },
 
   [ActionTypes.addProductToCartFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.UpdateCartSuccess]: (state, { product, value }) => {
     let productsArr = [...state.productsCart];
@@ -247,18 +279,23 @@ const actionMap = {
     return {
       ...state,
       productsCart: productsArr,
-      notification: productFound ? {variant: "", message: ""} : {variant: "success", message: "Successfully added product to cart!"}
+      notification: productFound
+        ? { variant: "", message: "" }
+        : {
+            variant: "success",
+            message: "Successfully added product to cart!",
+          },
     };
   },
   [ActionTypes.UpdateCartFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.RemoveProductFromCart]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.RemoveProductFromCartSuccess]: (state, { product }) => {
     const productsArr = state.productsCart.filter(
@@ -269,18 +306,21 @@ const actionMap = {
     return {
       ...state,
       productsCart: productsArr,
-      notification: {variant: "success", message: "Successfully removed product from cart!"}
+      notification: {
+        variant: "success",
+        message: "Successfully removed product from cart!",
+      },
     };
   },
   [ActionTypes.RemoveProductFromCartFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.ResetCart]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.ResetCartSuccess]: (state) => {
     window.localStorage.setItem("cart", []);
@@ -288,44 +328,47 @@ const actionMap = {
     return {
       ...state,
       productsCart: [],
-      notification: {variant: "", message: ""}
+      notification: { variant: "", message: "" },
     };
   },
   [ActionTypes.ResetCartFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.CreateOrder]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.CreateOrderSuccess]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "success", message: "Successfully created order!"}
+    notification: {
+      variant: "success",
+      message: "Successfully created order!",
+    },
   }),
-  [ActionTypes.CreateOrderFail]: (state, {error}) => ({
+  [ActionTypes.CreateOrderFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
   [ActionTypes.GetAllOrders]: (state) => ({
     ...state,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetAllOrdersSuccess]: (state, { orders }) => ({
     ...state,
     orders,
     error: null,
-    notification: {variant: "", message: ""}
+    notification: { variant: "", message: "" },
   }),
   [ActionTypes.GetAllOrdersFail]: (state, { error }) => ({
     ...state,
     error,
-    notification: {variant: "error", message: "An error occurred!"}
+    notification: { variant: "error", message: "An error occurred!" },
   }),
 };
 
@@ -411,6 +454,16 @@ const asyncActionMap = {
       })
       .catch((error) => {
         editCategoryFail(error);
+      });
+  },
+  [ActionTypes.DeleteCategory]: ({ category }) => {
+    return categoryService
+      .delete(category)
+      .then(() => {
+        return deleteCategorySuccess();
+      })
+      .catch((error) => {
+        deleteCategoryFail(error);
       });
   },
   [ActionTypes.CreateProduct]: ({ product }) => {

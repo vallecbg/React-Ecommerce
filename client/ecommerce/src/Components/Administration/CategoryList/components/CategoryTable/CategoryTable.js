@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -18,6 +18,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { StoreContext } from '../../../../../Store/Store'
+import { deleteCategory } from '../../../../../Store/Actions'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -48,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryTable = (props) => {
   const { className, categories, ...rest } = props;
+  const { dispatch } = useContext(StoreContext);
 
   const classes = useStyles();
 
@@ -61,6 +64,10 @@ const CategoryTable = (props) => {
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(event.target.value);
   };
+
+  function handleDelete (id) {
+    dispatch(deleteCategory(id))
+  }
 
   return (
     <Card {...rest} className={clsx(classes.root, className)}>
@@ -104,7 +111,7 @@ const CategoryTable = (props) => {
                         fullWidth
                         variant="contained"
                         className={classes.deleteBtn}
-                        //onClick={() => setOrderStatus("Cancelled")}
+                        onClick={() => handleDelete(category._id)}
                       >
                         Delete
                       </Button>

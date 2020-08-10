@@ -1,4 +1,4 @@
-const { CategoryModel } = require("../models");
+const { CategoryModel, ProductModel } = require("../models");
 
 module.exports = {
   createCategory: (req, res, next) => {
@@ -43,4 +43,14 @@ module.exports = {
       })
       .catch(next);
   },
+  deleteCategory: (req, res, next) => {
+      const { id } = req.params
+      CategoryModel.deleteOne({_id: id})
+        .then(() => {
+            ProductModel.deleteMany({category: id}).then(() => {
+              res.send({ msg: "Successfully deleted category!" });
+            })
+        })
+        .catch(next)
+  }
 };
