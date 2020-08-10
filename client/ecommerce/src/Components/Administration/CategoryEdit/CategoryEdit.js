@@ -1,21 +1,22 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import ListIcon from "@material-ui/icons/List";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { colors } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import withForm from "../../../Hocs/withForm";
 import { StoreContext } from "../../../Store/Store";
-import { createCategory } from "../../../Store/Actions";
+import { createProduct } from "../../../Store/Actions";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import "react-perfect-scrollbar/dist/css/styles.css";
-
+import categoryService from "../../../Services/categoryService";
 import CategoryFields from "../Category/CategoryFields";
+import ListIcon from "@material-ui/icons/List";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,17 +52,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CategoryCreate = (props) => {
+//TODO
+
+const CategoryEdit = (props) => {
   const classes = useStyles();
-  const { dispatch } = useContext(StoreContext);
-  const { runValidations, formIsInvalid, history } = props;
+  const { state, dispatch } = useContext(StoreContext);
+
+  const categoryId = props.match.params.id;
+
+  const { runValidations, formIsInvalid, history, formState } = props;
+
+  useEffect(() => {
+    categoryService.getOne(categoryId).then((currCategory) => {
+      console.log(currCategory.data[0]);
+      Object.assign(formState.form, {
+        ...formState.form,
+        ...currCategory.data[0],
+      });
+    });
+  }, []);
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       runValidations().then((formData) => {
-        dispatch(createCategory(formData));
-        history.push("/");
+        const finalCategory = {
+          ...formData,
+        };
+        console.log("finalCategory: ", finalCategory);
+        categoryService
+          .edit(finalCategory)
+          .then(() => {
+            //TODO: add notifications
+            history.push("/");
+          })
+          .catch((error) => console.error(error));
       });
     },
     [history, dispatch, runValidations]
@@ -77,7 +102,7 @@ const CategoryCreate = (props) => {
               <ListIcon />
             </Avatar>
             <Typography component="h1" variant="h5" className={classes.textH5}>
-              Create Category
+              Edit Category
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <CategoryFields {...props} />
@@ -89,7 +114,7 @@ const CategoryCreate = (props) => {
                 className={classes.submit}
                 disabled={formIsInvalid()}
               >
-                Create Category
+                Edit Category
               </Button>
             </form>
           </div>
@@ -110,7 +135,7 @@ const initialState = {
   title: "",
 };
 
-CategoryCreate.propTypes = {
+CategoryEdit.propTypes = {
   changeHandlerFactory: PropTypes.func,
   formState: PropTypes.object,
   runValidations: PropTypes.func,
@@ -119,4 +144,4 @@ CategoryCreate.propTypes = {
   history: PropTypes.object,
 };
 
-export default withForm(CategoryCreate, initialState, schema);
+export default withForm(CategoryEdit, initialState, schema);

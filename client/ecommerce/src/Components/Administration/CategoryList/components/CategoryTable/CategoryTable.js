@@ -15,9 +15,9 @@ import {
   TableRow,
   Typography,
   TablePagination,
-  Button
+  Button,
 } from "@material-ui/core";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -38,8 +38,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   navLink: {
-    textDecoration: 'none'
-  }
+    textDecoration: "none",
+  },
+  deleteBtn: {
+    backgroundColor: theme.palette.error.light,
+    color: 'white'
+  },
 }));
 
 const CategoryTable = (props) => {
@@ -69,6 +73,7 @@ const CategoryTable = (props) => {
                   <TableCell>Id</TableCell>
                   <TableCell>Title</TableCell>
                   <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -85,15 +90,24 @@ const CategoryTable = (props) => {
                     </TableCell>
                     <TableCell>{category.title}</TableCell>
                     <TableCell>
-                      <Link className={classes.navLink} to={"/categoryEdit/" + category._id}>
-                        <Button
-                          fullWidth
-                          variant="contained"
-                          color="primary"
-                        >
+                      <Link
+                        className={classes.navLink}
+                        to={"/categoryEdit/" + category._id}
+                      >
+                        <Button fullWidth variant="contained" color="primary">
                           Edit
                         </Button>
                       </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        className={classes.deleteBtn}
+                        //onClick={() => setOrderStatus("Cancelled")}
+                      >
+                        Delete
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

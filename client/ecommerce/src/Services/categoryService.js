@@ -17,6 +17,22 @@ const categoryService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    getOne: function(id) {
+        return axios.get(`${baseUrl}/details/${id}`, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    },
+    edit: function(data) {
+        return axios.put(`${baseUrl}/edit/${data._id}`, data, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 
