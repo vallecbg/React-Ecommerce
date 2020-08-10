@@ -24,18 +24,17 @@ const ProductsList = () => {
         dispatch(getAllProducts())
         setIsLoading(false)
     }, [])
-
-    //TODO: the product list isn't responsive - fix it
+    
     const renderProducts = (products.length ? products : state.products).map((product) => {
             return (
-                <Grid item xs={3} key={product._id}>
+                <Grid item xs={12} sm={6} md={3} key={product._id}>
                     <ProductItem product={product}/>
                 </Grid>
             )
         })
 
     return (
-        <Grid className={classes.container} container>
+        <Grid className={classes.container} container spacing={2}>
             {isLoading ? (
                 <Spinner />
             ) : renderProducts}
