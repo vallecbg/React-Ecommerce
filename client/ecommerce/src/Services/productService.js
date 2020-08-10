@@ -33,6 +33,14 @@ const productService = {
         .catch((error) => {
             console.error(error)
         })
+    },
+    setDelete: function(id, isDeleted) {
+        return axios.post(`${baseUrl}/setDelete/${id}`, isDeleted, {
+            withCredentials: true
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 

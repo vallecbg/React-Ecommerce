@@ -6,11 +6,13 @@ const {
     createProduct,
     getAllProducts,
     getProduct,
-    editProduct
+    editProduct,
+    setDelete
 } = require('../controllers/product')
 
 //TODO: check if auth or admin
 router.post('/create', auth(), createProduct)
+router.post('/setDelete/:id', admin(), setDelete)
 
 router.put('/edit/:id', admin(), editProduct)
 

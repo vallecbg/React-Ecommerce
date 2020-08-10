@@ -63,4 +63,16 @@ module.exports = {
       })
       .catch(next);
   },
+  setDelete: (req, res, next) => {
+    const { id } = req.params;
+    const { isDeleted } = req.body;
+    
+    ProductModel.findOneAndUpdate({_id: id}, {isDeleted})
+      .then((product) => {
+        res.status(200).json(product)
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
 };

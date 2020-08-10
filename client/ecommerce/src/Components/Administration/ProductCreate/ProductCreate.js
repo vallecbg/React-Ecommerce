@@ -115,6 +115,7 @@ const ProductCreate = (props) => {
                 ? [{ url: notFoundImg }]
                 : productImages,
             creator: window.localStorage.getItem("user").id,
+            isDeleted: false
           };
           dispatch(createProduct(finalProduct));
           history.push("/");
