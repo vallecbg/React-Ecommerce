@@ -74,6 +74,11 @@ const Sidebar = (props) => {
       icon: <ListIcon />,
     },
     {
+      title: "Categories",
+      href: "/categoryList",
+      icon: <ListIcon />,
+    },
+    {
       title: "Users",
       href: "/users",
       icon: <PeopleIcon />,

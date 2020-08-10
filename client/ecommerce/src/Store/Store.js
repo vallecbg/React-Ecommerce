@@ -155,6 +155,16 @@ const actionMap = {
     error: null,
     notification: {variant: "", message: ""}
   }),
+  [ActionTypes.CreateCategorySuccess]: (state) => ({
+    ...state,
+    error: null,
+    notification: {variant: "success", message: "Successfully created category!"}
+  }),
+  [ActionTypes.CreateCategoryFail]: (state, { error }) => ({
+    ...state,
+    error,
+    notification: {variant: "error", message: "An error occurred!"}
+  }),
   [ActionTypes.CreateProduct]: (state) => ({
     ...state,
     error: null,
