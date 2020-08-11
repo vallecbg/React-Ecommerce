@@ -19,6 +19,7 @@ import {
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
     marginRight: 10,
   },
+  navBtn: {
+    textDecoration: 'none'
+  }
 }));
 
 const LatestProducts = (props) => {
@@ -56,19 +60,12 @@ const LatestProducts = (props) => {
       <CardContent className={classes.content}>
         <List>
           {allProducts.map((currProduct, i) => {
-            
-
             return (
               <ListItem
                 divider={i < allProducts.length - 1}
                 key={currProduct._id}
               >
                 <ListItemAvatar>
-                  {/* <img
-                    alt="Product"
-                    className={classes.image}
-                    src={currProduct.imageUrls[0]}
-                  /> */}
                   <Avatar
                     className={classes.productImage}
                     alt="Product"
@@ -77,7 +74,9 @@ const LatestProducts = (props) => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={currProduct.title}
-                  secondary={`Updated ${moment(new Date(currProduct.createdOn)).fromNow()}`}
+                  secondary={`Updated ${moment(
+                    new Date(currProduct.createdOn)
+                  ).fromNow()}`}
                 />
                 <IconButton edge="end" size="small">
                   <MoreVertIcon />
@@ -85,14 +84,15 @@ const LatestProducts = (props) => {
               </ListItem>
             );
           })}
-          {/* {renderProducts} */}
         </List>
       </CardContent>
       <Divider />
       <CardActions className={classes.actions}>
-        <Button color="primary" size="small" variant="text">
-          View all <ArrowRightIcon />
-        </Button>
+        <Link to="/productList" className={classes.navBtn}>
+          <Button color="primary" size="small" variant="text">
+            View all <ArrowRightIcon />
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
