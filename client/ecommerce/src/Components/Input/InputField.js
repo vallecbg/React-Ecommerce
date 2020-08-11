@@ -6,7 +6,6 @@ const InputField = ({ label, name, changeHandler, formState, runControlValidatio
       variant="outlined"
       required={notRequired ? null : true}
       fullWidth
-      autoFocus
       name={name}
       label={label}
       id={name}

@@ -6,7 +6,6 @@ const InputNumber = ({ label, name, changeHandler, formState, runControlValidati
       variant="outlined"
       required
       fullWidth
-      autoFocus
       name={name}
       label={label}
       id={name}
