@@ -20,9 +20,9 @@ module.exports = {
       .catch(next);
   },
   getAllCategories: (req, res, next) => {
-    CategoryModel.find({})
+    CategoryModel.find({}).populate('products').lean()
       .then((categories) => {
-        res.json(categories);
+        res.status(200).json(categories);
       })
       .catch(next);
   },

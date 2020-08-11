@@ -7,7 +7,7 @@ const SignUp = React.lazy(() => import('./Components/Authentication/Register/Sig
 const SignIn = React.lazy(() => import('./Components/Authentication/Login/SignIn'))
 const Cart = React.lazy(() => import('./Components/Cart/Cart'))
 const Checkout = React.lazy(() => import('./Components/Checkout/Checkout'))
-const ProductsList = React.lazy(() => import('./Components/Products/ProductsList/ProductsList'))
+const AllProducts = React.lazy(() => import('./Components/Products/ProductsList/AllProducts'))
 const ProductDetails = React.lazy(() => import('./Components/Products/ProductDetails/ProductDetails'))
 //Admin panel
 const Dashboard = React.lazy(() => import('./Components/Administration/Dashboard/Dashboard'))
@@ -73,7 +73,7 @@ const AppRouter = () => {
             <Route path="/" exact component={Home} />
             <AuthRoute path="/register" component={SignUp} />
             <AuthRoute path="/login" component={SignIn} />
-            <Route path="/products" component={ProductsList} />
+            <Route path="/products" component={AllProducts} />
             <Route path="/cart" component={Cart} />
             <Route path="/product/details/:id" component={ProductDetails} />
             <ProtectedRoute path="/checkout" component={Checkout} />

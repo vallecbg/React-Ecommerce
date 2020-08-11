@@ -13,19 +13,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ProductsList = () => {
+const ProductsList = (props) => {
     const classes = useStyles()
-    const { state, dispatch } = useContext(StoreContext)
-    const [ products ] = useState([])
-    const [ isLoading, setIsLoading ] = useState(false)
+    //const { state, dispatch } = useContext(StoreContext)
+    const { products } = props
+    console.log("Products from props: ", products);
+    //const [ isLoading, setIsLoading ] = useState(false)
 
-    useEffect(() => {
-        setIsLoading(true)
-        dispatch(getAllProducts())
-        setIsLoading(false)
-    }, [])
-    
-    const renderProducts = (products.length ? products : state.products).map((product) => {
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     dispatch(getAllProducts())
+    //     setIsLoading(false)
+    // }, [])
+
+    const renderProducts = products.map((product) => {
             return (
                 <Grid item xs={12} sm={6} md={3} key={product._id}>
                     <ProductItem product={product}/>
@@ -35,9 +36,7 @@ const ProductsList = () => {
 
     return (
         <Grid className={classes.container} container spacing={2}>
-            {isLoading ? (
-                <Spinner />
-            ) : renderProducts}
+            { renderProducts }
         </Grid>
     )
 }
