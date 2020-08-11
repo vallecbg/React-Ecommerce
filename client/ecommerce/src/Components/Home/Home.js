@@ -49,7 +49,7 @@ const Home = () => {
       {products && (
         <div className={classes.container}>
           <Typography variant="h1" component="h2" align="center">Popular Products</Typography>
-          <ProductsList products={products} />
+          <ProductsList products={products} key={1} />
         </div>
       )}
       <TextSection
