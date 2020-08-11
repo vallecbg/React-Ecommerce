@@ -27,7 +27,7 @@ const Home = () => {
     productService.getAll().then(({ data: currProducts }) => {
       setProducts(
         currProducts.filter(function (pr) {
-          return pr.popular === true;
+          return pr.popular === true && pr.isDeleted === false;
         }).slice(0, 4)
       );
     });

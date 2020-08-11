@@ -26,7 +26,9 @@ const ProductsList = (props) => {
     //     setIsLoading(false)
     // }, [])
 
-    const renderProducts = products.map((product) => {
+    const renderProducts = products.filter(function (pr) {
+        return pr.isDeleted === false;
+      }).map((product) => {
             return (
                 <Grid item xs={12} sm={6} md={3} key={product._id}>
                     <ProductItem product={product}/>
