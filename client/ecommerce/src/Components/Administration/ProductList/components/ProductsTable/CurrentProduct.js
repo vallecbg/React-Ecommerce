@@ -54,11 +54,13 @@ const CurrentProduct = (props) => {
         {moment(new Date(product.createdOn)).format("DD/MM/YYYY")}
       </TableCell>
       <TableCell>
-        <Link className={classes.navLink} to={"/productEdit/" + product._id}>
-          <Button fullWidth variant="contained" color="primary">
-            Edit
-          </Button>
-        </Link>
+        {!isDeleted && (
+          <Link className={classes.navLink} to={"/productEdit/" + product._id}>
+            <Button fullWidth variant="contained" color="primary">
+              Edit
+            </Button>
+          </Link>
+        )}
       </TableCell>
       <TableCell>
         {!isDeleted && (
