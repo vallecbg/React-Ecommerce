@@ -73,7 +73,7 @@ const Dashboard = () => {
           <TotalProducts products={products.length} />
         </Grid>
         <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <TotalPrice price={renderTotalPrice.toFixed(2)}/>
+          <TotalPrice price={renderTotalPrice.toFixed(2)} text={"TOTAL INCOME"} />
         </Grid>
         {/* <Grid item lg={4} md={6} xl={3} xs={12}>
           <UsersByDevice />

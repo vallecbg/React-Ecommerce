@@ -48,6 +48,7 @@ const MyOrders = () => {
                     (acc, current) => (acc += current.totalPrice),
                     0
                   ).toFixed(2)}
+                  text={"TOTAL PRICE"}
                 />
               </Grid>
             </Grid>
