@@ -24,9 +24,9 @@ class App extends Component {
                 <ConfirmProvider>
                   <Notification />
                   <AppBarComponent />
-                  <React.Suspense fallback={<Spinner />}>
-                    <AppRouter />
-                  </React.Suspense>
+                    <React.Suspense fallback={<Spinner />}>
+                      <AppRouter />
+                    </React.Suspense>
                 </ConfirmProvider>
               </SnackbarProvider>
             </CloudinaryContext>
