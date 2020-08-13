@@ -25,7 +25,7 @@ const AllProducts = (props) => {
       {categories &&
         categories.map((currCategory) => {
           return (
-              <div>
+              <div key={currCategory._id}>
                   <Typography variant="h1" component="h2" align="center">{currCategory.title}</Typography>
                   <ProductsList products={currCategory.products} />
               </div>
