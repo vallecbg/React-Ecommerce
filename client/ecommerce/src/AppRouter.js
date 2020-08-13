@@ -21,6 +21,8 @@ const ProductEdit = React.lazy(() => import('./Components/Administration/Product
 const CategoryList = React.lazy(() => import('./Components/Administration/CategoryList/CategoryList'))
 const CategoryEdit = React.lazy(() => import('./Components/Administration/CategoryEdit/CategoryEdit'))
 
+const NotFound = React.lazy(() => import('./Components/NotFound/NotFound'))
+
 
 
 //TODO: add 404 route
@@ -87,6 +89,7 @@ const AppRouter = () => {
             <AdminRoute path="/productEdit/:id" component={ProductEdit} layout={MainLayout} />
             <AdminRoute path="/categoryList" component={CategoryList} layout={MainLayout} />
             <AdminRoute path="/categoryEdit/:id" component={CategoryEdit} layout={MainLayout} />
+            <Route path='*' exact={true} component={NotFound} />
         </Switch>
     )
 }
