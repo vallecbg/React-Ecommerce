@@ -53,14 +53,14 @@ There are 3 roles - Guest, User and Admin
   - Products Array
   - Total Price
   - User Info
-  -- First Name
-  -- Last Name
-  -- Address 1
-  -- Address 2 (optional)
-  -- City
-  -- State (optional)
-  -- ZIP Code
-  -- Country
+  - First Name
+  - Last Name
+  - Address 1
+  - Address 2 (optional)
+  - City
+  - State (optional)
+  - ZIP Code
+  - Country
   - Creator
   - Created On - Date
 ### Category
