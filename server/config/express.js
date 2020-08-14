@@ -2,6 +2,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const { secret, port } = require('./config')
+const path = require('path')
 const app = express()
 
 app.use(
@@ -20,6 +21,15 @@ app.use(function (err, req, res, next) {
 })
 
 require('./routes')(app)
+
+//Needed for heroku
+if (process.env.NODE_ENV === 'development') {
+    app.use(express.static('../../client/ecommerce/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../../' , 'client', 'ecommerce', 'build', 'index.html'))
+    })
+}
 
 app.listen(port, () => {
     console.log(`Server is listening on port: ${port}`)
